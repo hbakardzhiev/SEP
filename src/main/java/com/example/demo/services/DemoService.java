@@ -10,14 +10,14 @@ import java.util.List;
 @Service
 public class DemoService {
 
-    private DemoRepository repository;
+  private DemoRepository repository;
 
-    @Autowired
-    public DemoService(DemoRepository repository) {
-        this.repository = repository;
-    }
+  @Autowired
+  public DemoService(DemoRepository repository) {
+    this.repository = repository;
+  }
 
-    public List<DemoClass> getDemo() {
-        return repository.findAll();
-    }
+  public List<DemoClass> getDemo() {
+    return repository.findAll();
+  }
 }

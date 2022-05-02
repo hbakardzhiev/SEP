@@ -12,15 +12,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/")
 public class DemoController {
-    private final DemoService demoService;
+  private final DemoService demoService;
 
-    @Autowired
-    public DemoController(DemoService demoService) {
-        this.demoService = demoService;
-    }
+  @Autowired
+  public DemoController(DemoService demoService) {
+    this.demoService = demoService;
+  }
 
-    @GetMapping
-    public List<DemoClass> getDemoInstance() {
-        return demoService.getDemo();
-    }
+  @GetMapping
+  public List<DemoClass> getDemoInstance() {
+    return demoService.getDemo();
+  }
 }

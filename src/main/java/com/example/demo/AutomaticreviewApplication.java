@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AutomaticreviewApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AutomaticreviewApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(AutomaticreviewApplication.class, args);
+  }
 }
