@@ -12,7 +12,7 @@ public class DemoClass {
 
     private String Name;
 
-    public DemoClass() {}
+    public DemoClass() { }
 
     public DemoClass(String name) {
         Name = name;
