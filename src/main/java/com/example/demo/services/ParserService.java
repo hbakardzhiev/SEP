@@ -7,17 +7,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ParserService {
 
-    @Autowired
-    private ParserRepository repository;
+  @Autowired private ParserRepository repository;
 
-    public String parse() {
-        try {
-            return repository.parseElement();
-        }
-        catch (Exception ex) {
-            System.out.println("problem");
-        }
-        return "";
+  public String parse() {
+    try {
+      return repository.parseElement();
+    } catch (Exception ex) {
+      System.out.println("problem");
     }
-
+    return "";
+  }
 }

@@ -23,6 +23,4 @@ public class DemoController {
   public List<DemoClass> getDemoInstance() {
     return demoService.getDemo();
   }
-
-
 }
