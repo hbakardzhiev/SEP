@@ -10,4 +10,8 @@ class AutomaticreviewApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void test(){
+		assert false;
+	}
 }
