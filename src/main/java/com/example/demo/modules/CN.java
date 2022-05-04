@@ -1,6 +1,5 @@
 package com.example.demo.modules;
 
-
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -104,8 +103,7 @@ public class CN {
     this.modifiedOn = modifiedOn;
   }
 
-  public CN() {
-  }
+  public CN() {}
 
   public String getPhilipsID() {
     return philipsID;
