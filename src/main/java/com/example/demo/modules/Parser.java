@@ -16,9 +16,12 @@ public class Parser implements ParserRepository {
     document = Jsoup.parse(input, "UTF-8");
   }
 
-  public List<String> parseElement() {
-    return List.of(
-        document.select("[attrid=description]").text(),
-        document.select("[attrid=phiChangeType]").text());
+  public CN parseElement() {
+    final var cn = new CN();
+    cn.setDescription(document.select("[attrid=description]").text());
+    cn.setChangeType(List.of(document.select("[attrid=phiChangeType]").text().split(", ")));
+    cn.setCustomerApproval(document.select("[attrid=customerApprovalRequired]").text().equalsIgnoreCase("Yes"));
+    cn.setSupplierApproval(document.select("[attrid=supplierApprovalRequired]").text().equalsIgnoreCase("Yes"));
+    return cn;
   }
 }
