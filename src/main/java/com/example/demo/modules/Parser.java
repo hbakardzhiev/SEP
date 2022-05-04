@@ -6,16 +6,20 @@ import org.jsoup.nodes.Document;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class Parser implements ParserRepository {
-  private Document document;
+    private final Document document;
 
-  public Parser() throws IOException {
-    var input = new File(getClass().getClassLoader().getResource("test.html").getFile());
-    document = Jsoup.parse(input, "UTF-8");
-  }
+    public Parser() throws IOException {
+        final var input = new File(getClass().getClassLoader().getResource("example.html").getFile());
+        document = Jsoup.parse(input, "UTF-8");
+    }
 
-  public String parseElement() {
-    return document.body().getAllElements().first().text();
-  }
+    public List<String> parseElement() {
+        return List.of(
+                document.select("[attrid=description]").text(),
+                document.select("[attrid=phiChangeType]").text()
+        );
+    }
 }
