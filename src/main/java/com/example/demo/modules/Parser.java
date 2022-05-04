@@ -6,9 +6,9 @@ import org.jsoup.nodes.Document;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class Parser implements ParserRepository {
+
   private final Document document;
 
   public Parser() throws IOException {
@@ -16,14 +16,25 @@ public class Parser implements ParserRepository {
     document = Jsoup.parse(input, "UTF-8");
   }
 
+  private String parseAtrrID(String id) {
+    return this.document.select("[attrid=" + id + "]").text();
+  }
+
   public CN parseElement() {
     final var cn = new CN();
-    cn.setDescription(document.select("[attrid=description]").text());
-    cn.setChangeType(List.of(document.select("[attrid=phiChangeType]").text().split(", ")));
-    cn.setCustomerApproval(
-        document.select("[attrid=customerApprovalRequired]").text().equalsIgnoreCase("Yes"));
-    cn.setSupplierApproval(
-        document.select("[attrid=supplierApprovalRequired]").text().equalsIgnoreCase("Yes"));
+    cn.setDescription(parseAtrrID("description"));
+    cn.setChangeType(parseAtrrID("phiChangeType").split(", "));
+    cn.setCustomerApproval(parseAtrrID("customerApprovalRequired").equalsIgnoreCase("Yes"));
+    cn.setSupplierApproval(parseAtrrID("supplierApprovalRequired").equalsIgnoreCase("Yes"));
+    cn.setPhilipsID(parseAtrrID("phiProjectId"));
+    cn.setTeamName(parseAtrrID("teamTemplate.name"));
+    cn.setChangeAdminAuditReq(parseAtrrID("phiCNAudit").equalsIgnoreCase("Yes"));
+    cn.setCreatedBy(parseAtrrID("iterationInfo.creator").split(", "));
+    cn.setModifiedBy(parseAtrrID("modifier").split(", "));
+    cn.setRegulatoryRestrictionReq(parseAtrrID("phiRegResRequired").equalsIgnoreCase("Yes"));
     return cn;
   }
 }
+
+
+

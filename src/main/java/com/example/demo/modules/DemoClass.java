@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table
 public class DemoClass {
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
@@ -12,7 +13,8 @@ public class DemoClass {
 
   private String Name;
 
-  public DemoClass() {}
+  public DemoClass() {
+  }
 
   public DemoClass(String name) {
     Name = name;
