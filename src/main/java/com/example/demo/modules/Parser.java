@@ -20,8 +20,10 @@ public class Parser implements ParserRepository {
     final var cn = new CN();
     cn.setDescription(document.select("[attrid=description]").text());
     cn.setChangeType(List.of(document.select("[attrid=phiChangeType]").text().split(", ")));
-    cn.setCustomerApproval(document.select("[attrid=customerApprovalRequired]").text().equalsIgnoreCase("Yes"));
-    cn.setSupplierApproval(document.select("[attrid=supplierApprovalRequired]").text().equalsIgnoreCase("Yes"));
+    cn.setCustomerApproval(
+        document.select("[attrid=customerApprovalRequired]").text().equalsIgnoreCase("Yes"));
+    cn.setSupplierApproval(
+        document.select("[attrid=supplierApprovalRequired]").text().equalsIgnoreCase("Yes"));
     return cn;
   }
 }
