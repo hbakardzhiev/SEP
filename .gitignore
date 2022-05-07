@@ -116,3 +116,4 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 SEP.und/id.txt
 SEP.und/settings.xml
+src/main/resources/application.properties
