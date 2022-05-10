@@ -23,7 +23,7 @@ public class DemoConfiguration {
   CommandLineRunner commandLineRunner(DemoRepository repository) {
     return args -> {
       var list = Arrays.asList(new DemoClass("Peso"), new DemoClass("USD"));
-      repository.saveAllAndFlush(list);
+      repository.saveAll(list);
     };
   }
 }
