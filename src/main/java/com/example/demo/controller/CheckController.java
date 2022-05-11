@@ -21,7 +21,7 @@ public class CheckController {
     }
 
     @GetMapping
-    public List<Check> printCheck(){
-        return checkService.getCheck();
+    public List<Check> printAllCheck(){
+        return checkService.getChecks();
     }
 }
