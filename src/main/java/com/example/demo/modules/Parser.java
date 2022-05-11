@@ -14,11 +14,13 @@ public class Parser implements ParserRepository {
 
   private final Document document;
 
+
   @Autowired
   private CNRepository cnRepository;
 
-  public Parser() throws IOException {
-    final var input = new File(getClass().getClassLoader().getResource("example.html").getFile());
+
+  public Parser(String startUrl) throws IOException {
+    final var input = new File(getClass().getClassLoader().getResource(startUrl).getFile());
     document = Jsoup.parse(input, "UTF-8");
   }
 
@@ -26,14 +28,15 @@ public class Parser implements ParserRepository {
     return this.document.select(String.format("[%s=%s]", tag, id)).text();
   }
 
-  public JSONObject parseElement() {
+  public JSONObject parseElements() {
     var jsonObject = new JSONObject();
     cnRepository.findAll().stream().parallel()
         .forEach(element -> {
               var result = parseElementByTag(element.getHtmlTag(), element.getHtmlID());
-              jsonObject.append(element.getHtmlID(), result);
+              jsonObject.put(element.getHtmlID(), result);
             }
         );
     return jsonObject;
   }
+
 }

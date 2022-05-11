@@ -4,5 +4,5 @@ import org.json.JSONObject;
 
 public interface ParserRepository {
 
-  public JSONObject parseElement();
+  public JSONObject parseElements();
 }

@@ -13,7 +13,7 @@ public class ParserService {
   private ParserRepository repository;
 
   public String parse() {
-    return repository.parseElement().toString();
+    return repository.parseElements().toString();
 //    return new JSONObject();
   }
 }
