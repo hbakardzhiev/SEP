@@ -4,14 +4,15 @@ package com.example.demo.modules;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CHECK")
+@Table(name = "rule")
 public class Check {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
     private String name;
 
-    @Column(name = "document source")
+    @Column(name = "document_source")
     private String docSource;
 
     private String attribute;
@@ -19,8 +20,8 @@ public class Check {
 //    idea: maybe for now we can hard code the types of the second level check
 
 
-//    public Check() {
-//    }
+    public Check() {
+    }
 
     public Check(String name, String docSource, String attribute) {
         this.name = name;
