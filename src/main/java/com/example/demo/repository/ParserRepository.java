@@ -1,7 +1,8 @@
 package com.example.demo.repository;
 
-import com.example.demo.modules.CN;
+import org.json.JSONObject;
 
 public interface ParserRepository {
-  public CN parseElement();
+
+  public JSONObject parseElement();
 }

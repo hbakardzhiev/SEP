@@ -1,15 +1,24 @@
 package com.example.demo.modules;
 
-import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 @Entity
-@Table
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class CN {
 
   @Id
@@ -17,131 +26,171 @@ public class CN {
   @Column(name = "id", nullable = false)
   private Long id;
 
-  private String description;
-  private String[] changeType;
-  private boolean customerApproval;
-  private boolean supplierApproval;
-  private String philipsID;
-  private Boolean changeAdminAuditReq;
-  private String teamName;
-  private String location;
-  private String[] createdBy;
-  private LocalDateTime createdOn;
-  private String[] modifiedBy;
-  private LocalDateTime modifiedOn;
-  private Boolean regulatoryRestrictionReq;
+  @Column(nullable = false)
+  private String htmlID;
 
-  public Long getId() {
-    return id;
+  @Column(nullable = false)
+  private String htmlTag = "attrid";
+
+  @Column(nullable = false)
+  private String type;
+
+  @Column(nullable = true)
+  private String name;
+
+  public CN(String htmlID, String type) {
+    this.htmlID = htmlID;
+    this.type = type;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public CN(String htmlTag, String htmlID, String type) {
+    this(htmlID, type);
+    this.htmlTag = htmlTag;
   }
 
-  public Boolean getChangeAdminAuditReq() {
-    return changeAdminAuditReq;
+//
+//  private String description;
+//  private String[] changeType;
+//  private boolean customerApproval;
+//  private boolean supplierApproval;
+//  private String philipsID;
+//  private Boolean changeAdminAuditReq;
+//  private String teamName;
+//  private String location;
+//  private String[] createdBy;
+//  private LocalDateTime createdOn;
+//  private String[] modifiedBy;
+//  private LocalDateTime modifiedOn;
+//  private Boolean regulatoryRestrictionReq;
+//
+//  public Long getId() {
+//    return id;
+//  }
+//
+//  public void setId(Long id) {
+//    this.id = id;
+//  }
+//
+//  public Boolean getChangeAdminAuditReq() {
+//    return changeAdminAuditReq;
+//  }
+//
+//  public Boolean getRegulatoryRestrictionReq() {
+//    return regulatoryRestrictionReq;
+//  }
+//
+//  public void setRegulatoryRestrictionReq(Boolean regulatoryRestrictionReq) {
+//    this.regulatoryRestrictionReq = regulatoryRestrictionReq;
+//  }
+//
+//  public void setChangeAdminAuditReq(Boolean changeAdminAuditReq) {
+//    this.changeAdminAuditReq = changeAdminAuditReq;
+//  }
+//
+//  public String getTeamName() {
+//    return teamName;
+//  }
+//
+//  public void setTeamName(String teamName) {
+//    this.teamName = teamName;
+//  }
+//
+//  public String getLocation() {
+//    return location;
+//  }
+//
+//  public void setLocation(String location) {
+//    this.location = location;
+//  }
+//
+//  public String[] getCreatedBy() {
+//    return createdBy;
+//  }
+//
+//  public void setCreatedBy(String[] createdBy) {
+//    this.createdBy = createdBy;
+//  }
+//
+//  public LocalDateTime getCreatedOn() {
+//    return createdOn;
+//  }
+//
+//  public void setCreatedOn(LocalDateTime createdOn) {
+//    this.createdOn = createdOn;
+//  }
+//
+//  public String[] getModifiedBy() {
+//    return modifiedBy;
+//  }
+//
+//  public void setModifiedBy(String[] modifiedBy) {
+//    this.modifiedBy = modifiedBy;
+//  }
+//
+//  public LocalDateTime getModifiedOn() {
+//    return modifiedOn;
+//  }
+//
+//  public void setModifiedOn(LocalDateTime modifiedOn) {
+//    this.modifiedOn = modifiedOn;
+//  }
+//
+//  public CN() {}
+//
+//  public String getPhilipsID() {
+//    return philipsID;
+//  }
+//
+//  public void setPhilipsID(String philipsID) {
+//    this.philipsID = philipsID;
+//  }
+//
+//  public String getDescription() {
+//    return description;
+//  }
+//
+//  public void setDescription(String description) {
+//    this.description = description;
+//  }
+//
+//  public String[] getChangeType() {
+//    return changeType;
+//  }
+//
+//  public void setChangeType(String[] changeType) {
+//    this.changeType = changeType;
+//  }
+//
+//  public boolean isCustomerApproval() {
+//    return customerApproval;
+//  }
+//
+//  public void setCustomerApproval(boolean customerApproval) {
+//    this.customerApproval = customerApproval;
+//  }
+//
+//  public boolean isSupplierApproval() {
+//    return supplierApproval;
+//  }
+//
+//  public void setSupplierApproval(boolean supplierApproval) {
+//    this.supplierApproval = supplierApproval;
+//  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    CN cn = (CN) o;
+    return id != null && Objects.equals(id, cn.id);
   }
 
-  public Boolean getRegulatoryRestrictionReq() {
-    return regulatoryRestrictionReq;
-  }
-
-  public void setRegulatoryRestrictionReq(Boolean regulatoryRestrictionReq) {
-    this.regulatoryRestrictionReq = regulatoryRestrictionReq;
-  }
-
-  public void setChangeAdminAuditReq(Boolean changeAdminAuditReq) {
-    this.changeAdminAuditReq = changeAdminAuditReq;
-  }
-
-  public String getTeamName() {
-    return teamName;
-  }
-
-  public void setTeamName(String teamName) {
-    this.teamName = teamName;
-  }
-
-  public String getLocation() {
-    return location;
-  }
-
-  public void setLocation(String location) {
-    this.location = location;
-  }
-
-  public String[] getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(String[] createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public LocalDateTime getCreatedOn() {
-    return createdOn;
-  }
-
-  public void setCreatedOn(LocalDateTime createdOn) {
-    this.createdOn = createdOn;
-  }
-
-  public String[] getModifiedBy() {
-    return modifiedBy;
-  }
-
-  public void setModifiedBy(String[] modifiedBy) {
-    this.modifiedBy = modifiedBy;
-  }
-
-  public LocalDateTime getModifiedOn() {
-    return modifiedOn;
-  }
-
-  public void setModifiedOn(LocalDateTime modifiedOn) {
-    this.modifiedOn = modifiedOn;
-  }
-
-  public CN() {}
-
-  public String getPhilipsID() {
-    return philipsID;
-  }
-
-  public void setPhilipsID(String philipsID) {
-    this.philipsID = philipsID;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String[] getChangeType() {
-    return changeType;
-  }
-
-  public void setChangeType(String[] changeType) {
-    this.changeType = changeType;
-  }
-
-  public boolean isCustomerApproval() {
-    return customerApproval;
-  }
-
-  public void setCustomerApproval(boolean customerApproval) {
-    this.customerApproval = customerApproval;
-  }
-
-  public boolean isSupplierApproval() {
-    return supplierApproval;
-  }
-
-  public void setSupplierApproval(boolean supplierApproval) {
-    this.supplierApproval = supplierApproval;
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }
