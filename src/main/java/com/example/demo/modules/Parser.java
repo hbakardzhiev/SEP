@@ -1,12 +1,12 @@
 package com.example.demo.modules;
 
+import com.example.demo.Util;
 import com.example.demo.repository.CNRepository;
 import com.example.demo.repository.ParserRepository;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.File;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,8 +20,10 @@ public class Parser implements ParserRepository {
 
 
   public Parser(String startUrl) throws IOException {
-    final var input = new File(getClass().getClassLoader().getResource(startUrl).getFile());
-    document = Jsoup.parse(input, "UTF-8");
+    var inputStream = this.getClass()
+        .getClassLoader()
+        .getResourceAsStream(startUrl);
+    document = Jsoup.parse(Util.readFromInputStream(inputStream));
   }
 
   private String parseElementByTag(String tag, String id) {
@@ -39,4 +41,11 @@ public class Parser implements ParserRepository {
     return jsonObject;
   }
 
+  /**
+   * @Yasen would have to finish CR
+   */
+  public String parseCR() {
+    var result = this.document.select("a:matchesOwn(CR[0-9])").text();
+    return result;
+  }
 }

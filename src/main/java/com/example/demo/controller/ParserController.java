@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.modules.CN;
 import com.example.demo.services.ParserService;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +17,13 @@ public class ParserController {
     this.parserService = demoService;
   }
 
-  @GetMapping
-  public String parse() {
-    return parserService.parse();
+  @GetMapping("elements")
+  public String parseElements() {
+    return parserService.parseElements();
+  }
+
+  @GetMapping("cr")
+  public String parseCR() {
+    return parserService.parseCR();
   }
 }

@@ -15,7 +15,7 @@ public class CNConfiguration {
 
   @Bean
   public ParserRepository parserRepositoryConf() throws IOException {
-    return new Parser("example.html");
+    return new Parser("Change Notice - Example.html");
   }
 
   @Bean
