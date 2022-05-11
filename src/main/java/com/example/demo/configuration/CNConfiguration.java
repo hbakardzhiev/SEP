@@ -25,6 +25,7 @@ public class CNConfiguration {
       list.add(new CN("id", "infoPageIdentityDisplayType", String.class.getTypeName()));
       list.add(new CN("description", String.class.getTypeName()));
       list.add(new CN("phiChangeType", ArrayList.class.getTypeName()));
+      list.add(new CN("name", String.class.getTypeName()));
       list.add(new CN("proposedSolution", String.class.getTypeName()));
       list.add(new CN("customerApprovalRequired", Boolean.class.getTypeName()));
       list.add(new CN("supplierApprovalRequired", Boolean.class.getTypeName()));
