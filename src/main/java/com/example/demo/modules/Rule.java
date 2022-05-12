@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Check {
+public class Rule {
 
   @Id
   @Column(name = "id", nullable = false)
