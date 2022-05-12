@@ -2,13 +2,8 @@ package com.example.demo.modules;
 
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +16,7 @@ import org.hibernate.Hibernate;
 @Setter
 @ToString
 @NoArgsConstructor
+@Table
 @AllArgsConstructor
 public class SheetSource {
 
