@@ -9,7 +9,6 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 public class Parser implements ParserRepository {
 
@@ -20,9 +19,7 @@ public class Parser implements ParserRepository {
   @Autowired private SheetSourceRepository sheetSourceRepository;
 
   public Parser(String startUrl, SheetType type) throws IOException {
-    var inputStream = this.getClass()
-        .getClassLoader()
-        .getResourceAsStream(startUrl);
+    var inputStream = this.getClass().getClassLoader().getResourceAsStream(startUrl);
     document = Jsoup.parse(Util.readFromInputStream(inputStream));
     sheetTypeEnum = type;
   }
@@ -33,13 +30,14 @@ public class Parser implements ParserRepository {
 
   public JSONObject parseElements() {
     var jsonObject = new JSONObject();
-    sheetSourceRepository.findAll().stream().parallel().filter(element ->
-        element.getSheetSourceType().contains(this.sheetTypeEnum)
-    ).forEach(element -> {
-          var result = parseElementByTag(element.getHtmlTag(), element.getHtmlID());
-          jsonObject.put(element.getHtmlID(), result);
-        }
-    );
+    sheetSourceRepository.findAll().stream()
+        .parallel()
+        .filter(element -> element.getSheetSourceType().contains(this.sheetTypeEnum))
+        .forEach(
+            element -> {
+              var result = parseElementByTag(element.getHtmlTag(), element.getHtmlID());
+              jsonObject.put(element.getHtmlID(), result);
+            });
     return jsonObject;
   }
 
