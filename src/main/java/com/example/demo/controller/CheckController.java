@@ -5,6 +5,7 @@ import com.example.demo.services.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,7 @@ public class CheckController {
 
     @PostMapping
     public Check addCheck(@RequestBody Check theCheck) {
+        //check name is unique
         checkService.save(theCheck);
         return theCheck;
     }
@@ -44,8 +46,17 @@ public class CheckController {
         return theCheck;
     }
 
+    //Update the check name or docSource
+    @PutMapping("/{name}")
+    public void updateCheck(
+            @PathVariable("name") String name,
+            @RequestParam(required = false) String docSource,
+            @RequestParam(required = false) String attribute){
+        checkService.updateCheckProperties(name, docSource, attribute);
+    }
+
     @DeleteMapping("/{name}")
-    public String deleteEmployee(@PathVariable String name) {
+    public String deleteCheck(@PathVariable String name) {
         Check theCheck = checkService.findByName(name);
 
         if (theCheck == null) {
