@@ -15,18 +15,43 @@ public class Check {
     @Column(name = "document_source")
     private String docSource;
 
+    @Column(name = "attribute")
     private String attribute;
-//    TODO: think for first level check and type of second-level check
-//    idea: maybe for now we can hard code the types of the second level check
+
+    @Column(name = "action")
+    private ActionTypes action;
+
+    @Column(name = "value")
+    private String value;
+
+    public ActionTypes getCheckAction() {
+        return action;
+    }
+
+    public void setCheckAction(ActionTypes action) {
+        this.action = action;
+    }
+
+    public String getCheckValue() {
+        return value;
+    }
+
+    public void setCheckValue(String value) {
+        this.value = value;
+    }
+
 
 
     public Check() {
     }
 
-    public Check(String name, String docSource, String attribute) {
+    public Check(String name, String docSource, String attribute,
+                                ActionTypes action, String value) {
         this.name = name;
         this.docSource = docSource;
         this.attribute = attribute;
+        this.action = action;
+        this.value = value;
     }
 
     public String getCheckName() {
