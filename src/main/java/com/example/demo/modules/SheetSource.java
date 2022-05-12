@@ -1,8 +1,11 @@
 package com.example.demo.modules;
 
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +22,7 @@ import org.hibernate.Hibernate;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CN {
+public class SheetSource {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,13 +41,19 @@ public class CN {
   @Column(nullable = true)
   private String name;
 
-  public CN(String htmlID, String type) {
+  @Column(nullable = false)
+  @Enumerated
+  @ElementCollection(targetClass=SheetType.class)
+  private List<Enum<SheetType>> sheetSourceType;
+
+  public SheetSource(String htmlID, String type, List<Enum<SheetType>> sheetSourceType) {
     this.htmlID = htmlID;
     this.type = type;
+    this.sheetSourceType = sheetSourceType;
   }
 
-  public CN(String htmlTag, String htmlID, String type) {
-    this(htmlID, type);
+  public SheetSource(String htmlTag, String htmlID, String type, List<Enum<SheetType>> sheetSourceType) {
+    this(htmlID, type, sheetSourceType);
     this.htmlTag = htmlTag;
   }
 
@@ -185,7 +194,7 @@ public class CN {
     if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
       return false;
     }
-    CN cn = (CN) o;
+    SheetSource cn = (SheetSource) o;
     return id != null && Objects.equals(id, cn.id);
   }
 

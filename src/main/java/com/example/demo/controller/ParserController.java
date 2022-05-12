@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.modules.SheetType;
 import com.example.demo.services.ParserService;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,7 @@ public class ParserController {
   }
 
   @GetMapping("cr")
-  public String parseCR() {
-    return parserService.parseCR();
+  public String parseCR() throws IOException {
+    return parserService.parseCR(SheetType.CR);
   }
 }
