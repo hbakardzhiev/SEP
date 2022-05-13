@@ -18,9 +18,6 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.14.3'
     // https://mvnrepository.com/artifact/org.json/json
     implementation 'org.json:json:20220320'
-    // https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core
-    implementation 'org.jgrapht:jgrapht-core:1.5.1'
-
 
 
     runtimeOnly 'org.postgresql:postgresql'
