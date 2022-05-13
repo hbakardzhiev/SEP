@@ -20,7 +20,7 @@ public class ParserController {
   }
 
   @GetMapping("elements")
-  public String parseElements() {
+  public String parseElements() throws IOException {
     return parserService.parseElements();
   }
 
@@ -28,4 +28,5 @@ public class ParserController {
   public String parseCR() throws IOException {
     return parserService.parseCR(SheetType.CR);
   }
+  
 }

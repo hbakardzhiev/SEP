@@ -11,7 +11,7 @@ public class ParserService {
 
   @Autowired private ParserRepository repository;
 
-  public String parseElements() {
+  public String parseElements() throws IOException {
     return repository.parseElements().toString();
   }
 

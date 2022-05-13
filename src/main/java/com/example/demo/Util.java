@@ -16,4 +16,6 @@ public class Util {
     }
     return resultStringBuilder.toString();
   }
+
+  public static String startUrl = "Change Notice - Example.html";
 }

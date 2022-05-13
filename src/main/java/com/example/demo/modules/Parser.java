@@ -1,7 +1,6 @@
 package com.example.demo.modules;
 
 import com.example.demo.Util;
-import com.example.demo.repository.SheetSourceRepository;
 import com.example.demo.repository.ParserRepository;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -16,7 +15,8 @@ public class Parser implements ParserRepository {
 
   private SheetType sheetTypeEnum;
 
-  @Autowired private SheetSourceRepository sheetSourceRepository;
+  @Autowired
+  private ParserBase parserBase;
 
   public Parser(String startUrl, SheetType type) throws IOException {
     var inputStream = this.getClass().getClassLoader().getResourceAsStream(startUrl);
@@ -25,19 +25,21 @@ public class Parser implements ParserRepository {
   }
 
   private String parseElementByTag(String tag, String id) {
-    return this.document.select(String.format("[%s=%s]", tag, id)).text();
+    return this.parserBase.document.select(String.format("[%s=%s]", tag, id)).text();
   }
 
-  public JSONObject parseElements() {
+  public JSONObject parseElements() throws IOException {
     var jsonObject = new JSONObject();
-    sheetSourceRepository.findAll().stream()
-        .parallel()
-        .filter(element -> element.getSheetSourceType().contains(this.sheetTypeEnum))
-        .forEach(
-            element -> {
-              var result = parseElementByTag(element.getHtmlTag(), element.getHtmlID());
-              jsonObject.put(element.getHtmlID(), result);
-            });
+    var parser = new ParserCN(parserBase);
+    parser.parser.changeState(new ParserCR(parserBase));
+
+
+    parser.parser.parsePage().forEach(element -> {
+      System.out.println(parseElementByTag(element.getHtmlTag(), element.getHtmlID()));
+          var result = parseElementByTag(element.getHtmlTag(), element.getHtmlID());
+          jsonObject.put(element.getHtmlID(), result);
+        }
+    );
     return jsonObject;
   }
 

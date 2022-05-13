@@ -50,9 +50,6 @@ public class SheetSource {
   @ElementCollection(targetClass=SheetType.class)
   private List<Enum<SheetType>> sheetSourceType;
 
-  @ManyToMany
-  private List<Rule> rules;
-
   public SheetSource(String htmlID, String type, List<Enum<SheetType>> sheetSourceType) {
     this.htmlID = htmlID;
     this.type = type;

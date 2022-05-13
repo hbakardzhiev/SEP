@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 public interface ParserRepository {
 
-  public JSONObject parseElements();
+  public JSONObject parseElements() throws IOException;
 
   public JSONObject parseCR(SheetType type) throws IOException;
 }
