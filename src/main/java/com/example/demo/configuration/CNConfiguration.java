@@ -7,7 +7,6 @@ import com.example.demo.repository.SheetSourceRepository;
 import com.example.demo.repository.ParserRepository;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,10 +28,11 @@ public class CNConfiguration {
       final var list = new ArrayList<SheetSource>();
       final List<Enum<SheetType>> cn = List.of(SheetType.CN);
       final List<Enum<SheetType>> cr = List.of(SheetType.CR);
-      final List<Enum<SheetType>> cnAndCr = Stream.concat(cn.stream(), cr.stream()).parallel()
-          .collect(Collectors.toList());
-      list.add(new SheetSource("id", "infoPageIdentityDisplayType", String.class.getTypeName(),
-          cnAndCr));
+      final List<Enum<SheetType>> cnAndCr =
+          Stream.concat(cn.stream(), cr.stream()).parallel().collect(Collectors.toList());
+      list.add(
+          new SheetSource(
+              "id", "infoPageIdentityDisplayType", String.class.getTypeName(), cnAndCr));
       list.add(new SheetSource("name", String.class.getTypeName(), cnAndCr));
       list.add(new SheetSource("proposedSolution", String.class.getTypeName(), cn));
       list.add(new SheetSource("customerApprovalRequired", Boolean.class.getTypeName(), cnAndCr));
