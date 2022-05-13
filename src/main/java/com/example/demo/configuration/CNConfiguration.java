@@ -8,6 +8,7 @@ import com.example.demo.repository.ParserRepository;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,6 +21,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
+
 @Configuration
 public class CNConfiguration {
 
@@ -28,10 +31,12 @@ public class CNConfiguration {
     return new Parser("Change Notice - Example.html", SheetType.CN);
   }
 
+
   Graph<URI, DefaultEdge> g = new Multigraph<>(DefaultEdge.class);
 
+
   private void addMultipleEdges(Graph g, String attribute) {
-    for (SheetType s : SheetType.values()) {
+    for (SheetType s: SheetType.values()) {
       g.addEdge(s, attribute);
     }
   }
@@ -64,7 +69,6 @@ public class CNConfiguration {
     g.addEdge(SheetType.CN, "supplierApprovalRequired");
     g.addEdge(SheetType.CR, "supplierApprovalRequired");
   }
-
   @Bean
   CommandLineRunner cnPersist(SheetSourceRepository sheetSourceRepository) {
     populateGraph(g);
@@ -72,35 +76,19 @@ public class CNConfiguration {
       final var list = new ArrayList<SheetSource>();
       final List<Enum<SheetType>> cn = List.of(SheetType.CN);
       final List<Enum<SheetType>> cr = List.of(SheetType.CR);
-      final List<Enum<SheetType>> cnAndCr =
-          Stream.concat(cn.stream(), cr.stream()).parallel().collect(Collectors.toList());
-      list.add(
-          new SheetSource(
-              "id",
-              "infoPageIdentityDisplayType",
-              String.class.getTypeName(),
-              converter(g, "name")));
+      final List<Enum<SheetType>> cnAndCr = Stream.concat(cn.stream(), cr.stream()).parallel()
+          .collect(Collectors.toList());
+      list.add(new SheetSource("id", "infoPageIdentityDisplayType", String.class.getTypeName(),
+              converter(g ,"name")));
 
-      list.add(new SheetSource("name", String.class.getTypeName(), converter(g, "name")));
-      list.add(
-          new SheetSource(
-              "proposedSolution", String.class.getTypeName(), converter(g, "proposedSolution")));
-      list.add(
-          new SheetSource(
-              "customerApprovalRequired",
-              Boolean.class.getTypeName(),
-              converter(g, "customerApprovalRequired")));
-      list.add(
-          new SheetSource(
-              "supplierApprovalRequired",
-              Boolean.class.getTypeName(),
-              converter(g, "supplierApprovalRequired")));
-      list.add(
-          new SheetSource(
-              "theRequestPriority",
-              String.class.getTypeName(),
-              converter(g, "theRequestPriority")));
+
+      list.add(new SheetSource("name", String.class.getTypeName(), converter(g ,"name")));
+      list.add(new SheetSource("proposedSolution", String.class.getTypeName(), converter(g ,"proposedSolution")));
+      list.add(new SheetSource("customerApprovalRequired", Boolean.class.getTypeName(), converter(g ,"customerApprovalRequired")));
+      list.add(new SheetSource("supplierApprovalRequired", Boolean.class.getTypeName(), converter(g ,"supplierApprovalRequired")));
+      list.add(new SheetSource("theRequestPriority", String.class.getTypeName(), converter(g ,"theRequestPriority")));
       sheetSourceRepository.saveAll(list);
     };
   }
+
 }
