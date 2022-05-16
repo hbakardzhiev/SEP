@@ -23,19 +23,13 @@ public class Parser implements ParserRepository {
     document = Jsoup.parse(Util.readFromInputStream(inputStream));
     sheetTypeEnum = type;
   }
-
   private String parseElementByTag(String tag, String id) {
     return this.parserBase.document.select(String.format("[%s=%s]", tag, id)).text();
   }
 
-  public JSONObject parseElements() throws IOException {
+  private JSONObject extracted(State parser) throws IOException {
     var jsonObject = new JSONObject();
-    var parser = new ParserCN(parserBase);
-    parser.parser.changeState(new ParserCR(parserBase));
-
-
-    parser.parser.parsePage().forEach(element -> {
-      System.out.println(parseElementByTag(element.getHtmlTag(), element.getHtmlID()));
+    parser.parsePage().forEach(element -> {
           var result = parseElementByTag(element.getHtmlTag(), element.getHtmlID());
           jsonObject.put(element.getHtmlID(), result);
         }
@@ -43,9 +37,30 @@ public class Parser implements ParserRepository {
     return jsonObject;
   }
 
-  public JSONObject parseCR(SheetType type) throws IOException {
-    final String link = this.document.select("a:matchesOwn(CR[0-9])").attr("href");
-    final Parser parser = new Parser(link, type);
-    return parser.parseElements();
+  @Override
+  public JSONObject parseCN() throws IOException {
+    var parser = new ParserCN(parserBase);
+    parserBase.changeState(new ParserCN(parserBase));
+    parser.parser.changeState(new ParserCN(parserBase));
+    return extracted(parser);
   }
+
+  @Override
+  public JSONObject parseCR() throws IOException {
+    var parser = new ParserCR(parserBase);
+    parserBase.changeState(new ParserCR(parserBase));
+    parser.parser.changeState(new ParserCR(parserBase));
+    return extracted(parser);
+  }
+
+  @Override
+  public JSONObject parseCT() throws IOException {
+    parserBase.changeState(new ParserCT(parserBase));
+    var parser = new ParserCT(parserBase);
+//    parserBase.changeState(new ParserCT(parserBase));
+    parser.parser.changeState(new ParserCT(parserBase));
+    return extracted(parser);
+  }
+
+
 }

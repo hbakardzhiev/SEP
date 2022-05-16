@@ -4,6 +4,7 @@ import com.example.demo.Util;
 import com.example.demo.repository.SheetSourceRepository;
 import java.io.IOException;
 import java.util.stream.Stream;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,11 @@ public class ParserBase implements IParserBase {
 
   public Stream<SheetSource> parsePage() throws IOException {
     return state.parsePage();
+  }
+
+  public String parseNextPage(SheetType type, String pattern) throws IOException {
+    final String link = this.document.select(String.format("a:matchesOwn(%s)", pattern)).attr("href");
+    return link;
   }
 
 }

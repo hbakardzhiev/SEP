@@ -11,11 +11,15 @@ public class ParserService {
 
   @Autowired private ParserRepository repository;
 
-  public String parseElements() throws IOException {
-    return repository.parseElements().toString();
+  public String parseCN() throws IOException {
+    return repository.parseCN().toString();
   }
 
-  public String parseCR(SheetType sheetTypeEnum) throws IOException {
-    return repository.parseCR(sheetTypeEnum).toString();
+  public String parseCR() throws IOException {
+    return repository.parseCR().toString();
+  }
+
+  public String parseCT() throws IOException {
+    return repository.parseCT().toString();
   }
 }

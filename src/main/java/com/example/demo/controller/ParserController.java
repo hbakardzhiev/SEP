@@ -19,14 +19,19 @@ public class ParserController {
     this.parserService = demoService;
   }
 
-  @GetMapping("elements")
-  public String parseElements() throws IOException {
-    return parserService.parseElements();
+  @GetMapping("cn")
+  public String parseCN() throws IOException {
+    return parserService.parseCN();
   }
 
   @GetMapping("cr")
   public String parseCR() throws IOException {
-    return parserService.parseCR(SheetType.CR);
+    return parserService.parseCR();
+  }
+
+  @GetMapping("ct")
+  public String parseCT() throws IOException {
+    return parserService.parseCT();
   }
   
 }

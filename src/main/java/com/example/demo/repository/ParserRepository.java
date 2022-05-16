@@ -5,8 +5,7 @@ import java.io.IOException;
 import org.json.JSONObject;
 
 public interface ParserRepository {
-
-  public JSONObject parseElements() throws IOException;
-
-  public JSONObject parseCR(SheetType type) throws IOException;
+  JSONObject parseCN() throws IOException;
+  JSONObject parseCR() throws IOException;
+  JSONObject parseCT() throws IOException;
 }

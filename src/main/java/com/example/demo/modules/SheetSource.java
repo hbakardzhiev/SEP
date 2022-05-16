@@ -1,15 +1,20 @@
 package com.example.demo.modules;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,19 +50,23 @@ public class SheetSource {
   private String name;
 
 
-  @Column(nullable = false)
+  @Column(nullable = true)
+//  @ElementCollection(targetClass = SheetType.class)
+//  @CollectionTable(name = "sheet_type")
   @Enumerated
-  @ElementCollection(targetClass=SheetType.class)
-  private List<Enum<SheetType>> sheetSourceType;
+//  @CollectionTable
+  private SheetType sheetSourceType;
 
-  public SheetSource(String htmlID, String type, List<Enum<SheetType>> sheetSourceType) {
+  public SheetSource(String htmlID, String type,
+      SheetType sheetSourceType
+  ) {
     this.htmlID = htmlID;
     this.type = type;
     this.sheetSourceType = sheetSourceType;
   }
 
   public SheetSource(String htmlTag, String htmlID, String type,
-      List<Enum<SheetType>> sheetSourceType) {
+      SheetType sheetSourceType) {
     this(htmlID, type, sheetSourceType);
     this.htmlTag = htmlTag;
   }
