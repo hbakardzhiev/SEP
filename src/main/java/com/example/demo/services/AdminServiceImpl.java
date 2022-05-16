@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,13 @@ public class AdminServiceImpl implements AdminService {
    public Admin addAdmin(Admin admin) {
       adminRepoistory.save(admin);
       return admin;
+   }
+
+   @Override
+   public void deleteAdmin(Long id) {
+
+      adminRepoistory.deleteById(id);
+
    }
 
    @Override

@@ -32,10 +32,11 @@ public class AdminController {
             return ResponseEntity.ok().body("asd");
         }
 
-//        @DeleteMapping("/admins/{id}")
-//        public ResponseEntity<HttpStatus> deleteAdminById (@PathVariable long id) {
-//
-//        }
+        @DeleteMapping("admins")
+        public ResponseEntity<String> deleteAdminById (@RequestBody long id) {
+            adminService.deleteAdmin(id);
+            return  ResponseEntity.ok().body("deleted");
+        }
 //
         @PostMapping("admins")
         public ResponseEntity<Admin> addAdmin (@RequestBody Admin admin) {

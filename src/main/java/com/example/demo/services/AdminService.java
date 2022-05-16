@@ -8,4 +8,6 @@ public interface AdminService {
     Admin addAdmin (Admin admin);
 
     List<Admin> getAdmins();
+
+    void deleteAdmin(Long id);
 }
