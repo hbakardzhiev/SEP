@@ -3,7 +3,7 @@ package com.example.demo.modules;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "check2")
+@Table(name = "rule")
 public class Check2 {
 
     @Id

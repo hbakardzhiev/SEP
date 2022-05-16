@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.modules.Check;
 import com.example.demo.modules.Check2;
 import com.example.demo.services.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;

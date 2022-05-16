@@ -1,5 +1,6 @@
 package com.example.demo.configuration;
 
+import com.example.demo.modules.ActionTypes;
 import com.example.demo.modules.ActionValueType;
 import com.example.demo.modules.Check2;
 import com.example.demo.repository.ActionValueTypeRepository;
@@ -8,19 +9,64 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class ActionValueTypeConfig {
 
     @Bean
-    CommandLineRunner commandLineAction(ActionValueTypeRepository repository) {
-        ActionValueType action1 = new ActionValueType("action1", "String");
-        //Check2 check1 = new Check2("check1", "CN", "name", "abc");
-        //action1.add(check1);
-
+    CommandLineRunner commandLineRunnerActionTypes(
+            ActionValueTypeRepository repository) {
         return args -> {
-            var list = Arrays.asList(action1);
-            repository.saveAll(list);
+            List<ActionValueType> actions = Arrays.asList(
+                    new ActionValueType(
+                            "Empty",
+                            null),
+                    new ActionValueType(
+                           "NotEmpty",
+                            null),
+                    new ActionValueType(
+                            "Contains",
+                            "String")
+//                    new ActionValueType(
+//                            ActionTypes.NotContains,
+//                            "String"),
+//                    new ActionValueType(
+//                            ActionTypes.StrictlyGreater,
+//                            "Integer"),
+//                    new ActionValueType(
+//                            ActionTypes.StrictlySmaller,
+//                            "Integer"),
+//                    new ActionValueType(
+//                            ActionTypes.GreaterEqual,
+//                            "Integer"),
+//                    new ActionValueType(
+//                            ActionTypes.SmallerEqual,
+//                            "Integer"),
+//                    new ActionValueType(
+//                            ActionTypes.LengthStrictlyGreater,
+//                            "String"),
+//                    new ActionValueType(
+//                            ActionTypes.LengthStrictlySmaller,
+//                            "Integer"),
+//                    new ActionValueType(
+//                            ActionTypes.LengthGreaterEqual,
+//                            "Integer"),
+//                    new ActionValueType(
+//                            ActionTypes.LengthSmallerEqual,
+//                            "Integer"),
+//                    new ActionValueType(
+//                            ActionTypes.DifferentAttrValue,
+//                            "Integer"),
+//                    new ActionValueType(
+//                            ActionTypes.SameAttrValue,
+//                            "String"),
+//                    new ActionValueType(
+//                            ActionTypes.HumanCheck,
+//                            null)
+            );
+
+            repository.saveAll(actions);
         };
     }
 }
