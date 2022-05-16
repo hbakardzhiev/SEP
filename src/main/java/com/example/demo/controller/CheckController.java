@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.modules.Check;
+import com.example.demo.modules.Check2;
 import com.example.demo.services.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -14,50 +16,43 @@ public class CheckController {
 
     private CheckService checkService;
 
-    @Autowired
     public CheckController(CheckService checkService) {
         this.checkService = checkService;
     }
 
     @GetMapping
-    public List<Check> printAllCheck(){
-        return checkService.getChecks();
+    public List<Check2> printAllCheck(){
+        return checkService.findAll();
     }
 
     @GetMapping("/{name}")
-    public Check getCheck(@PathVariable String name) {
-        Check theCheck = checkService.findByName(name);
+    public Check2 getCheck(@PathVariable String name) {
+
+        Check2 theCheck = checkService.findByName(name);
+
         if (theCheck == null) {
             throw new RuntimeException("Check not found " + name);
         }
+
         return theCheck;
     }
 
     @PostMapping
-    public Check addCheck(@RequestBody Check theCheck) {
+    public Check2 addCheck(@RequestBody Check2 theCheck) {
         //check name is unique
         checkService.save(theCheck);
         return theCheck;
     }
 
     @PutMapping
-    public Check updateCheck(@RequestBody Check theCheck) {
+    public Check2 updateCheck(@RequestBody Check2 theCheck) {
         checkService.save(theCheck);
         return theCheck;
     }
 
-    //Update the check name or docSource
-    @PutMapping("/{name}")
-    public void updateCheck(
-            @PathVariable("name") String name,
-            @RequestParam(required = false) String docSource,
-            @RequestParam(required = false) String attribute){
-        checkService.updateCheckProperties(name, docSource, attribute);
-    }
-
     @DeleteMapping("/{name}")
     public String deleteCheck(@PathVariable String name) {
-        Check theCheck = checkService.findByName(name);
+        Check2 theCheck = checkService.findByName(name);
 
         if (theCheck == null) {
             throw new RuntimeException("Check not found " + name);

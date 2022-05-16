@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.modules.Check;
+import com.example.demo.modules.Check2;
 import com.example.demo.repository.CheckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,14 @@ public class CheckService {
         this.checkRepository = repository;
     }
 
-    public List<Check> getChecks(){
+    public List<Check2> findAll(){
         return checkRepository.findAll();
     }
 
-    public Check findByName(String name) {
-        Optional<Check> result = checkRepository.findById(name);
+    public Check2 findByName(String name) {
+        Optional<Check2> result = checkRepository.findById(name);
 
-        Check theCheck = null;
+        Check2 theCheck = null;
 
         if (result.isPresent()) {
             theCheck = result.get();
@@ -41,14 +42,17 @@ public class CheckService {
         return theCheck;
     }
 
-    public void save(Check theCheck) {
+    public void save(Check2 theCheck) {
         checkRepository.save(theCheck);
     }
 
-    @Transactional // with this annotation you don't have to save the check
-    public void updateCheckProperties(String name, String docSource, String attribute) {
+    // For update, we only need save
+    // since the info to be changed will be retrieved from front-end,
+    // and afterwards, we just save it, just like when adding a new check.
+   /*  public void updateCheckProperties(String name) {
         Check theCheck = checkRepository.getById(name);
-        if(docSource != null && docSource.length() > 0
+        checkRepository.save(theCheck);
+       if(docSource != null && docSource.length() > 0
                 && !Objects.equals(theCheck.getDocSource(),docSource)){
             theCheck.setDocSource(docSource);
         }
@@ -56,8 +60,7 @@ public class CheckService {
                 && !Objects.equals(theCheck.getCheckAttribute(),attribute)) {
             theCheck.setCheckAttribute(attribute);
         }
-//        checkRepository.save(theCheck);
-    }
+    }*/
 
     public void deleteByName(String name) {
         checkRepository.deleteById(name);

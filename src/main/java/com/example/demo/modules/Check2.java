@@ -3,8 +3,8 @@ package com.example.demo.modules;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "check")
-public class Check {
+@Table(name = "check2")
+public class Check2 {
 
     @Id
     @Column(name = "name")
@@ -16,23 +16,22 @@ public class Check {
     @Column(name = "attribute")
     private String attribute;
 
+    @Column(name = "value")
+    private String value;
+
     // Get a string value for action, if it does not exist from the defined actions,
     // do not allow the user to make the check.
     // This could be hardcoded on the frontend side.
 
     // To prevent cascading deletes, so that check deletion has no relation
     // with ActionValueType deletion.
-    /*@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "action")
-    private ActionValueType actionValueType;*/
+    private ActionValueType actionValueType;
 
-    @Column(name = "value")
-    private String value;
+    public Check2() {}
 
-    public Check() {
-    }
-
-    public Check(String name, String docSource, String attribute, String value) {
+    public Check2(String name, String docSource, String attribute, String value) {
         this.name = name;
         this.docSource = docSource;
         this.attribute = attribute;
@@ -71,21 +70,11 @@ public class Check {
         this.value = value;
     }
 
-    /*public ActionValueType getActionValueType() {
+    public ActionValueType getActionValueType() {
         return actionValueType;
     }
 
     public void setActionValueType(ActionValueType actionValueType) {
         this.actionValueType = actionValueType;
-    }*/
-
-    @Override
-    public String toString() {
-        return "Check{" +
-                "name='" + name + '\'' +
-                ", docSource='" + docSource + '\'' +
-                ", attribute='" + attribute + '\'' +
-                ", value='" + value + '\'' +
-                '}';
     }
 }
