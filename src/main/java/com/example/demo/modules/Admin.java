@@ -9,6 +9,10 @@ public class Admin {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    public Admin() {
+
+    }
+
     public String getUsername() {
         return username;
     }
@@ -19,6 +23,11 @@ public class Admin {
 
     public String getPassword() {
         return password;
+    }
+
+    public Admin(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public void setPassword(String password) {
