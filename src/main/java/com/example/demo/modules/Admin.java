@@ -1,16 +1,30 @@
 package com.example.demo.modules;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Admin {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    public Admin() {
+    @Column(name="username")
+    private String username;
 
+    @Column(name="password")
+    private String password;
+
+    public Admin(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public String getUsername() {
@@ -25,19 +39,9 @@ public class Admin {
         return password;
     }
 
-    public Admin(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
-
-    private String username;
-
-    private String password;
-
 
     public Long getId() {
         return id;

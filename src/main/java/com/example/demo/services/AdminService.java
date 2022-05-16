@@ -1,14 +1,11 @@
 package com.example.demo.services;
 
-import com.example.demo.repository.AdminRepoistory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.example.demo.modules.Admin;
 
-@Service
-public class AdminService {
+import java.util.List;
 
-    @Autowired
-    private AdminRepoistory adminRepoistory;
+public interface AdminService {
+    Admin addAdmin (Admin admin);
 
-
+    List<Admin> getAdmins();
 }
