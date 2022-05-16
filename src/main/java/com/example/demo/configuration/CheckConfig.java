@@ -8,17 +8,26 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class CheckConfig {
 
     @Bean
     CommandLineRunner commandLineCheck(CheckRepository repository) {
-        Check2 check1 = new Check2("check1", "CN", "name", "abc");
+//        Check2 check1 = new Check2("check1", "CN", "name", "abc");
 
         return args -> {
-            var list = Arrays.asList(check1);
-            repository.saveAll(list);
+            Check2 firstCheck = new Check2("Check 1",
+                    "CN",
+                    "name", null);
+
+            Check2 secondCheck = new Check2("Check 2",
+                    "CT",
+                    "description",
+                    "NotContains");
+            repository.saveAll(
+                    List.of(firstCheck, secondCheck));
         };
     }
 
