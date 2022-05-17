@@ -61,13 +61,6 @@ public class CheckController {
         return theCheck;
     }
 
-    /*@PostMapping
-    public Check2 addCheck(@RequestBody Check2 theCheck) {
-        //check name is unique
-        checkService.save(theCheck);
-        return theCheck;
-    }*/
-
     @PutMapping
     public Check2 updateCheck(@RequestBody Check2 theCheck) {
         checkService.save(theCheck);
