@@ -19,6 +19,9 @@ public class Check2 {
     @Column(name = "value")
     private String value;
 
+    @Column(name = "comments")
+    private String comments;
+
     // Get a string value for action, if it does not exist from the defined actions,
     // do not allow the user to make the check.
     // This could be hardcoded on the frontend side.
@@ -68,6 +71,14 @@ public class Check2 {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public ActionValueType getActionValueType() {
