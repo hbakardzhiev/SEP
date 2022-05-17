@@ -1,7 +1,6 @@
 package com.example.demo.services;
 
 import com.example.demo.modules.ActionValueType;
-import com.example.demo.modules.Check2;
 import com.example.demo.repository.ActionValueTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -4,6 +4,7 @@ import com.example.demo.modules.ActionTypes;
 import com.example.demo.modules.ActionValueType;
 import com.example.demo.modules.Check2;
 import com.example.demo.repository.ActionValueTypeRepository;
+import com.example.demo.services.ActionValueTypeService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

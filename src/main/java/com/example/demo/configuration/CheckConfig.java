@@ -15,7 +15,7 @@ import java.util.Optional;
 @Configuration
 public class CheckConfig {
 
-    @Bean
+    /*@Bean
     CommandLineRunner commandLineCheck(CheckRepository repository, ActionValueTypeRepository repository2) {
 //        Check2 check1 = new Check2("check1", "CN", "name", "abc");
 
@@ -46,6 +46,6 @@ public class CheckConfig {
             repository.saveAll(
                     List.of(firstCheck, secondCheck, thirdCheck));
         };
-    }
+    }*/
 
 }

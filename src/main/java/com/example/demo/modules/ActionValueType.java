@@ -1,5 +1,7 @@
 package com.example.demo.modules;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ public class ActionValueType {
     private String description;
 
     @OneToMany(mappedBy = "actionValueType")
+    @JsonManagedReference
     private List<Check2> checks;
 
     public ActionValueType() {}

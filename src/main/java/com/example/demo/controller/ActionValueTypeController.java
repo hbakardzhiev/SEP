@@ -23,8 +23,8 @@ public class ActionValueTypeController {
         return actionValueTypeService.findAll();
     }
 
-    @GetMapping
+    /*@GetMapping
     public ActionValueType getByAction(String action){
         return actionValueTypeService.findByName(action);
-    }
+    }*/
 }

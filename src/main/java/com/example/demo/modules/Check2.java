@@ -1,5 +1,7 @@
 package com.example.demo.modules;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -30,6 +32,7 @@ public class Check2 {
     // with ActionValueType deletion.
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "action")
+    @JsonBackReference
     private ActionValueType actionValueType;
 
     public Check2() {}
