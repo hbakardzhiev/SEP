@@ -20,6 +20,7 @@ dependencies {
     implementation 'org.json:json:20220320'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security:spring-security-test'
+    implementation group: 'com.auth0', name: 'java-jwt', version: '3.19.2'
 
 
     runtimeOnly 'org.postgresql:postgresql'

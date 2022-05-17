@@ -22,9 +22,13 @@ public class Admin {
     @Column(name="password")
     private String password;
 
+    @Column(name="role")
+    private String adminRole;
+
     public Admin(String username, String password) {
         this.username = username;
         this.password = password;
+        adminRole = "ADMIN";
     }
 
     public String getUsername() {
@@ -49,5 +53,9 @@ public class Admin {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAdminRole() {
+        return adminRole;
     }
 }
