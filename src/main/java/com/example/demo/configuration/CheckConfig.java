@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Configuration
 public class CheckConfig {
@@ -23,22 +24,25 @@ public class CheckConfig {
                     "CN",
                     "name", null);
 
-            ActionValueType actionType = new ActionValueType("NotEmpty", null);
+            ActionValueType actionType = new ActionValueType("NotEmpty", null, "pls1");
             actionType.add(firstCheck);
             Check2 secondCheck = new Check2("Check 2",
                     "CT",
                     "description",
                     "banana");
-            ActionValueType actionType2 = new ActionValueType("Contains", "String");
+            ActionValueType actionType2 = new ActionValueType("Contains", "String", "pls2");
             actionType2.add(secondCheck);
-
-            Check2 thirdCheck = new Check2("Check 3",
-                    "CT",
-                    "description",
+//            repository2.saveAll(List.of(actionType, actionType2));
+            Check2 thirdCheck = new Check2("Check3",
+                    "CT", "description",
                     "pineapple");
-            ActionValueType actionType3 = new ActionValueType("Contains", "String");
-            actionType3.add(thirdCheck);
-
+//            Optional<ActionValueType> actionType3 = repository2.findById("Contains");
+            // assume not null
+//            if(actionType3.isPresent()) {
+//                ActionValueType actionType31 = actionType3.get();
+//                actionType31.add(thirdCheck);
+//            }
+            ActionValueType actionType3 = new ActionValueType("Contains", "String", "pls3");
             repository.saveAll(
                     List.of(firstCheck, secondCheck, thirdCheck));
         };

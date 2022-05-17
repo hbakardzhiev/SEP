@@ -15,14 +15,26 @@ public class ActionValueType {
     @Column(name = "valueType")
     private String valueType;
 
+    @Column(name = "description")
+    private String description;
+
     @OneToMany(mappedBy = "actionValueType")
     private List<Check2> checks;
 
     public ActionValueType() {}
 
-    public ActionValueType(String action, String valueType) {
+    public ActionValueType(String action, String valueType, String description) {
         this.action = action;
         this.valueType = valueType;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getAction() {

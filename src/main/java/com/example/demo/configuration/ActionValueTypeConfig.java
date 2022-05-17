@@ -21,13 +21,13 @@ public class ActionValueTypeConfig {
             List<ActionValueType> actions = Arrays.asList(
                     new ActionValueType(
                             "Empty",
-                            null),
+                            null, "This attribute value should be empty"),
                     new ActionValueType(
                            "NotEmpty",
-                            null),
+                            null, "Should not be empty, pls"),
                     new ActionValueType(
                             "Contains",
-                            "String")
+                            "String", "The specified value should be contained in the attribute value")
 //                    new ActionValueType(
 //                            ActionTypes.NotContains,
 //                            "String"),
