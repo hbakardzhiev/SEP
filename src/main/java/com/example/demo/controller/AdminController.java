@@ -40,7 +40,7 @@ public class AdminController {
 //
         @PostMapping("admins")
         public ResponseEntity<Admin> addAdmin (@RequestBody Admin admin) {
-            URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/admins").toUriString());
+            URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/admins").toUriString());
             return ResponseEntity.created(uri).body(adminService.addAdmin(admin));
         }
 }

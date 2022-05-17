@@ -28,7 +28,6 @@ public class Admin {
     public Admin(String username, String password) {
         this.username = username;
         this.password = password;
-        adminRole = "ADMIN";
     }
 
     public String getUsername() {

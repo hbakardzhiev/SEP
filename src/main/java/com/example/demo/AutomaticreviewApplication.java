@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.modules.Admin;
+import com.example.demo.services.AdminService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,4 +21,7 @@ public class AutomaticreviewApplication {
   PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
+
+
+
 }

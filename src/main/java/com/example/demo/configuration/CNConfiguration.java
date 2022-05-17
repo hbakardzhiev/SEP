@@ -1,5 +1,6 @@
 package com.example.demo.configuration;
 
+import com.example.demo.modules.Admin;
 import com.example.demo.modules.SheetSource;
 import com.example.demo.modules.Parser;
 import com.example.demo.modules.SheetType;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import com.example.demo.services.AdminService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +26,7 @@ public class CNConfiguration {
   }
 
   @Bean
-  CommandLineRunner cnPersist(SheetSourceRepository sheetSourceRepository) {
+  CommandLineRunner cnPersist(SheetSourceRepository sheetSourceRepository, AdminService adminService) {
     return args -> {
       final var list = new ArrayList<SheetSource>();
       final List<Enum<SheetType>> cn = List.of(SheetType.CN);
@@ -39,6 +42,7 @@ public class CNConfiguration {
       list.add(new SheetSource("supplierApprovalRequired", Boolean.class.getTypeName(), cnAndCr));
       list.add(new SheetSource("theRequestPriority", String.class.getTypeName(), cr));
       sheetSourceRepository.saveAll(list);
+      adminService.addAdmin(new Admin("p", "123"));
     };
   }
 }
