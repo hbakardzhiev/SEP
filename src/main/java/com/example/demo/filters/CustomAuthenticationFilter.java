@@ -49,9 +49,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withClaim("roles", "ADMIN")
                 .sign(algorithm);
 
-//        logger.info("access token is " + access_token);
-//        System.out.println(access_token);
-//        response.addHeader();
         Map<String, String> tokens = new HashMap<>();
         tokens.put("access_token", access_token);
         response.setContentType(APPLICATION_JSON_VALUE);
