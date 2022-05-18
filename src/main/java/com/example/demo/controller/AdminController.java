@@ -32,12 +32,12 @@ public class AdminController {
             return ResponseEntity.ok().body("asd");
         }
 
-        @DeleteMapping("admins")
-        public ResponseEntity<String> deleteAdminById (@RequestBody long id) {
+        @DeleteMapping("admins/{id}")
+        public ResponseEntity<String> deleteAdminById (@PathVariable(name = "id") long id) {
             adminService.deleteAdmin(id);
             return  ResponseEntity.ok().body("deleted");
         }
-//
+
         @PostMapping("admins")
         public ResponseEntity<Admin> addAdmin (@RequestBody Admin admin) {
             URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/admins").toUriString());
