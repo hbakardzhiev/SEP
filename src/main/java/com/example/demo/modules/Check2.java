@@ -37,11 +37,12 @@ public class Check2 {
 
     public Check2() {}
 
-    public Check2(String name, String docSource, String attribute, String value) {
+    public Check2(String name, String docSource, String attribute, String value, String comments) {
         this.name = name;
         this.docSource = docSource;
         this.attribute = attribute;
         this.value = value;
+        this.comments = comments;
     }
 
     public String getName() {

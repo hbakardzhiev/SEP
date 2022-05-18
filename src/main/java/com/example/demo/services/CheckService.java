@@ -5,10 +5,7 @@ import com.example.demo.repository.CheckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.plaf.basic.BasicTreeUI;
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 /*
   This class implements the business logic.
@@ -60,6 +57,7 @@ public class CheckService {
             theCheck.setCheckAttribute(attribute);
         }
     }*/
+
 
     public void deleteByName(String name) {
         checkRepository.deleteById(name);
