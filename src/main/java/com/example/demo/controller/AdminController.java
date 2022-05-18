@@ -16,29 +16,29 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/admins")
 @RequiredArgsConstructor
 public class AdminController {
         private final AdminService adminService;
 
-        @GetMapping("admins")
+        @GetMapping("")
         public ResponseEntity<List<Admin>> getAdmins () {
             return ResponseEntity.ok().body(adminService.getAdmins());
 
         }
 
-        @GetMapping("check")
+        @GetMapping("/check")
         public ResponseEntity<String> testtt () {
             return ResponseEntity.ok().body("asd");
         }
 
-        @DeleteMapping("admins/{id}")
+        @DeleteMapping("/delete/{id}")
         public ResponseEntity<String> deleteAdminById (@PathVariable(name = "id") long id) {
             adminService.deleteAdmin(id);
             return  ResponseEntity.ok().body("deleted");
         }
 
-        @PostMapping("admins")
+        @PostMapping("/add")
         public ResponseEntity<Admin> addAdmin (@RequestBody Admin admin) {
             URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/admins").toUriString());
             return ResponseEntity.created(uri).body(adminService.addAdmin(admin));
