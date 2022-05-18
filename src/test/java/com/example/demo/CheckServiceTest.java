@@ -3,6 +3,8 @@ package com.example.demo;
 import com.example.demo.modules.Check2;
 import com.example.demo.repository.CheckRepository;
 import com.example.demo.services.CheckService;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -42,31 +45,43 @@ class CheckServiceTest {
     }
 
     @Test
-    @Disabled
     void canFindByName() {
         //given
         String name = "CN_description";
-        boolean foundCheck = (checkRepository.findById(name)).isPresent();
-        given(foundCheck)
-                .willReturn(true);
+        Check2 checkToBeSaved = new Check2(
+                "CN_description",
+                "CN",
+                "description",
+                "Philips",
+                "comment");
+        Optional<Check2> optionalCheck = Optional.of(checkToBeSaved);
+
+        given(checkRepository.findById(name))
+                .willReturn(optionalCheck);
 
         //when
-        underTest.findByName(name);
+        Check2 returnedCheck = underTest.findByName(name);
 
-        //then: verifies that the save method was invoked with the checkToBeSaved
-        ArgumentCaptor<String> checkArgumentCaptor =
-                ArgumentCaptor.forClass(String.class);
+        //then:
+        assertThat(returnedCheck).isEqualTo(checkToBeSaved);
+    }
 
-        //captures the check instance that was used upon saving
-        // and verifies that the save method was invoked
-        verify(checkRepository).findById(checkArgumentCaptor.capture());
+    @Test
+    void canFindByNameException() {
+        //given
+        String name = "CN_description";
+        Optional<Check2> optionalCheck = Optional.empty();
 
-        //retrieved the captured check
-        String capturedName = checkArgumentCaptor.getValue();
+        //upon triggering the method findById on the
+        // repository will return optionalCheck
+        given(checkRepository.findById(name))
+                .willReturn(optionalCheck);
 
-        //check that the captured check is the one that supposed to be saved
-        assertThat(capturedName).isEqualTo(name);
 
+       //then
+        assertThatThrownBy(() -> underTest.findByName(name))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Check not found " + name);
     }
 
     @Test
