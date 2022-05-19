@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.modules.SheetType;
 import com.example.demo.services.ParserService;
 import java.io.IOException;
+import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,17 +22,17 @@ public class ParserController {
   }
 
   @GetMapping("cn")
-  public String parseCN() throws IOException {
+  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCN() throws IOException {
     return parserService.parseCN();
   }
 
   @GetMapping("cr")
-  public String parseCR() throws IOException {
+  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCR() throws IOException {
     return parserService.parseCR();
   }
 
   @GetMapping("ct")
-  public String parseCT() throws IOException {
+  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCT() throws IOException {
     return parserService.parseCT();
   }
   

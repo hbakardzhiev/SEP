@@ -1,20 +1,19 @@
 package com.example.demo.modules;
 
 import java.io.IOException;
-import java.util.stream.Stream;
 
-public class ParserCR extends State{
+public class ParserCR extends ParserBase {
 
-  public ParserCR(ParserBase parser) {
-    super(parser);
-    this.setSheetType(SheetType.CR);
+  public ParserCR(ParserCN parserCN) throws IOException {
+    setSheetType(SheetType.CR);
+    passCN(parserCN);
   }
 
-  @Override
-  public Stream<SheetSource> parsePage() throws IOException {
-    this.parser.setDocument(this.parser.parseNextPage(SheetType.CR, "CR[0-9]"));
-    this.setSheetType(SheetType.CR);
-    return super.parsePage();
+  private void passCN(ParserCN parserCN) throws IOException {
+    this.setDocumentByUrl(parserCN.getDocument().values().stream().map(
+        document -> document.select(String.format("a:matchesOwn(%s)", "^CR[\\d]{6},"))
+            .attr("href")));
+
   }
 
 }

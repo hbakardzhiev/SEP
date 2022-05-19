@@ -1,47 +1,59 @@
 package com.example.demo.modules;
 
 import com.example.demo.Util;
-import com.example.demo.repository.SheetSourceRepository;
 import java.io.IOException;
+import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.json.JSONObject;
+import lombok.Getter;
+import lombok.Setter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.springframework.beans.factory.annotation.Autowired;
 
-public class ParserBase implements IParserBase {
+abstract public class ParserBase {
 
-  private State state;
+  @Getter
+  @Setter
+  private SheetType sheetType = SheetType.CN;
 
-  protected Document document;
+  @Getter
+  @Setter
+  private HashMap<String, Document> document = new HashMap<>();
 
-  private String url;
-
-  @Autowired
-  protected SheetSourceRepository sheetSourceRepository;
-
-  public ParserBase() throws IOException {
-    this.url = "";
-    this.state = new ParserCN(this);
+  public void setDocumentByUrl(Stream<String> url) throws IOException {
+    document = url.map(element -> {
+      final var inputStream = this.getClass().getClassLoader().getResourceAsStream(element);
+      try {
+        return new AbstractMap.SimpleEntry<>(element,
+            Jsoup.parse(Util.readFromInputStream(inputStream)));
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (prev, next) -> next,
+        HashMap::new));
   }
 
-  public void setDocument(String url) throws IOException {
-    this.url = url;
-    var inputStream = this.getClass().getClassLoader().getResourceAsStream(this.url);
-    document = Jsoup.parse(Util.readFromInputStream(inputStream));
+  public Stream<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseElementByTag(
+      String tag,
+      String id) {
+    final var content = document.entrySet().stream().map(
+        element -> new AbstractMap.SimpleImmutableEntry<>(element.getKey(),
+            new SimpleImmutableEntry<String, String>(id,
+                element.getValue().select((String.format("[%s=%s]", tag, id))).text())));
+    return content;
   }
 
-  public void changeState(State state) {
-    this.state = state;
-  }
-
-  public Stream<SheetSource> parsePage() throws IOException {
-    return state.parsePage();
-  }
-
-  public String parseNextPage(SheetType type, String pattern) throws IOException {
-    final String link = this.document.select(String.format("a:matchesOwn(%s)", pattern)).attr("href");
-    return link;
+  public Stream<AbstractMap.SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parsePage(
+      Stream<SheetSource> sheetSourceStream) throws IOException {
+    final var stream = sheetSourceStream.parallel()
+        //element is a row in table sheetsource which is connected to sheetsource_sheetsource_type
+        .filter(element -> element.getSheetSourceType().equals(this.getSheetType())).flatMap(
+            (elementToBeParsed) -> parseElementByTag(elementToBeParsed.getHtmlTag(),
+                elementToBeParsed.getHtmlID()));
+    return stream;
   }
 
 }

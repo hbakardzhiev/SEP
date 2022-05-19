@@ -1,13 +1,17 @@
 package com.example.demo.modules;
 
 import java.io.IOException;
+import java.util.stream.Stream;
 
-public class ParserCN extends State {
+public class ParserCN extends ParserBase {
 
-  public ParserCN(ParserBase parser) throws IOException {
-    super(parser);
-    this.parser.setDocument("Change Notice - Example.html");
-    this.setSheetType(SheetType.CN);
+
+
+  public ParserCN(String input) throws IOException {
+    setSheetType(SheetType.CN);
+    setDocumentByUrl(Stream.of(input));
   }
+
+
 
 }

@@ -51,10 +51,7 @@ public class SheetSource {
 
 
   @Column(nullable = true)
-//  @ElementCollection(targetClass = SheetType.class)
-//  @CollectionTable(name = "sheet_type")
   @Enumerated
-//  @CollectionTable
   private SheetType sheetSourceType;
 
   public SheetSource(String htmlID, String type,
