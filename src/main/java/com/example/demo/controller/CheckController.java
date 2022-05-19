@@ -62,7 +62,15 @@ public class CheckController {
     }
 
     @PutMapping
-    public Check2 updateCheck(@RequestBody Check2 theCheck) {
+    public Check2 updateCheck(@RequestBody CheckAndActionName checkAndActionName) {
+
+        Check2 theCheck = checkAndActionName.theCheck;
+        String actionName = checkAndActionName.actionName.getActionName();
+
+        ActionValueType theAction = actionValueTypeService.findByName(actionName);
+
+        theAction.add(theCheck);
+
         checkService.save(theCheck);
         return theCheck;
     }
