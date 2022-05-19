@@ -35,5 +35,10 @@ public class ParserController {
   public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCT() throws IOException {
     return parserService.parseCT();
   }
+
+  @GetMapping("dmr")
+  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseDMR() throws IOException {
+    return parserService.parseDMR();
+  }
   
 }

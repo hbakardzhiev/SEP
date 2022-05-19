@@ -6,6 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class Util {
+
+  public static final String CHANGE_NOTICE_EXAMPLE_HTML = "Change Notice - Example.html";
+
   public static String readFromInputStream(InputStream inputStream) throws IOException {
     StringBuilder resultStringBuilder = new StringBuilder();
     try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {

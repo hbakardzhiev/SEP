@@ -2,7 +2,8 @@ package com.example.demo.modules;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import org.jsoup.nodes.Element;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class ParserCT extends ParserBase {
 
@@ -14,12 +15,8 @@ public class ParserCT extends ParserBase {
   private void passCN(ParserCN parserCN) throws IOException {
     final var stream = parserCN.getDocument().values().parallelStream()
         .map(element -> element.select("a:matchesOwn(^ECT[\\d]{6})"));
-    var listStrings = new ArrayList<String>();
-    stream.forEach(elements -> {
-      for (Element element : elements) {
-        listStrings.add(element.attr("href"));
-      }
-    });
+    final var listStrings = stream.parallel().flatMap(Collection::stream)
+        .map(element -> element.attr("href")).collect(Collectors.toCollection(ArrayList::new));
     this.setDocumentByUrl(listStrings.parallelStream());
   }
 
