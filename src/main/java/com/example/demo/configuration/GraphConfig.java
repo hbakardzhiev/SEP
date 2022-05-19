@@ -36,15 +36,15 @@ public class GraphConfig {
     }
   }
 
-  public List<SheetType> converter(String attr) {
-    ArrayList<SheetType> list = new ArrayList<>();
-    Set<CustomEdge> edges = g.incomingEdgesOf(attr);
-
-    for (CustomEdge e : edges) {
-      list.add(SheetType.valueOf(g.getEdgeSource(e)));
-    }
-    return list;
-  }
+//  public List<SheetType> converter(String attr) {
+//    ArrayList<SheetType> list = new ArrayList<>();
+//    Set<CustomEdge> edges = g.incomingEdgesOf(attr);
+//
+//    for (CustomEdge e : edges) {
+//      list.add(SheetType.valueOf(g.getEdgeSource(e)));
+//    }
+//    return list;
+//  }
 
   private void populateGraph() {
     edges = new ArrayList<>();
