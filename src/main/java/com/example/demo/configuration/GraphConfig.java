@@ -2,6 +2,7 @@ package com.example.demo.configuration;
 
 import com.example.demo.modules.SheetType;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.jgrapht.Graph;
@@ -10,10 +11,23 @@ import org.jgrapht.graph.Multigraph;
 
 public class GraphConfig {
 
-  private Graph<String, DefaultEdge> g = new Multigraph<>(DefaultEdge.class);
+
+  private Graph<String, CustomEdge> g = new Multigraph<>(CustomEdge.class);
+  private ArrayList<CustomEdge> edges;
 
   public GraphConfig() {
     this.populateGraph();
+  }
+
+  public List<CustomEdge> getEdges() {
+    Set<CustomEdge> edges = new HashSet<>();
+    ArrayList arr = new ArrayList();
+    for (CustomEdge e: g.edgeSet()) {
+      arr.add(e);
+    }
+    //ArrayList arr = (ArrayList) List.of(g.edgeSet());
+    System.out.println("4urulik");
+    return arr;
   }
 
   private void addMultipleEdges(String attribute) {
@@ -22,17 +36,19 @@ public class GraphConfig {
     }
   }
 
-  public List<Enum<SheetType>> converter(String attr) {
-    ArrayList<Enum<SheetType>> list = new ArrayList<>();
-    Set<DefaultEdge> edges = g.incomingEdgesOf(attr);
+  public List<SheetType> converter(String attr) {
+    ArrayList<SheetType> list = new ArrayList<>();
+    Set<CustomEdge> edges = g.incomingEdgesOf(attr);
 
-    for (DefaultEdge e : edges) {
+    for (CustomEdge e : edges) {
       list.add(SheetType.valueOf(g.getEdgeSource(e)));
     }
     return list;
   }
 
   private void populateGraph() {
+    edges = new ArrayList<>();
+
     g.addVertex(String.valueOf(SheetType.CN));
     g.addVertex(String.valueOf(SheetType.CT));
     g.addVertex(String.valueOf(SheetType.CR));
@@ -42,6 +58,8 @@ public class GraphConfig {
     g.addVertex("customerApprovalRequired");
     g.addVertex("supplierApprovalRequired");
     g.addVertex("theRequestPriority");
+
+
 
     addMultipleEdges("name");
     g.addEdge(String.valueOf(SheetType.CN), "proposedSolution");

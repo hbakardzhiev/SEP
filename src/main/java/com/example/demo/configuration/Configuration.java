@@ -13,29 +13,21 @@ import org.springframework.context.annotation.Bean;
 public class Configuration {
 
   @Bean
-  CommandLineRunner cnPersist(SheetSourceRepository sheetSourceRepository) {
-//    var graph = new GraphConfig();
+  CommandLineRunner persist(SheetSourceRepository sheetSourceRepository) {
+    var graph = new GraphConfig();
+    ArrayList<CustomEdge> edges = (ArrayList<CustomEdge>) graph.getEdges();
     return args -> {
       final var list = new ArrayList<SheetSource>();
 
-      for (SheetType sheetType : Arrays.asList(SheetType.CN, SheetType.CR, SheetType.CT)) {
+      // TODO: add the sheetTypeCT to the graphConfig
+      for (SheetType sheetType : Arrays.asList(SheetType.CT)) {
         list.add(new SheetSource("id", "infoPageIdentityDisplayType", String.class.getTypeName(),
             sheetType));
-        list.add(new SheetSource("id", "infoPageIdentityDisplayType", String.class.getTypeName(),
-            sheetType));
-        list.add(new SheetSource("name", String.class.getTypeName(), sheetType));
-        list.add(new SheetSource("customerApprovalRequired", Boolean.class.getTypeName(),
-            sheetType));
-        list.add(new SheetSource("supplierApprovalRequired", Boolean.class.getTypeName(),
-            sheetType));
       }
-      for (var cnType : Arrays.asList(SheetType.CN)) {
-        list.add(
-            new SheetSource("proposedSolution", String.class.getTypeName(), cnType));
-      }
-      for (var crType : Arrays.asList(SheetType.CR)) {
-        list.add(
-            new SheetSource("theRequestPriority", String.class.getTypeName(), crType));
+
+      for (CustomEdge e: edges) {
+        list.add(new SheetSource((String) e.getTargetCustom(), e.getTargetCustom().getClass().getTypeName(),
+                 SheetType.valueOf((String) e.getSourceCustom())));
       }
       sheetSourceRepository.saveAllAndFlush(list);
     };
