@@ -6,10 +6,8 @@ import com.example.demo.modules.CheckAndActionName;
 import com.example.demo.services.ActionValueTypeService;
 import com.example.demo.services.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -47,18 +45,20 @@ public class CheckController {
     @PostMapping
     public Check2 addCheck(@RequestBody CheckAndActionName checkAndActionName) {
 
-        Check2 theCheck = checkAndActionName.theCheck;
-        String actionName = checkAndActionName.actionName.getActionName();
+        if (checkService.findByName(checkAndActionName.theCheck.getName())==null) {
+            Check2 theCheck = checkAndActionName.theCheck;
+            String actionName = checkAndActionName.actionName.getActionName();
 
-        //checkService.save(theCheck);
+            ActionValueType theAction = actionValueTypeService.findByName(actionName);
 
-        ActionValueType theAction = actionValueTypeService.findByName(actionName);
+            theAction.add(theCheck);
 
-        theAction.add(theCheck);
+            checkService.save(theCheck);
 
-        checkService.save(theCheck);
-
-        return theCheck;
+            return theCheck;
+        } else {
+            return null;
+        }
     }
 
     @PutMapping

@@ -32,9 +32,10 @@ public class CheckService {
 
         if (result.isPresent()) {
             theCheck = result.get();
-        } else {
-            throw new RuntimeException("Check not found " + name);
         }
+        /*else {
+            throw new RuntimeException("Check not found " + name);
+        }*/
         return theCheck;
     }
 
