@@ -1,16 +1,15 @@
 package com.example.demo.configuration;
 
-import com.example.demo.modules.ActionTypes;
 import com.example.demo.modules.ActionValueType;
-import com.example.demo.modules.Check2;
 import com.example.demo.repository.ActionValueTypeRepository;
-import com.example.demo.services.ActionValueTypeService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Arrays;
 import java.util.List;
+/**
+ * Configuration file for adding all types of actions in the database.
+ */
 
 @Configuration
 public class ActionValueTypeConfig {
@@ -19,53 +18,53 @@ public class ActionValueTypeConfig {
     CommandLineRunner commandLineRunnerActionTypes(
             ActionValueTypeRepository repository) {
         return args -> {
-            List<ActionValueType> actions = Arrays.asList(
+            final var actions =
+                    List.of(
                     new ActionValueType(
                             "Empty",
                             null, "This attribute value should be empty"),
                     new ActionValueType(
                            "NotEmpty",
-                            null, "Should not be empty, pls"),
+                            null, "Should not be empty"),
                     new ActionValueType(
                             "Contains",
-                            "String", "The specified value should be contained in the attribute value")
-//                    new ActionValueType(
-//                            ActionTypes.NotContains,
-//                            "String"),
-//                    new ActionValueType(
-//                            ActionTypes.StrictlyGreater,
-//                            "Integer"),
-//                    new ActionValueType(
-//                            ActionTypes.StrictlySmaller,
-//                            "Integer"),
-//                    new ActionValueType(
-//                            ActionTypes.GreaterEqual,
-//                            "Integer"),
-//                    new ActionValueType(
-//                            ActionTypes.SmallerEqual,
-//                            "Integer"),
-//                    new ActionValueType(
-//                            ActionTypes.LengthStrictlyGreater,
-//                            "String"),
-//                    new ActionValueType(
-//                            ActionTypes.LengthStrictlySmaller,
-//                            "Integer"),
-//                    new ActionValueType(
-//                            ActionTypes.LengthGreaterEqual,
-//                            "Integer"),
-//                    new ActionValueType(
-//                            ActionTypes.LengthSmallerEqual,
-//                            "Integer"),
-//                    new ActionValueType(
-//                            ActionTypes.DifferentAttrValue,
-//                            "Integer"),
-//                    new ActionValueType(
-//                            ActionTypes.SameAttrValue,
-//                            "String"),
-//                    new ActionValueType(
-//                            ActionTypes.HumanCheck,
-//                            null)
-            );
+                            "String", "The specified value should be contained in the attribute value"),
+                    new ActionValueType(
+                            "NotContains",
+                            "String", "sth"),
+                    new ActionValueType(
+                            "StrictlyGreater",
+                            "Integer", "Description"),
+                    new ActionValueType(
+                            "StrictlySmaller",
+                            "Integer", "description"),
+                    new ActionValueType(
+                            "GreaterEqual",
+                            "Integer", "sth"),
+                    new ActionValueType(
+                            "SmallerEqual",
+                            "Integer", "sth"),
+                    new ActionValueType(
+                            "LengthStrictlyGreater",
+                            "String", "sth"),
+                    new ActionValueType(
+                            "LengthStrictlySmaller",
+                            "Integer", "sth"),
+                    new ActionValueType(
+                            "LengthGreaterEqual",
+                            "Integer", "sth"),
+                    new ActionValueType(
+                            "LengthSmallerEqual",
+                            "Integer", "sth"),
+                    new ActionValueType(
+                            "DifferentAttrValue",
+                            "Integer", "sth"),
+                    new ActionValueType(
+                            "SameAttrValue",
+                            "String", "sth"),
+                    new ActionValueType(
+                            "HumanCheck",
+                            null, "sth"));
 
             repository.saveAll(actions);
         };
