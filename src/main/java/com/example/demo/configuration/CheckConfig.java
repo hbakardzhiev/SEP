@@ -3,7 +3,6 @@ package com.example.demo.configuration;
 import com.example.demo.modules.*;
 import com.example.demo.repository.ActionValueTypeRepository;
 import com.example.demo.repository.CheckRepository;
-import com.example.demo.repository.DemoRepository;
 import com.example.demo.services.ActionValueTypeService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@Configuration
 public class CheckConfig {
 
     /*@Bean

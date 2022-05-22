@@ -22,7 +22,7 @@ public class ActionValueType {
 
     @OneToMany(mappedBy = "actionValueType")
     @JsonManagedReference
-    private List<Check2> checks;
+    private List<Check2> checks = new ArrayList<>();
 
     public ActionValueType() {}
 
@@ -65,9 +65,9 @@ public class ActionValueType {
     }
 
     public void add(Check2 tempCheck) {
-        if (checks == null) {
-            checks = new ArrayList<>();
-        }
+//        if (checks == null) {
+//            checks = new ArrayList<>();
+//        }
 
         checks.add(tempCheck);
 

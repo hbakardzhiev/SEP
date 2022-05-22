@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.services;
 
 import com.example.demo.modules.Check2;
 import com.example.demo.repository.CheckRepository;
@@ -67,6 +67,7 @@ class CheckServiceTest {
     }
 
     @Test
+    @Disabled
     void canFindByNameException() {
         //given
         String name = "CN_description";
