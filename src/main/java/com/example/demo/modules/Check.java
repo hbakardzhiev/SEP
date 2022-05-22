@@ -4,9 +4,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
+/**
+ * Class that defines the rule entity in the database, which
+ * contains the name of check (PK), the specific document type,
+ * the attribute upon which the check will be made, the inputted value form the user
+ * the comment which will be visible when the check fails.
+ */
 @Entity
 @Table(name = "rule")
-public class Check2 {
+public class Check {
 
     @Id
     @Column(name = "name")
@@ -35,9 +41,9 @@ public class Check2 {
     @JsonBackReference
     private ActionValueType actionValueType;
 
-    public Check2() {}
+    public Check() {}
 
-    public Check2(String name, String docSource, String attribute, String value, String comments) {
+    public Check(String name, String docSource, String attribute, String value, String comments) {
         this.name = name;
         this.docSource = docSource;
         this.attribute = attribute;

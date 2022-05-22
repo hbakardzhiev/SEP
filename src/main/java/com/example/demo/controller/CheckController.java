@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.modules.ActionValueType;
-import com.example.demo.modules.Check2;
+import com.example.demo.modules.Check;
 import com.example.demo.modules.CheckAndActionName;
 import com.example.demo.services.ActionValueTypeService;
 import com.example.demo.services.CheckService;
@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Class that defines the API - the GET, POST, DELETE and PUT requests.
+ */
 @RestController
 @RequestMapping("/check")
 public class CheckController {
@@ -24,16 +27,25 @@ public class CheckController {
         this.checkService = checkService;
     }
 
+    /**
+     * Returns all checks in the database
+     * @return list of all checks in the database
+     */
     @GetMapping
-    public List<Check2> printAllCheck(){
+    public List<Check> printAllCheck(){
         return checkService.findAll();
     }
 
+    /**
+     * Retrieves the check with the given name.
+     * @param name the name of the searched check
+     * @return the check with the specified name
+     * @throws RuntimeException if a check with such name does not exist
+     */
     @GetMapping("/{name}")
-    public Check2 getCheck(@PathVariable String name) {
+    public Check getCheck(@PathVariable String name) {
 
-        Check2 theCheck = checkService.findByName(name);
-
+        Check theCheck = checkService.findByName(name);
 
         if (theCheck == null) {
             throw new RuntimeException("Check not found " + name);
@@ -42,29 +54,44 @@ public class CheckController {
         return theCheck;
     }
 
+    /**
+     * Adds the given check in the database if it does not exist already and associates the
+     * check with the action type from the action table.
+     * @param checkAndActionName the check and the action name
+     * @return TODO: make it later void when tested with front end
+     */
     @PostMapping
-    public Check2 addCheck(@RequestBody CheckAndActionName checkAndActionName) {
+    public Check addCheck(@RequestBody CheckAndActionName checkAndActionName) {
 
-        if (checkService.findByName(checkAndActionName.theCheck.getName())==null) {
-            Check2 theCheck = checkAndActionName.theCheck;
-            String actionName = checkAndActionName.actionName.getActionName();
-
-            ActionValueType theAction = actionValueTypeService.findByName(actionName);
-
-            theAction.add(theCheck);
-
-            checkService.save(theCheck);
+        //if (checkService.findByName(checkAndActionName.theCheck.getName())==null) {
+            Check theCheck = extractCheck(checkAndActionName);
 
             return theCheck;
-        } else {
-            return null;
-        }
+//        } else {
+//            return null;
+//        }
     }
 
+    /**
+     * Updates an existing check in the database.
+     * @param checkAndActionName the updated check with the action name
+     * @return TODO: make it later void when tested with front end
+     */
     @PutMapping
-    public Check2 updateCheck(@RequestBody CheckAndActionName checkAndActionName) {
+    public Check updateCheck(@RequestBody CheckAndActionName checkAndActionName) {
 
-        Check2 theCheck = checkAndActionName.theCheck;
+        Check theCheck = extractCheck(checkAndActionName);
+        return theCheck;
+    }
+
+    /**
+     * Extracts the check and the action and saves/updates the check in the db.
+     * Associates the check with the corresponding action name from the action table.
+     * @param checkAndActionName a check and its action name
+     * @return TODO: make it later void when tested with front end
+     */
+    private Check extractCheck(@RequestBody CheckAndActionName checkAndActionName) {
+        Check theCheck = checkAndActionName.theCheck;
         String actionName = checkAndActionName.actionName.getActionName();
 
         ActionValueType theAction = actionValueTypeService.findByName(actionName);
@@ -75,9 +102,15 @@ public class CheckController {
         return theCheck;
     }
 
+    /**
+     * Deletes the check from the database with the provided name.
+     * @param name the name of the check that is to be deleted
+     * @return TODO: make it later void when tested with front end
+     * @throws RuntimeException if a check with such name does not exist
+     */
     @DeleteMapping("/{name}")
     public String deleteCheck(@PathVariable String name) {
-        Check2 theCheck = checkService.findByName(name);
+        Check theCheck = checkService.findByName(name);
 
         if (theCheck == null) {
             throw new RuntimeException("Check not found " + name);

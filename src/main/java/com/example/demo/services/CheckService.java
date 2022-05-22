@@ -1,14 +1,14 @@
 package com.example.demo.services;
 
-import com.example.demo.modules.Check2;
+import com.example.demo.modules.Check;
 import com.example.demo.repository.CheckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-/*
-  This class implements the business logic.
+/**
+ * This class implements the business logic.
  */
 
 @Service
@@ -21,14 +21,14 @@ public class CheckService {
         this.checkRepository = repository;
     }
 
-    public List<Check2> findAll(){
+    public List<Check> findAll(){
         return checkRepository.findAll();
     }
 
-    public Check2 findByName(String name) {
-        Optional<Check2> result = checkRepository.findById(name);
+    public Check findByName(String name) {
+        Optional<Check> result = checkRepository.findById(name);
 
-        Check2 theCheck = null;
+        Check theCheck = null;
 
         if (result.isPresent()) {
             theCheck = result.get();
@@ -39,7 +39,7 @@ public class CheckService {
         return theCheck;
     }
 
-    public void save(Check2 theCheck) {
+    public void save(Check theCheck) {
         checkRepository.save(theCheck);
     }
 

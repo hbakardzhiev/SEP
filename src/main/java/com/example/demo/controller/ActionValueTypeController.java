@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Defines the needed API for the table with the actions and value types.
+ */
 @RestController
 @RequestMapping("/action")
 public class ActionValueTypeController {
@@ -18,6 +21,10 @@ public class ActionValueTypeController {
         this.actionValueTypeService = actionValueTypeService;
     }
 
+    /**
+     * Retrieves all actions from the database.
+     * @return list of all actions in the database
+     */
     @GetMapping
     public List<ActionValueType> getAllAction() {
         return actionValueTypeService.findAll();

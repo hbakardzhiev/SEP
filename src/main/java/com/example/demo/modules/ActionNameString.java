@@ -1,5 +1,8 @@
 package com.example.demo.modules;
 
+/**
+ * Class for the action name.
+ */
 public class ActionNameString {
 
     private String actionName;
