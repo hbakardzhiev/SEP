@@ -22,7 +22,7 @@ public class GraphConfig {
   public List<CustomEdge> getEdges() {
     Set<CustomEdge> edges = new HashSet<>();
     ArrayList arr = new ArrayList();
-    for (CustomEdge e: g.edgeSet()) {
+    for (CustomEdge e : g.edgeSet()) {
       arr.add(e);
     }
     //ArrayList arr = (ArrayList) List.of(g.edgeSet());
@@ -58,8 +58,7 @@ public class GraphConfig {
     g.addVertex("customerApprovalRequired");
     g.addVertex("supplierApprovalRequired");
     g.addVertex("theRequestPriority");
-
-
+    g.addVertex("description");
 
     addMultipleEdges("name");
     g.addEdge(String.valueOf(SheetType.CN), "proposedSolution");
@@ -68,6 +67,7 @@ public class GraphConfig {
     g.addEdge(String.valueOf(SheetType.CR), "customerApprovalRequired");
     g.addEdge(String.valueOf(SheetType.CN), "supplierApprovalRequired");
     g.addEdge(String.valueOf(SheetType.CR), "supplierApprovalRequired");
+    g.addEdge(String.valueOf(SheetType.CN), "description");
   }
 
 }

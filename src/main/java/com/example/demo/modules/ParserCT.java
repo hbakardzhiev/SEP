@@ -14,7 +14,8 @@ public class ParserCT extends ParserBase {
 
   private void passCN(ParserCN parserCN) throws IOException {
     final var stream = parserCN.getDocument().values().parallelStream()
-        .map(element -> element.select("a:matchesOwn(^ECT[\\d]{6})"));
+        // ? are for optional M, D, E which would match any string like MCT, MDCT, ECT, CT followed by 6 numbers.
+        .map(element -> element.select("a:matchesOwn(^([M]?[D]?[E]?CT[\\d]{6}))"));
     final var listStrings = stream.parallel().flatMap(Collection::stream)
         .map(element -> element.attr("href")).collect(Collectors.toCollection(ArrayList::new));
     this.setDocumentByUrl(listStrings.parallelStream());
