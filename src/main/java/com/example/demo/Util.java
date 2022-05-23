@@ -5,10 +5,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * Helper class where constants and helper
+ * functions are defined.
+ *
+ */
 public class Util {
 
+  // TODO the swap out this hardcoded url once we get access to web based WindChill
   public static final String CHANGE_NOTICE_EXAMPLE_HTML = "Change Notice - Example.html";
 
+  /**
+   * Reads the input stream and builds a string out of it.
+   *
+   * @param inputStream The stream of file contents to be read
+   * @return string content of the input file
+   * @throws IOException
+   */
   public static String readFromInputStream(InputStream inputStream) throws IOException {
     StringBuilder resultStringBuilder = new StringBuilder();
     try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -20,5 +33,4 @@ public class Util {
     return resultStringBuilder.toString();
   }
 
-  public static String startUrl = "Change Notice - Example.html";
 }

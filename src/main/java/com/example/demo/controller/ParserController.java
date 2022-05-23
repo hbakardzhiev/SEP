@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * An exemplary controller built for web scrapping.
+ * It can be deleted in the future but it is useful to quickly
+ * see the scraped data in json format.
+ */
 @RestController
 @RequestMapping("/")
 public class ParserController {
