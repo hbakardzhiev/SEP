@@ -3,13 +3,12 @@ package com.example.demo.modules;
 import java.io.IOException;
 import java.util.stream.Stream;
 
-/**
- * Parses CN type pages
- */
+/** Parses CN type pages */
 public class ParserCN extends ParserBase {
 
   /**
    * Creates the CN parser which implements ParserBase
+   *
    * @param input String url of the page
    * @throws IOException
    */
@@ -17,5 +16,4 @@ public class ParserCN extends ParserBase {
     setSheetType(SheetType.CN);
     setDocumentByUrl(Stream.of(input));
   }
-
 }

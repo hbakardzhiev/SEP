@@ -5,11 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * Helper class where constants and helper
- * functions are defined.
- *
- */
+/** Helper class where constants and helper functions are defined. */
 public class Util {
 
   // TODO the swap out this hardcoded url once we get access to web based WindChill
@@ -32,5 +28,4 @@ public class Util {
     }
     return resultStringBuilder.toString();
   }
-
 }

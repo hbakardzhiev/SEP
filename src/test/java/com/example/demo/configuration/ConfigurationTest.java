@@ -13,16 +13,14 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 class ConfigurationTest {
-    /**
-     * Method under test: {@link Configuration#persist(SheetSourceRepository)}
-     */
-    @Test
-    void testPersist() throws Exception {
-        Configuration configuration = new Configuration();
-        SheetSourceRepository sheetSourceRepository = mock(SheetSourceRepository.class);
-        when(sheetSourceRepository.saveAllAndFlush((Iterable<SheetSource>) any())).thenReturn(new ArrayList<>());
-        configuration.persist(sheetSourceRepository).run("foo");
-        verify(sheetSourceRepository).saveAllAndFlush((Iterable<SheetSource>) any());
-    }
+  /** Method under test: {@link Configuration#persist(SheetSourceRepository)} */
+  @Test
+  void testPersist() throws Exception {
+    Configuration configuration = new Configuration();
+    SheetSourceRepository sheetSourceRepository = mock(SheetSourceRepository.class);
+    when(sheetSourceRepository.saveAllAndFlush((Iterable<SheetSource>) any()))
+        .thenReturn(new ArrayList<>());
+    configuration.persist(sheetSourceRepository).run("foo");
+    verify(sheetSourceRepository).saveAllAndFlush((Iterable<SheetSource>) any());
+  }
 }
-

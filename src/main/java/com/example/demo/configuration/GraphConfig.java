@@ -6,13 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.Multigraph;
 
-/**
- * Graph class that is used to extract which SheetSource
- * to which page should be linked to.
- */
+/** Graph class that is used to extract which SheetSource to which page should be linked to. */
 public class GraphConfig {
 
   private Graph<String, CustomEdge> g = new Multigraph<>(CustomEdge.class);
@@ -28,7 +24,7 @@ public class GraphConfig {
     for (CustomEdge e : g.edgeSet()) {
       arr.add(e);
     }
-    //ArrayList arr = (ArrayList) List.of(g.edgeSet());
+    // ArrayList arr = (ArrayList) List.of(g.edgeSet());
     System.out.println("4urulik");
     return arr;
   }
@@ -63,5 +59,4 @@ public class GraphConfig {
     g.addEdge(String.valueOf(SheetType.CN), "description");
     g.addEdge(String.valueOf(SheetType.CT), "description");
   }
-
 }

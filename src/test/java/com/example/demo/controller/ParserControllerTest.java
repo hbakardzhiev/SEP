@@ -21,91 +21,88 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(SpringExtension.class)
 class ParserControllerTest {
 
-  @Autowired
-  private ParserController parserController;
+  @Autowired private ParserController parserController;
 
-  @MockBean
-  private ParserService parserService;
+  @MockBean private ParserService parserService;
 
-  /**
-   * Method under test: {@link ParserController#parseCN()}
-   */
+  /** Method under test: {@link ParserController#parseCN()} */
   @Test
   void testParseCN() throws Exception {
     when(this.parserService.parseCN()).thenReturn(new ArrayList<>());
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/cn");
-    MockMvcBuilders.standaloneSetup(this.parserController).build().perform(requestBuilder)
+    MockMvcBuilders.standaloneSetup(this.parserController)
+        .build()
+        .perform(requestBuilder)
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
         .andExpect(MockMvcResultMatchers.content().string("[]"));
   }
 
-  /**
-   * Method under test: {@link ParserController#parseCN()}
-   */
+  /** Method under test: {@link ParserController#parseCN()} */
   @Test
   void testParseCN2() throws Exception {
     when(this.parserService.parseCN()).thenReturn(new ArrayList<>());
     MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/cn");
     getResult.contentType("https://example.org/example");
-    MockMvcBuilders.standaloneSetup(this.parserController).build().perform(getResult)
+    MockMvcBuilders.standaloneSetup(this.parserController)
+        .build()
+        .perform(getResult)
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
         .andExpect(MockMvcResultMatchers.content().string("[]"));
   }
 
-  /**
-   * Method under test: {@link ParserController#parseCR()}
-   */
+  /** Method under test: {@link ParserController#parseCR()} */
   @Test
   void testParseCR() throws Exception {
     when(this.parserService.parseCR()).thenReturn(new ArrayList<>());
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/cr");
-    MockMvcBuilders.standaloneSetup(this.parserController).build().perform(requestBuilder)
+    MockMvcBuilders.standaloneSetup(this.parserController)
+        .build()
+        .perform(requestBuilder)
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
         .andExpect(MockMvcResultMatchers.content().string("[]"));
   }
 
-  /**
-   * Method under test: {@link ParserController#parseCR()}
-   */
+  /** Method under test: {@link ParserController#parseCR()} */
   @Test
   void testParseCR2() throws Exception {
     when(this.parserService.parseCR()).thenReturn(new ArrayList<>());
     MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/cr");
     getResult.contentType("https://example.org/example");
-    MockMvcBuilders.standaloneSetup(this.parserController).build().perform(getResult)
+    MockMvcBuilders.standaloneSetup(this.parserController)
+        .build()
+        .perform(getResult)
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
         .andExpect(MockMvcResultMatchers.content().string("[]"));
   }
 
-  /**
-   * Method under test: {@link ParserController#parseCT()}
-   */
+  /** Method under test: {@link ParserController#parseCT()} */
   @Test
   void testParseCT() throws Exception {
     when(this.parserService.parseCT()).thenReturn(new ArrayList<>());
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/ct");
-    MockMvcBuilders.standaloneSetup(this.parserController).build().perform(requestBuilder)
+    MockMvcBuilders.standaloneSetup(this.parserController)
+        .build()
+        .perform(requestBuilder)
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
         .andExpect(MockMvcResultMatchers.content().string("[]"));
   }
 
-  /**
-   * Method under test: {@link ParserController#parseCT()}
-   */
+  /** Method under test: {@link ParserController#parseCT()} */
   @Test
   void testParseCT2() throws Exception {
     when(this.parserService.parseCT()).thenReturn(new ArrayList<>());
     MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/ct");
     getResult.contentType("https://example.org/example");
-    MockMvcBuilders.standaloneSetup(this.parserController).build().perform(getResult)
+    MockMvcBuilders.standaloneSetup(this.parserController)
+        .build()
+        .perform(getResult)
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
         .andExpect(MockMvcResultMatchers.content().string("[]"));
   }
 }
-
