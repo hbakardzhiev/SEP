@@ -68,6 +68,7 @@ public class GraphConfig {
     g.addEdge(String.valueOf(SheetType.CN), "supplierApprovalRequired");
     g.addEdge(String.valueOf(SheetType.CR), "supplierApprovalRequired");
     g.addEdge(String.valueOf(SheetType.CN), "description");
+    g.addEdge(String.valueOf(SheetType.CT), "description");
   }
 
 }
