@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 /**
- * This class implements the business logic.
+ * Service layer for Check class - holds the relevant business logic.
  */
 
 @Service
@@ -16,15 +16,27 @@ public class CheckService {
 
     private CheckRepository checkRepository;
 
+    /**
+     * Constructor to use the correct repository
+     */
     @Autowired
     public CheckService(CheckRepository repository) {
         this.checkRepository = repository;
     }
 
+    /**
+     * Returns the list of all checks in the database
+     * @return list of checks
+     */
     public List<Check> findAll(){
         return checkRepository.findAll();
     }
 
+    /**
+     * Returns the check
+     * @param name the name of the check to be found
+     * @return the check that has the name given as param
+     */
     public Check findByName(String name) {
         Optional<Check> result = checkRepository.findById(name);
 
@@ -39,27 +51,18 @@ public class CheckService {
         return theCheck;
     }
 
+    /**
+     * Saves the check
+     * @param theCheck the check to be saved in the database
+     */
     public void save(Check theCheck) {
         checkRepository.save(theCheck);
     }
 
-    // For update, we only need save
-    // since the info to be changed will be retrieved from front-end,
-    // and afterwards, we just save it, just like when adding a new check.
-   /*  public void updateCheckProperties(String name) {
-        Check theCheck = checkRepository.getById(name);
-        checkRepository.save(theCheck);
-       if(docSource != null && docSource.length() > 0
-                && !Objects.equals(theCheck.getDocSource(),docSource)){
-            theCheck.setDocSource(docSource);
-        }
-        if(attribute != null && attribute.length() > 0
-                && !Objects.equals(theCheck.getCheckAttribute(),attribute)) {
-            theCheck.setCheckAttribute(attribute);
-        }
-    }*/
-
-
+    /**
+     * Deletes the check that is already in the database
+     * @param name the name of the check to be deleted
+     */
     public void deleteByName(String name) {
         checkRepository.deleteById(name);
     }
