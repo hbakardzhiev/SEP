@@ -15,7 +15,7 @@ class SheetSourceTest {
         SheetSource actualSheetSource = new SheetSource("Html ID", "Type", SheetType.CN);
 
         assertEquals("Html ID", actualSheetSource.getHtmlID());
-        assertEquals("Type", actualSheetSource.getType());
+        assertEquals("Type", actualSheetSource.getDataType());
         assertEquals(SheetType.CN, actualSheetSource.getSheetSourceType());
         assertNull(actualSheetSource.getName());
         assertNull(actualSheetSource.getId());
@@ -30,7 +30,7 @@ class SheetSourceTest {
         SheetSource actualSheetSource = new SheetSource("Html Tag", "Html ID", "Type", SheetType.CN);
 
         assertEquals("Html ID", actualSheetSource.getHtmlID());
-        assertEquals("Type", actualSheetSource.getType());
+        assertEquals("Type", actualSheetSource.getDataType());
         assertEquals(SheetType.CN, actualSheetSource.getSheetSourceType());
         assertNull(actualSheetSource.getName());
         assertNull(actualSheetSource.getId());
@@ -48,7 +48,7 @@ class SheetSourceTest {
         sheetSource.setId(123L);
         sheetSource.setName("Name");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("Type");
+        sheetSource.setDataType("Type");
         assertNotEquals(sheetSource, null);
     }
 
@@ -63,7 +63,7 @@ class SheetSourceTest {
         sheetSource.setId(123L);
         sheetSource.setName("Name");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("Type");
+        sheetSource.setDataType("Type");
         assertNotEquals(sheetSource, "Different type to SheetSource");
     }
 
@@ -78,7 +78,7 @@ class SheetSourceTest {
         sheetSource.setId(123L);
         sheetSource.setName("Name");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("Type");
+        sheetSource.setDataType("Type");
         assertEquals(sheetSource, sheetSource);
         int expectedHashCodeResult = sheetSource.hashCode();
         assertEquals(expectedHashCodeResult, sheetSource.hashCode());
@@ -95,7 +95,7 @@ class SheetSourceTest {
         sheetSource.setId(123L);
         sheetSource.setName("Name");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("Type");
+        sheetSource.setDataType("Type");
 
         SheetSource sheetSource1 = new SheetSource();
         sheetSource1.setHtmlID("Html ID");
@@ -103,7 +103,7 @@ class SheetSourceTest {
         sheetSource1.setId(123L);
         sheetSource1.setName("Name");
         sheetSource1.setSheetSourceType(SheetType.CN);
-        sheetSource1.setType("Type");
+        sheetSource1.setDataType("Type");
         assertEquals(sheetSource, sheetSource1);
         int expectedHashCodeResult = sheetSource.hashCode();
         assertEquals(expectedHashCodeResult, sheetSource1.hashCode());
@@ -120,7 +120,7 @@ class SheetSourceTest {
         sheetSource.setId(1L);
         sheetSource.setName("Name");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("Type");
+        sheetSource.setDataType("Type");
 
         SheetSource sheetSource1 = new SheetSource();
         sheetSource1.setHtmlID("Html ID");
@@ -128,7 +128,7 @@ class SheetSourceTest {
         sheetSource1.setId(123L);
         sheetSource1.setName("Name");
         sheetSource1.setSheetSourceType(SheetType.CN);
-        sheetSource1.setType("Type");
+        sheetSource1.setDataType("Type");
         assertNotEquals(sheetSource, sheetSource1);
     }
 
@@ -143,7 +143,7 @@ class SheetSourceTest {
         sheetSource.setId(null);
         sheetSource.setName("Name");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("Type");
+        sheetSource.setDataType("Type");
 
         SheetSource sheetSource1 = new SheetSource();
         sheetSource1.setHtmlID("Html ID");
@@ -151,7 +151,7 @@ class SheetSourceTest {
         sheetSource1.setId(123L);
         sheetSource1.setName("Name");
         sheetSource1.setSheetSourceType(SheetType.CN);
-        sheetSource1.setType("Type");
+        sheetSource1.setDataType("Type");
         assertNotEquals(sheetSource, sheetSource1);
     }
 
@@ -166,7 +166,7 @@ class SheetSourceTest {
         sheetSource.setId(123L);
         sheetSource.setName("Name");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("Type");
+        sheetSource.setDataType("Type");
         assertNotEquals(sheetSource, null);
     }
 
@@ -181,7 +181,7 @@ class SheetSourceTest {
         sheetSource.setId(123L);
         sheetSource.setName("Name");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("Type");
+        sheetSource.setDataType("Type");
         assertNotEquals(sheetSource, "Different type to SheetSource");
     }
 
@@ -201,7 +201,7 @@ class SheetSourceTest {
         sheetSource.setId(123L);
         sheetSource.setName("Name");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("Type");
+        sheetSource.setDataType("Type");
         assertEquals(sheetSource, sheetSource);
         int expectedHashCodeResult = sheetSource.hashCode();
         assertEquals(expectedHashCodeResult, sheetSource.hashCode());
@@ -223,7 +223,7 @@ class SheetSourceTest {
         sheetSource.setId(123L);
         sheetSource.setName("Name");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("Type");
+        sheetSource.setDataType("Type");
 
         SheetSource sheetSource1 = new SheetSource();
         sheetSource1.setHtmlID("Html ID");
@@ -231,7 +231,7 @@ class SheetSourceTest {
         sheetSource1.setId(123L);
         sheetSource1.setName("Name");
         sheetSource1.setSheetSourceType(SheetType.CN);
-        sheetSource1.setType("Type");
+        sheetSource1.setDataType("Type");
         assertEquals(sheetSource, sheetSource1);
         int expectedHashCodeResult = sheetSource.hashCode();
         assertEquals(expectedHashCodeResult, sheetSource1.hashCode());
@@ -248,7 +248,7 @@ class SheetSourceTest {
         sheetSource.setId(1L);
         sheetSource.setName("Name");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("Type");
+        sheetSource.setDataType("Type");
 
         SheetSource sheetSource1 = new SheetSource();
         sheetSource1.setHtmlID("Html ID");
@@ -256,7 +256,7 @@ class SheetSourceTest {
         sheetSource1.setId(123L);
         sheetSource1.setName("Name");
         sheetSource1.setSheetSourceType(SheetType.CN);
-        sheetSource1.setType("Type");
+        sheetSource1.setDataType("Type");
         assertNotEquals(sheetSource, sheetSource1);
     }
 
@@ -271,7 +271,7 @@ class SheetSourceTest {
         sheetSource.setId(null);
         sheetSource.setName("Name");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("Type");
+        sheetSource.setDataType("Type");
 
         SheetSource sheetSource1 = new SheetSource();
         sheetSource1.setHtmlID("Html ID");
@@ -279,7 +279,7 @@ class SheetSourceTest {
         sheetSource1.setId(123L);
         sheetSource1.setName("Name");
         sheetSource1.setSheetSourceType(SheetType.CN);
-        sheetSource1.setType("Type");
+        sheetSource1.setDataType("Type");
         assertNotEquals(sheetSource, sheetSource1);
     }
 }

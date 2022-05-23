@@ -36,7 +36,7 @@ public class SheetSource {
   private String htmlTag = "attrid";
 
   @Column(nullable = false)
-  private String type;
+  private String dataType;
 
   @Column(nullable = true)
   private String name;
@@ -46,17 +46,17 @@ public class SheetSource {
   @Enumerated
   private SheetType sheetSourceType;
 
-  public SheetSource(String htmlID, String type,
+  public SheetSource(String htmlID, String dataType,
       SheetType sheetSourceType
   ) {
     this.htmlID = htmlID;
-    this.type = type;
+    this.dataType = dataType;
     this.sheetSourceType = sheetSourceType;
   }
 
-  public SheetSource(String htmlTag, String htmlID, String type,
+  public SheetSource(String htmlTag, String htmlID, String dataType,
       SheetType sheetSourceType) {
-    this(htmlID, type, sheetSourceType);
+    this(htmlID, dataType, sheetSourceType);
     this.htmlTag = htmlTag;
   }
 

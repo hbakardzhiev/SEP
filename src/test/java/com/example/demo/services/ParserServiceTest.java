@@ -49,7 +49,7 @@ class ParserServiceTest {
         sheetSource.setId(123L);
         sheetSource.setName("UU:");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("UU:");
+        sheetSource.setDataType("UU:");
 
         ArrayList<SheetSource> sheetSourceList = new ArrayList<>();
         sheetSourceList.add(sheetSource);
@@ -69,7 +69,7 @@ class ParserServiceTest {
         sheetSource.setId(123L);
         sheetSource.setName("UU:");
         sheetSource.setSheetSourceType(SheetType.CN);
-        sheetSource.setType("UU:");
+        sheetSource.setDataType("UU:");
 
         SheetSource sheetSource1 = new SheetSource();
         sheetSource1.setHtmlID("UU:");
@@ -77,7 +77,7 @@ class ParserServiceTest {
         sheetSource1.setId(123L);
         sheetSource1.setName("UU:");
         sheetSource1.setSheetSourceType(SheetType.CN);
-        sheetSource1.setType("UU:");
+        sheetSource1.setDataType("UU:");
 
         ArrayList<SheetSource> sheetSourceList = new ArrayList<>();
         sheetSourceList.add(sheetSource1);
