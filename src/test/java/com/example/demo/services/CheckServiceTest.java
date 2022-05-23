@@ -63,24 +63,6 @@ class CheckServiceTest {
         assertThat(returnedCheck).isEqualTo(checkToBeSaved);
     }
 
-    @Test
-    @Disabled
-    void canFindByNameException() {
-        //given
-        String name = "CN_description";
-        Optional<Check> optionalCheck = Optional.empty();
-
-        //upon triggering the method findById on the
-        // repository will return optionalCheck
-        given(checkRepository.findById(name))
-                .willReturn(optionalCheck);
-
-
-       //then
-        assertThatThrownBy(() -> underTest.findByName(name))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Check not found " + name);
-    }
 
     @Test
     void save() {
