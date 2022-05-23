@@ -27,8 +27,8 @@ abstract public class ParserBase {
     document = url.map(element -> {
       final var inputStream = this.getClass().getClassLoader().getResourceAsStream(element);
       try {
-        return new AbstractMap.SimpleEntry<>(element,
-            Jsoup.parse(Util.readFromInputStream(inputStream)));
+        final var currentDocument = Jsoup.parse(Util.readFromInputStream(inputStream));
+        return new AbstractMap.SimpleEntry<>(readDocumentName(currentDocument), currentDocument);
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
@@ -37,8 +37,7 @@ abstract public class ParserBase {
   }
 
   public Stream<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseElementByTag(
-      String tag,
-      String id) {
+      String tag, String id) {
     final var content = document.entrySet().stream().map(
         element -> new AbstractMap.SimpleImmutableEntry<>(element.getKey(),
             new SimpleImmutableEntry<String, String>(id,
@@ -56,4 +55,7 @@ abstract public class ParserBase {
     return stream;
   }
 
+  private String readDocumentName(Document document) {
+    return document.select("[id=infoPageIdentityObjectIdentifier]").text();
+  }
 }
