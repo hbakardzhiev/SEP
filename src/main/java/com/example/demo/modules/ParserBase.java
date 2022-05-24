@@ -104,6 +104,12 @@ public abstract class ParserBase {
   }
 
   private String readDocumentName(Document document) {
-    return document.select("[id=infoPageIdentityObjectIdentifier]").text();
+    final var stringBuilder = new StringBuilder();
+    final var firstPart = document.select("[id=infoPageIdentityDisplayType]").text();
+    final var secondPart = document.select("[id=infoPageIdentityObjectIdentifier]").text();
+    stringBuilder.append(firstPart);
+    stringBuilder.append(" - ");
+    stringBuilder.append(secondPart);
+    return stringBuilder.toString();
   }
 }
