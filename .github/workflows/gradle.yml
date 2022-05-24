@@ -70,8 +70,8 @@ jobs:
       #      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       #      with:
       #        arguments: build
-      - name: Archive code coverage results
       - uses: actions/upload-artifact@v3
+      - name: Archive code coverage results
         run: cd home/runner/work/SEP/SEP/build/reports/tests/test/ 
              cd
         with:
