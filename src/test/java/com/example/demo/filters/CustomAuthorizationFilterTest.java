@@ -63,31 +63,6 @@ class CustomAuthorizationFilterTest {
      * Method under test: {@link CustomAuthorizationFilter#doFilterInternal(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, FilterChain)}
      */
     @Test
-    @Disabled("TODO: Complete this test")
-    void testDoFilterInternal2() throws IOException, ServletException {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "javax.servlet.http.HttpServletRequest.getHeader(String)" because "request" is null
-        //       at com.example.demo.filters.CustomAuthorizationFilter.doFilterInternal(CustomAuthorizationFilter.java:31)
-        //   In order to prevent doFilterInternal(HttpServletRequest, HttpServletResponse, FilterChain)
-        //   from throwing NullPointerException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   doFilterInternal(HttpServletRequest, HttpServletResponse, FilterChain).
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        CustomAuthorizationFilter customAuthorizationFilter = new CustomAuthorizationFilter();
-        Response response = new Response();
-        FilterChain filterChain = mock(FilterChain.class);
-        doNothing().when(filterChain).doFilter((javax.servlet.ServletRequest) any(), (javax.servlet.ServletResponse) any());
-        customAuthorizationFilter.doFilterInternal(null, response, filterChain);
-    }
-
-    /**
-     * Method under test: {@link CustomAuthorizationFilter#doFilterInternal(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, FilterChain)}
-     */
-    @Test
     void testDoFilterInternal3() throws IOException, ServletException {
         CustomAuthorizationFilter customAuthorizationFilter = new CustomAuthorizationFilter();
         MockHttpServletRequest request = new MockHttpServletRequest();
