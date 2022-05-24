@@ -66,17 +66,16 @@ jobs:
       - name: Test
         run: ./gradlew test --tests "*" --scan
 
-#    - name: Build with Gradle
-#      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-#      with:
-#        arguments: build
+      #    - name: Build with Gradle
+      #      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+      #      with:
+      #        arguments: build
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         run: |
           cd home/runner/work/SEP/SEP/build/reports/tests/test/
-          cd 
-
+          cd
         with:
-          name: code-coverage-report
+          name: index.html
           path: /output
 
