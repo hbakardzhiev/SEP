@@ -63,6 +63,22 @@ public class CheckController {
    * @param checkAndActionName the check and the action name
    * @return TODO: make it later void when tested with front end
    */
+
+  /*
+JSON - use the following in postman to see that it is working;
+{
+    "theCheck":{
+        "name" : "check1",
+        "docSource" : "CN",
+        "attribute" : "name",
+        "value" : "orange",
+        "comments" : "hey comment"
+    },
+    "actionName": {
+        "actionName" : "Contains"
+    }
+}
+   */
   @PostMapping
   public Check addCheck(@RequestBody CheckAndActionName checkAndActionName) {
 
@@ -76,6 +92,21 @@ public class CheckController {
    *
    * @param checkAndActionName the updated check with the action name
    * @return TODO: make it later void when tested with front end
+   */
+
+  /*
+JSON - use the following in postman to see that it is working;
+{
+    "theCheck":{
+        "name" : "check1",
+        "docSource" : "CT",
+        "attribute" : "name",
+        "comments" : "noooooooo comment"
+    },
+    "actionName": {
+        "actionName" : "NotEmpty"
+    }
+}
    */
   @PutMapping
   public Check updateCheck(@RequestBody CheckAndActionName checkAndActionName) {
