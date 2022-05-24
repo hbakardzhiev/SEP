@@ -66,13 +66,17 @@ jobs:
     - name: Test
       run: ./gradlew test --tests "*" --scan
 
-    - name: Deploy report page
-      uses: peaceiris/actions-gh-pages@v3
+  - name: "Add build scan URL as PR comment"
+      uses: actions/github-script@v5
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: home/runner/work/SEP/SEP/build/reports/tests/test/
-        user_name: 'github-actions[bot]'
-        user_email: 'github-actions[bot]@users.noreply.github.com'
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '❌ ${{ github.workflow }} failed: ${{ steps.gradle.outputs.build-scan-url }}'
+          })
 
 #    - name: Build with Gradle
 #      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
