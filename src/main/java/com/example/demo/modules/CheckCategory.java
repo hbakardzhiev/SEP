@@ -9,6 +9,14 @@ public class CheckCategory {
         this.check = check;
     }
 
+    @Override
+    public String toString() {
+        return "CheckCategory{" +
+                "category='" + category + '\'' +
+                ", check=" + check +
+                '}';
+    }
+
     public String getCategory() {
         return category;
     }

@@ -98,4 +98,16 @@ public class Check {
   public void setActionValueType(ActionValueType actionValueType) {
     this.actionValueType = actionValueType;
   }
+
+  @Override
+  public String toString() {
+    return "Check{" +
+            "name='" + name + '\'' +
+            ", docSource='" + docSource + '\'' +
+            ", attribute='" + attribute + '\'' +
+            ", value='" + value + '\'' +
+            ", comments='" + comments + '\'' +
+            ", actionValueType=" + actionValueType +
+            '}';
+  }
 }

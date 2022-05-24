@@ -63,7 +63,7 @@ public class ProbaService {
 
 
         switch (checkValue) {
-            case "": checkCategory = checksNull(attributeValue, check); // null value
+            case "null": checkCategory = checksNull(attributeValue, check); // front end will give us ""
 //            case "Integer":
 //            case "String":
         }
