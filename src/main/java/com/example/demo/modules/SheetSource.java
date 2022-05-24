@@ -15,6 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 
+/** SheetSource class is specifying which html tag should be scraped from which page. */
 @Entity
 @Getter
 @Setter
@@ -32,31 +33,32 @@ public class SheetSource {
   @Column(nullable = false)
   private String htmlID;
 
+  /**
+   * The default html attribute that we look for is attrid. It is a custom attribute not part of the
+   * HTML standard.
+   */
   @Column(nullable = false)
   private String htmlTag = "attrid";
 
   @Column(nullable = false)
-  private String type;
+  private String dataType;
 
   @Column(nullable = true)
   private String name;
 
-
+  /** Tells us which page should the html tag be applied to. */
   @Column(nullable = true)
   @Enumerated
   private SheetType sheetSourceType;
 
-  public SheetSource(String htmlID, String type,
-      SheetType sheetSourceType
-  ) {
+  public SheetSource(String htmlID, String dataType, SheetType sheetSourceType) {
     this.htmlID = htmlID;
-    this.type = type;
+    this.dataType = dataType;
     this.sheetSourceType = sheetSourceType;
   }
 
-  public SheetSource(String htmlTag, String htmlID, String type,
-      SheetType sheetSourceType) {
-    this(htmlID, type, sheetSourceType);
+  public SheetSource(String htmlTag, String htmlID, String dataType, SheetType sheetSourceType) {
+    this(htmlID, dataType, sheetSourceType);
     this.htmlTag = htmlTag;
   }
 
