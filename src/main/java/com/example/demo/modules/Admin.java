@@ -19,14 +19,30 @@ public class Admin {
     @Column(name="username")
     private String username;
 
+    @Column(name="email")
+    private String email;
+
     @Column(name="password")
     private String password;
 
     @Column(name="role")
     private String adminRole;
 
-    public Admin(String username, String password) {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAdminRole(String adminRole) {
+        this.adminRole = adminRole;
+    }
+
+    public Admin(String username, String email, String password) {
         this.username = username;
+        this.email = email;
         this.password = password;
     }
 

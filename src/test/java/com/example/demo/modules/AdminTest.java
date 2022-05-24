@@ -22,7 +22,7 @@ class AdminTest {
      */
     @Test
     void testConstructor() {
-        Admin actualAdmin = new Admin("janedoe", "iloveyou");
+        Admin actualAdmin = new Admin("janedoe", "biyan@gmai..com", "iloveyou");
         actualAdmin.setId(123L);
         actualAdmin.setPassword("iloveyou");
         actualAdmin.setUsername("janedoe");

@@ -42,7 +42,7 @@ public class CNConfiguration {
       list.add(new SheetSource("supplierApprovalRequired", Boolean.class.getTypeName(), cnAndCr));
       list.add(new SheetSource("theRequestPriority", String.class.getTypeName(), cr));
       sheetSourceRepository.saveAll(list);
-      adminService.addAdmin(new Admin("p", "123"));
+      adminService.addAdmin(new Admin("p", "boyan@gmail.com","123"));
     };
   }
 }
