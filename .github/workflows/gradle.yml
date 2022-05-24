@@ -64,7 +64,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Test
-      run: ./gradlew test --tests "*" --stacktrace
+      run: ./gradlew test --tests "*" --scan
 
 #    - name: Build with Gradle
 #      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
