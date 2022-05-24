@@ -76,7 +76,7 @@ class AdminServiceImplTest {
         when(this.adminRepoistory.save((Admin) any())).thenThrow(new UsernameNotFoundException("ADMIN"));
 
         Admin admin = new Admin();
-        admin.setAdminRole("Admin Role");
+        admin.setAdminRole("ADMIN");
         admin.setId(123L);
         admin.setPassword("iloveyou");
         admin.setUsername("janedoe");
