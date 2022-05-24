@@ -72,8 +72,7 @@ jobs:
       #      with:
       #        arguments: build
       - name: Print results
-        run: cd home/runner/work/SEP/SEP/build/reports/tests/test/ 
-             cd
+        run: cd home/runner/work/SEP/SEP/build/reports/tests/test/
 
       - uses: actions/upload-artifact@v3
         with:
