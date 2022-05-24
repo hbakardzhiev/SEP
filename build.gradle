@@ -19,6 +19,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.json/json
     implementation 'org.json:json:20220320'
     implementation 'org.jgrapht:jgrapht-core:1.5.1'
+    implementation 'org.springframework.data:spring-data-envers:2.7.0'
 
 
     runtimeOnly 'org.postgresql:postgresql'

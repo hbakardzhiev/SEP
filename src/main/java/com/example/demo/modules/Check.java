@@ -1,6 +1,7 @@
 package com.example.demo.modules;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -11,22 +12,28 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "rule")
+
 public class Check {
 
   @Id
   @Column(name = "name")
+  @Audited
   private String name;
 
   @Column(name = "document_source")
+  @Audited
   private String docSource;
 
   @Column(name = "attribute")
+  @Audited
   private String attribute;
 
   @Column(name = "value")
+  @Audited
   private String value;
 
   @Column(name = "comments")
+  @Audited
   private String comments;
 
   // Get a string value for action, if it does not exist from the defined actions,
