@@ -1,13 +1,11 @@
 package com.example.demo.modules;
 
-/**
- * Class for the action name.
- */
+/** Class for the action name. */
 public class ActionNameString {
 
-    private String actionName;
+  private String actionName;
 
-    public String getActionName() {
-        return actionName;
-    }
+  public String getActionName() {
+    return actionName;
+  }
 }

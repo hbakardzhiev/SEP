@@ -21,92 +21,82 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 public class ActionValueTypeServiceTest {
 
-    @Mock
-    private ActionValueTypeRepository actionValueTypeRepository;
-    private ActionValueTypeService underTest;
+  @Mock private ActionValueTypeRepository actionValueTypeRepository;
+  private ActionValueTypeService underTest;
 
-    @BeforeEach
-    void setUp(){
-        underTest = new ActionValueTypeService(actionValueTypeRepository);
-    }
+  @BeforeEach
+  void setUp() {
+    underTest = new ActionValueTypeService(actionValueTypeRepository);
+  }
 
-    @Test
-    void canFindAll() {
+  @Test
+  void canFindAll() {
 
-        List<ActionValueType> actions = underTest.findAll();
+    List<ActionValueType> actions = underTest.findAll();
 
-        System.out.println(actions);
+    System.out.println(actions);
 
-        verify(actionValueTypeRepository).findAll();
-    }
+    verify(actionValueTypeRepository).findAll();
+  }
 
-    @Test
-    void canFindByName() {
+  @Test
+  void canFindByName() {
 
-        String name = "Test";
-        ActionValueType actionToBeSaved = new ActionValueType(
-                "Test",
-                "String",
-                "Desc");
-        Optional<ActionValueType> optionalAction = Optional.of(actionToBeSaved);
+    String name = "Test";
+    ActionValueType actionToBeSaved = new ActionValueType("Test", "String", "Desc");
+    Optional<ActionValueType> optionalAction = Optional.of(actionToBeSaved);
 
-        given(actionValueTypeRepository.findById(name))
-                .willReturn(optionalAction);
+    given(actionValueTypeRepository.findById(name)).willReturn(optionalAction);
 
-        ActionValueType returnedAction = underTest.findByName(name);
+    ActionValueType returnedAction = underTest.findByName(name);
 
-        assertThat(returnedAction).isEqualTo(actionToBeSaved);
-    }
+    assertThat(returnedAction).isEqualTo(actionToBeSaved);
+  }
 
-    @Test
-    @Disabled
-    void canFindByNameException() {
+  @Test
+  @Disabled
+  void canFindByNameException() {
 
-        String name = "Not_exist_test";
-        Optional<ActionValueType> optionalAction = Optional.empty();
+    String name = "Not_exist_test";
+    Optional<ActionValueType> optionalAction = Optional.empty();
 
-        given(actionValueTypeRepository.findById(name))
-                .willReturn(optionalAction);
+    given(actionValueTypeRepository.findById(name)).willReturn(optionalAction);
 
-        assertThatThrownBy(() -> underTest.findByName(name))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Action not found " + name);
-    }
+    assertThatThrownBy(() -> underTest.findByName(name))
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("Action not found " + name);
+  }
 
-    @Test
-    void save() {
+  @Test
+  void save() {
 
-        ActionValueType actionToBeSaved = new ActionValueType(
-                "Check 1",
-                "Integer",
-                "Description");
+    ActionValueType actionToBeSaved = new ActionValueType("Check 1", "Integer", "Description");
 
-        underTest.save(actionToBeSaved);
+    underTest.save(actionToBeSaved);
 
-        ArgumentCaptor<ActionValueType> actionArgumentCaptor =
-                ArgumentCaptor.forClass(ActionValueType.class);
+    ArgumentCaptor<ActionValueType> actionArgumentCaptor =
+        ArgumentCaptor.forClass(ActionValueType.class);
 
-        verify(actionValueTypeRepository).save(actionArgumentCaptor.capture());
+    verify(actionValueTypeRepository).save(actionArgumentCaptor.capture());
 
-        ActionValueType capturedAction = actionArgumentCaptor.getValue();
+    ActionValueType capturedAction = actionArgumentCaptor.getValue();
 
-        assertThat(capturedAction).isEqualTo(actionToBeSaved);
-    }
+    assertThat(capturedAction).isEqualTo(actionToBeSaved);
+  }
 
-    @Test
-    void deleteByName() {
+  @Test
+  void deleteByName() {
 
-        String name = "Test";
+    String name = "Test";
 
-        underTest.deleteByName(name);
+    underTest.deleteByName(name);
 
-        ArgumentCaptor<String> actionArgumentCaptor =
-                ArgumentCaptor.forClass(String.class);
+    ArgumentCaptor<String> actionArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-        verify(actionValueTypeRepository).deleteById(actionArgumentCaptor.capture());
+    verify(actionValueTypeRepository).deleteById(actionArgumentCaptor.capture());
 
-        String capturedName = actionArgumentCaptor.getValue();
+    String capturedName = actionArgumentCaptor.getValue();
 
-        assertThat(capturedName).isEqualTo(name);
-    }
+    assertThat(capturedName).isEqualTo(name);
+  }
 }

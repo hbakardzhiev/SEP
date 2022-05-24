@@ -8,30 +8,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * Defines the needed API for the table with the actions and value types.
- */
+/** Defines the needed API for the table with the actions and value types. */
 @RestController
 @RequestMapping("/action")
 public class ActionValueTypeController {
 
-    private ActionValueTypeService actionValueTypeService;
+  private ActionValueTypeService actionValueTypeService;
 
-    public ActionValueTypeController(ActionValueTypeService actionValueTypeService) {
-        this.actionValueTypeService = actionValueTypeService;
-    }
+  public ActionValueTypeController(ActionValueTypeService actionValueTypeService) {
+    this.actionValueTypeService = actionValueTypeService;
+  }
 
-    /**
-     * Retrieves all actions from the database.
-     * @return list of all actions in the database
-     */
-    @GetMapping
-    public List<ActionValueType> getAllAction() {
-        return actionValueTypeService.findAll();
-    }
+  /**
+   * Retrieves all actions from the database.
+   *
+   * @return list of all actions in the database
+   */
+  @GetMapping
+  public List<ActionValueType> getAllAction() {
+    return actionValueTypeService.findAll();
+  }
 
-    /*@GetMapping
-    public ActionValueType getByAction(String action){
-        return actionValueTypeService.findByName(action);
-    }*/
+  /*@GetMapping
+  public ActionValueType getByAction(String action){
+      return actionValueTypeService.findByName(action);
+  }*/
 }

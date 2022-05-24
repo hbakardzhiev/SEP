@@ -10,18 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Class that defines the API - the GET, POST, DELETE and PUT requests.
- */
+/** Class that defines the API - the GET, POST, DELETE and PUT requests. */
 @RestController
 @RequestMapping("/check")
 public class CheckController {
 
-
   private CheckService checkService;
 
-  @Autowired
-  private ActionValueTypeService actionValueTypeService;
+  @Autowired private ActionValueTypeService actionValueTypeService;
 
   public CheckController(CheckService checkService) {
     this.checkService = checkService;
@@ -65,20 +61,20 @@ public class CheckController {
    */
 
   /*
-JSON - use the following in postman to see that it is working;
-{
-    "theCheck":{
-        "name" : "check1",
-        "docSource" : "CN",
-        "attribute" : "name",
-        "value" : "orange",
-        "comments" : "hey comment"
-    },
-    "actionName": {
-        "actionName" : "Contains"
-    }
-}
-   */
+  JSON - use the following in postman to see that it is working;
+  {
+      "theCheck":{
+          "name" : "check1",
+          "docSource" : "CN",
+          "attribute" : "name",
+          "value" : "orange",
+          "comments" : "hey comment"
+      },
+      "actionName": {
+          "actionName" : "Contains"
+      }
+  }
+     */
   @PostMapping
   public Check addCheck(@RequestBody CheckAndActionName checkAndActionName) {
 
@@ -95,19 +91,19 @@ JSON - use the following in postman to see that it is working;
    */
 
   /*
-JSON - use the following in postman to see that it is working;
-{
-    "theCheck":{
-        "name" : "check1",
-        "docSource" : "CT",
-        "attribute" : "name",
-        "comments" : "noooooooo comment"
-    },
-    "actionName": {
-        "actionName" : "NotEmpty"
-    }
-}
-   */
+  JSON - use the following in postman to see that it is working;
+  {
+      "theCheck":{
+          "name" : "check1",
+          "docSource" : "CT",
+          "attribute" : "name",
+          "comments" : "noooooooo comment"
+      },
+      "actionName": {
+          "actionName" : "NotEmpty"
+      }
+  }
+     */
   @PutMapping
   public Check updateCheck(@RequestBody CheckAndActionName checkAndActionName) {
 

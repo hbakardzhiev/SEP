@@ -20,41 +20,34 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ContextConfiguration(classes = {ActionValueTypeController.class})
 @ExtendWith(SpringExtension.class)
 class ActionValueTypeControllerTest {
-    @Autowired
-    private ActionValueTypeController actionValueTypeController;
+  @Autowired private ActionValueTypeController actionValueTypeController;
 
-    @MockBean
-    private ActionValueTypeService actionValueTypeService;
+  @MockBean private ActionValueTypeService actionValueTypeService;
 
-    /**
-     * Method under test: {@link ActionValueTypeController#getAllAction()}
-     */
-    @Test
-    void testGetAllAction() throws Exception {
-        when(this.actionValueTypeService.findAll()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/action");
-        MockMvcBuilders.standaloneSetup(this.actionValueTypeController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
+  /** Method under test: {@link ActionValueTypeController#getAllAction()} */
+  @Test
+  void testGetAllAction() throws Exception {
+    when(this.actionValueTypeService.findAll()).thenReturn(new ArrayList<>());
+    MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/action");
+    MockMvcBuilders.standaloneSetup(this.actionValueTypeController)
+        .build()
+        .perform(requestBuilder)
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+        .andExpect(MockMvcResultMatchers.content().string("[]"));
+  }
 
-    /**
-     * Method under test: {@link ActionValueTypeController#getAllAction()}
-     */
-    @Test
-    void testGetAllAction2() throws Exception {
-        when(this.actionValueTypeService.findAll()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/action");
-        getResult.contentType("https://example.org/example");
-        MockMvcBuilders.standaloneSetup(this.actionValueTypeController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
+  /** Method under test: {@link ActionValueTypeController#getAllAction()} */
+  @Test
+  void testGetAllAction2() throws Exception {
+    when(this.actionValueTypeService.findAll()).thenReturn(new ArrayList<>());
+    MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/action");
+    getResult.contentType("https://example.org/example");
+    MockMvcBuilders.standaloneSetup(this.actionValueTypeController)
+        .build()
+        .perform(getResult)
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+        .andExpect(MockMvcResultMatchers.content().string("[]"));
+  }
 }
-
