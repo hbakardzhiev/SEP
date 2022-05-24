@@ -71,7 +71,6 @@ jobs:
       #      with:
       #        arguments: build
       - uses: actions/upload-artifact@v3
-      - name: Archive code coverage results
         run: cd home/runner/work/SEP/SEP/build/reports/tests/test/ 
              cd
         with:
