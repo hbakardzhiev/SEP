@@ -70,6 +70,7 @@ class AdminControllerTest {
     void testAddAdmin() throws Exception {
         Admin admin = new Admin();
         admin.setAdminRole("Admin Role");
+        admin.setEmail("jane.doe@example.org");
         admin.setId(123L);
         admin.setPassword("iloveyou");
         admin.setUsername("janedoe");
@@ -77,6 +78,7 @@ class AdminControllerTest {
 
         Admin admin1 = new Admin();
         admin1.setAdminRole("Admin Role");
+        admin1.setEmail("jane.doe@example.org");
         admin1.setId(123L);
         admin1.setPassword("iloveyou");
         admin1.setUsername("janedoe");
@@ -90,7 +92,9 @@ class AdminControllerTest {
         actualPerformResult.andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"id\":123,\"username\":\"janedoe\",\"password\":\"iloveyou\",\"adminRole\":\"Admin Role\"}"))
+                        .string(
+                                "{\"id\":123,\"username\":\"janedoe\",\"email\":\"jane.doe@example.org\",\"password\":\"iloveyou\",\"adminRole\":\"Admin"
+                                        + " Role\"}"))
                 .andExpect(MockMvcResultMatchers.redirectedUrl("http://localhost/admins"));
     }
 
