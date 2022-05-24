@@ -72,9 +72,8 @@ jobs:
       #        arguments: build
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
-        run: |
-          cd home/runner/work/SEP/SEP/build/reports/tests/test/
-          cd
+        run: cd home/runner/work/SEP/SEP/build/reports/tests/test/ 
+             cd
         with:
           name: index.html
           path: /output
