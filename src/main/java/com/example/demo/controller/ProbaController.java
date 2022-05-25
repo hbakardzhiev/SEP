@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.modules.CheckCategory;
+import com.example.demo.modules.CheckInputValue;
 import com.example.demo.services.ProbaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class ProbaController {
     private ProbaService probaService;
 
     @GetMapping("/cn")
-    public List<AbstractMap.SimpleEntry<List<CheckCategory>, String>> executeChecksCN() throws IOException {
+    public List<List<AbstractMap.SimpleEntry<String, CheckInputValue>>> executeChecksCN() throws IOException {
         return probaService.filterDataWithChecks();
     }
 
