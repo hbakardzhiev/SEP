@@ -26,6 +26,11 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
 
    private final PasswordEncoder passwordEncoder;
 
+   /**
+    * Method that adds na Admin object to the database.
+    * @param admin the admin to be added
+    * @return admin the object that was added
+    */
    @Override
    public Admin addAdmin(Admin admin) {
       admin.setPassword(passwordEncoder.encode(admin.getPassword()));
@@ -33,6 +38,10 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
       return adminRepoistory.save(admin);
    }
 
+   /**
+    * Method that deletes an administrator from the database
+    * @param id the id of the admin object
+    */
    @Override
    public void deleteAdmin(Long id) {
 
@@ -40,11 +49,22 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
 
    }
 
+   /**
+    * Method that returns a list of all admins in the database
+    * @return the list of admins found in the database
+    */
    @Override
    public List<Admin> getAdmins() {
       return adminRepoistory.findAll();
    }
 
+
+   /**
+    * Find an admin in the databse when given the usernname
+    * @param username the username to be searched
+    * @return returns the details of the user
+    * @throws UsernameNotFoundException
+    */
    @Override
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
       Admin admin = adminRepoistory.findAdminByUsername(username);
