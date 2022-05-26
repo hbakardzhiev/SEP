@@ -23,7 +23,7 @@ public class AdminController {
    *
    * @return the list of admins in the database
    */
-  @GetMapping("")
+  @GetMapping()
   public ResponseEntity<List<Admin>> getAdmins() {
     return ResponseEntity.ok().body(adminService.getAdmins());
   }

@@ -13,8 +13,4 @@ public class AutomaticreviewApplication {
     SpringApplication.run(AutomaticreviewApplication.class, args);
   }
 
-  @Bean
-  PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
 }

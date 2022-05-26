@@ -2,15 +2,18 @@ package com.example.demo.controller;
 
 import com.example.demo.modules.ActionValueType;
 import com.example.demo.services.ActionValueTypeService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import org.springframework.web.cors.CorsConfiguration;
 
 /** Defines the needed API for the table with the actions and value types. */
 @RestController
 @RequestMapping("/action")
+@CrossOrigin(CorsConfiguration.ALL)
 public class ActionValueTypeController {
 
   private ActionValueTypeService actionValueTypeService;
