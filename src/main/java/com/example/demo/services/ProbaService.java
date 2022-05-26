@@ -72,9 +72,10 @@ public class ProbaService {
 
         Result label = null;
         switch (actionValue) {
-            case "null": label = checksNull(value, check); // front end will give us ""
-            case "String": label = checksString(value, check);
-            case "Integer": label = checksInteger(value, check);
+            case "null": label = checksNull(value, check); break;
+            // front end will give us ""
+            case "String": label = checksString(value, check); break;
+            case "Integer": label = checksInteger(value, check); break;
         }
         return label;
     }
@@ -87,17 +88,17 @@ public class ProbaService {
 //        if(check.getValue() == null){
 //            throw
 //        }
-        Integer checkValue = Integer.parseInt(check.getValue());
-        Integer valueInputInt = Integer.parseInt(valueInput);
+        Integer checkValue = Integer.parseInt(check.getValue()); // check value
+        Integer valueInputInt = Integer.parseInt(valueInput); //attribute value
         switch(checkAction) {
-            case "StrictlyGreater": status = checkValue > valueInputInt;
-            case "StrictlySmaller": status = checkValue < valueInputInt;
-            case "GreaterEqual": status = checkValue >= valueInputInt;
-            case "SmallerEqual": status = checkValue <= valueInputInt;
-            case "LengthStrictlyGreater": status = length > checkValue;
-            case "LengthStrictlySmaller": status = length < checkValue;
-            case "LengthGreaterEqual": status = length >= checkValue;
-            case "LengthSmallerEqual": status = length <= checkValue;
+            case "StrictlyGreater": status = checkValue > valueInputInt; break;
+            case "StrictlySmaller": status = checkValue < valueInputInt; break;
+            case "GreaterEqual": status = checkValue >= valueInputInt; break;
+            case "SmallerEqual": status = checkValue <= valueInputInt; break;
+            case "LengthStrictlyGreater": status = length > checkValue; break;
+            case "LengthStrictlySmaller": status = length < checkValue; break;
+            case "LengthGreaterEqual": status = length >= checkValue; break;
+            case "LengthSmallerEqual": status = length <= checkValue; break;
         }
         result = true ? Result.passed : Result.failed;
         return result;
@@ -107,9 +108,9 @@ public class ProbaService {
        Result passed = null; //change it to enum
         String checkAction = check.getActionValueType().getAction();
         switch(checkAction) {
-            case "Empty": passed = attributeValue.isEmpty() ? Result.passed : Result.failed;
-            case "NotEmpty": passed = (! (attributeValue.isEmpty())) ? Result.passed : Result.failed;
-            case "HumanCheck": passed = Result.humanCheck;
+            case "Empty": passed = attributeValue.isEmpty() ? Result.passed : Result.failed; break;
+            case "NotEmpty": passed = (! (attributeValue.isEmpty())) ? Result.passed : Result.failed; break;
+            case "HumanCheck": passed = Result.humanCheck; break;
         }
         return passed;
     }
@@ -120,8 +121,8 @@ public class ProbaService {
         String value = check.getValue();
         String checkAction = check.getActionValueType().getAction();
         switch(checkAction) {
-            case "Contains": if (attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;}
-            case "NotContains": if (!attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;}
+            case "Contains": if (attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;} break;
+            case "NotContains": if (!attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;} break;
         }
         return result;
     }

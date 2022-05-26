@@ -22,11 +22,11 @@ public class CheckConfiguration {
       ActionValueType actionType = new ActionValueType("NotEmpty", "null", "pls1");
       actionType.add(firstCheck);
 
-      Check secondCheck = new Check("Check2", "Change Task ", "description", "banana", "comment2");
-      ActionValueType actionType2 = new ActionValueType("Contains", "String", "pls2");
+      Check secondCheck = new Check("Check2", "Change Notice ", "des", "1", "comment2");
+      ActionValueType actionType2 = new ActionValueType("StrictlyGreater", "Integer", "pls2");
       actionType2.add(secondCheck);
 
-      Check thirdCheck = new Check("Check3", "Change Task ", "description", "pineapple", "comment3");
+      Check thirdCheck = new Check("Check3", "Change Notice ", "supplierApprovalRequired", "No", "comment3");
       ActionValueType actionType3 = new ActionValueType("Contains", "String", "pls3");
       actionType3.add(thirdCheck);
 
