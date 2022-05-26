@@ -11,28 +11,26 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Admin {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id", nullable = false)
+  private Long id;
 
-    @Column(name="username")
-    private String username;
+  @Column(name = "username")
+  private String username;
 
-    @Column(name="email")
-    private String email;
+  @Column(name = "email")
+  private String email;
 
-    @Column(name="password")
-    private String password;
+  @Column(name = "password")
+  private String password;
 
-    @Column(name="role")
-    private String adminRole;
+  @Column(name = "role")
+  private String adminRole;
 
-
-    public Admin(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
+  public Admin(String username, String email, String password) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+  }
 }

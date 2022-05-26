@@ -5,9 +5,9 @@ import com.example.demo.modules.Admin;
 import java.util.List;
 
 public interface AdminService {
-    Admin addAdmin (Admin admin);
+  Admin addAdmin(Admin admin);
 
-    List<Admin> getAdmins();
+  List<Admin> getAdmins();
 
-    void deleteAdmin(Long id);
+  void deleteAdmin(Long id);
 }

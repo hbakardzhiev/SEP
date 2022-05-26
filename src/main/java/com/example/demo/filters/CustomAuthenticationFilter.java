@@ -22,58 +22,66 @@ import java.util.Map;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private final AuthenticationManager authenticationManager;
+  private final AuthenticationManager authenticationManager;
 
-    public CustomAuthenticationFilter (AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
-    }
+  public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+    this.authenticationManager = authenticationManager;
+  }
 
-    /**
-     * Overriden method that attempts authentication,
-     * taking the account password and username from the request
-     */
-    @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+  /**
+   * Overriden method that attempts authentication, taking the account password and username from
+   * the request
+   */
+  @Override
+  public Authentication attemptAuthentication(
+      HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+    UsernamePasswordAuthenticationToken authenticationToken =
+        new UsernamePasswordAuthenticationToken(username, password);
 
-        return authenticationManager.authenticate(authenticationToken);
-    }
+    return authenticationManager.authenticate(authenticationToken);
+  }
 
-    /**
-     * Method that returns the token value when the client has made a successful authentication.
-     */
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        var admin = (User) authResult.getPrincipal();
-        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+  /** Method that returns the token value when the client has made a successful authentication. */
+  @Override
+  protected void successfulAuthentication(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      FilterChain chain,
+      Authentication authResult)
+      throws IOException, ServletException {
+    var admin = (User) authResult.getPrincipal();
+    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
 
-        // retrieving the token
-        String access_token = JWT.create()
-                .withSubject(admin.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 3 * 60 * 60 * 1000))
-                .withIssuer(request.getRequestURL().toString())
-                .withClaim("roles", "ADMIN")
-                .sign(algorithm);
+    // retrieving the token
+    String access_token =
+        JWT.create()
+            .withSubject(admin.getUsername())
+            .withExpiresAt(new Date(System.currentTimeMillis() + 3 * 60 * 60 * 1000))
+            .withIssuer(request.getRequestURL().toString())
+            .withClaim("roles", "ADMIN")
+            .sign(algorithm);
 
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("access_token", access_token);
-        response.setContentType(APPLICATION_JSON_VALUE);
+    Map<String, String> tokens = new HashMap<>();
+    tokens.put("access_token", access_token);
+    response.setContentType(APPLICATION_JSON_VALUE);
 
-        // return the token in a JSON format
-        new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-    }
+    // return the token in a JSON format
+    new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+  }
 
-    /**
-     * Method that overrires the behaviour of its parent and
-     * displays the content of the request and response when the authentication has been
-     */
-    @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        super.unsuccessfulAuthentication(request, response, failed);
-        System.out.println(request);
-        System.out.println(response);
-    }
+  /**
+   * Method that overrires the behaviour of its parent and displays the content of the request and
+   * response when the authentication has been
+   */
+  @Override
+  protected void unsuccessfulAuthentication(
+      HttpServletRequest request, HttpServletResponse response, AuthenticationException failed)
+      throws IOException, ServletException {
+    super.unsuccessfulAuthentication(request, response, failed);
+    System.out.println(request);
+    System.out.println(response);
+  }
 }
