@@ -129,33 +129,5 @@ class AdminControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("deleted"));
     }
 
-    /**
-     * Method under test: {@link AdminController#testtt()}
-     */
-    @Test
-    void testTesttt() throws Exception {
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/admins/check");
-        MockMvcBuilders.standaloneSetup(this.adminController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("asd"));
-    }
-
-    /**
-     * Method under test: {@link AdminController#testtt()}
-     */
-    @Test
-    void testTesttt2() throws Exception {
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/admins/check");
-        getResult.contentType("https://example.org/example");
-        MockMvcBuilders.standaloneSetup(this.adminController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("asd"));
-    }
 }
 
