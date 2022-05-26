@@ -21,7 +21,7 @@ public class ProbaService {
     @Autowired
     private CheckRepository checkRepository;
 
-    public List<List<AbstractMap.SimpleEntry<Result,CheckInputValue>>> filterDataWithChecks () throws IOException {
+    public List<AbstractMap.SimpleEntry<Result,CheckInputValue>> filterDataWithChecks () throws IOException {
         List<Check> checks = checkRepository.findAll();
         var data = perserService.parseCN();
         final var relevantChecksVal = data.stream().map(element -> {
@@ -41,7 +41,7 @@ public class ProbaService {
             return checkedChecks.collect(Collectors.toList());
 //
         });
-        return relevantChecksVal.collect(Collectors.toList());
+        return relevantChecksVal.flatMap(List::stream).collect(Collectors.toList());
 
     }
 
@@ -67,30 +67,53 @@ public class ProbaService {
 
     private Result executeTheCheck(CheckInputValue checkInputValue) {
         Check check = checkInputValue.getCheck();
-        String value = checkInputValue.getInputValue();
-        String checkValue = check.getValue();
+        String value = checkInputValue.getInputValue(); // this is inputValue
+        String actionValue = check.getActionValueType().getValueType();
 
         Result label = null;
-        switch (checkValue) {
+        switch (actionValue) {
             case "null": label = checksNull(value, check); // front end will give us ""
-//            case "Integer":
             case "String": label = checksString(value, check);
+            case "Integer": label = checksInteger(value, check);
         }
         return label;
     }
 
-    private String checksNull(String attributeValue, Check check){
-        String passed = null; //change it to enum
+    private Result checksInteger(String valueInput, Check check) { //InputValue and a check
+        Result result = null;
+        boolean status;
+        String checkAction = check.getActionValueType().getAction();
+        Integer length = valueInput.length();
+//        if(check.getValue() == null){
+//            throw
+//        }
+        Integer checkValue = Integer.parseInt(check.getValue());
+        Integer valueInputInt = Integer.parseInt(valueInput);
+        switch(checkAction) {
+            case "StrictlyGreater": status = checkValue > valueInputInt;
+            case "StrictlySmaller": status = checkValue < valueInputInt;
+            case "GreaterEqual": status = checkValue >= valueInputInt;
+            case "SmallerEqual": status = checkValue <= valueInputInt;
+            case "LengthStrictlyGreater": status = length > checkValue;
+            case "LengthStrictlySmaller": status = length < checkValue;
+            case "LengthGreaterEqual": status = length >= checkValue;
+            case "LengthSmallerEqual": status = length <= checkValue;
+        }
+        result = true ? Result.passed : Result.failed;
+        return result;
+    }
+
+    private Result checksNull(String attributeValue, Check check){
+       Result passed = null; //change it to enum
         String checkAction = check.getActionValueType().getAction();
         switch(checkAction) {
-            case "Empty": passed = String.valueOf(attributeValue.isEmpty());
-            case "NotEmpty": passed = String.valueOf(! (attributeValue.isEmpty()));
-//            case "HumanCheck":
+            case "Empty": passed = attributeValue.isEmpty() ? Result.passed : Result.failed;
+            case "NotEmpty": passed = (! (attributeValue.isEmpty())) ? Result.passed : Result.failed;
+            case "HumanCheck": passed = Result.humanCheck;
         }
         return passed;
     }
 
-//    if checks are with value integer or value String
 
     private Result checksString(String attributeValue, Check check) {
         Result result = Result.humanCheck;
