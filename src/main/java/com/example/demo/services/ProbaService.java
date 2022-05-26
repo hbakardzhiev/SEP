@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.modules.Check;
 import com.example.demo.modules.CheckInputValue;
+import com.example.demo.modules.Result;
 import com.example.demo.repository.CheckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class ProbaService {
     @Autowired
     private CheckRepository checkRepository;
 
-    public List<List<AbstractMap.SimpleEntry<String,CheckInputValue>>> filterDataWithChecks () throws IOException {
+    public List<List<AbstractMap.SimpleEntry<Result,CheckInputValue>>> filterDataWithChecks () throws IOException {
         List<Check> checks = checkRepository.findAll();
         var data = perserService.parseCN();
         final var relevantChecksVal = data.stream().map(element -> {
@@ -33,8 +34,8 @@ public class ProbaService {
 
             var checkedChecks = relCheck.stream().map( check -> {
                 CheckInputValue checkInputValue = new CheckInputValue(element.getValue().getValue(), check);
-                String status = executeTheCheck(checkInputValue);
-                return new AbstractMap.SimpleEntry<String, CheckInputValue>(status, checkInputValue);
+                Result status = executeTheCheck(checkInputValue);
+                return new AbstractMap.SimpleEntry<Result, CheckInputValue>(status, checkInputValue);
             });
 
             return checkedChecks.collect(Collectors.toList());
@@ -64,16 +65,16 @@ public class ProbaService {
 //        return checkCategories.collect(Collectors.toList());
 //    }
 
-    private String executeTheCheck(CheckInputValue checkInputValue) {
+    private Result executeTheCheck(CheckInputValue checkInputValue) {
         Check check = checkInputValue.getCheck();
         String value = checkInputValue.getInputValue();
         String checkValue = check.getValue();
 
-        String label = null;
+        Result label = null;
         switch (checkValue) {
             case "null": label = checksNull(value, check); // front end will give us ""
 //            case "Integer":
-//            case "String":
+            case "String": label = checksString(value, check);
         }
         return label;
     }
@@ -90,5 +91,16 @@ public class ProbaService {
     }
 
 //    if checks are with value integer or value String
+
+    private Result checksString(String attributeValue, Check check) {
+        Result result = Result.humanCheck;
+        String value = check.getValue();
+        String checkAction = check.getActionValueType().getAction();
+        switch(checkAction) {
+            case "Contains": if (attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;}
+            case "NotContains": if (!attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;}
+        }
+        return result;
+    }
 
 }

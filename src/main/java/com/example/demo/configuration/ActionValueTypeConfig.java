@@ -28,11 +28,11 @@ public class ActionValueTypeConfig {
               new ActionValueType("StrictlySmaller", "Integer", "description"),
               new ActionValueType("GreaterEqual", "Integer", "sth"),
               new ActionValueType("SmallerEqual", "Integer", "sth"),
-              new ActionValueType("LengthStrictlyGreater", "String", "sth"),
+              new ActionValueType("LengthStrictlyGreater", "Integer", "sth"),
               new ActionValueType("LengthStrictlySmaller", "Integer", "sth"),
               new ActionValueType("LengthGreaterEqual", "Integer", "sth"),
               new ActionValueType("LengthSmallerEqual", "Integer", "sth"),
-              new ActionValueType("DifferentAttrValue", "Integer", "sth"),
+              new ActionValueType("DifferentAttrValue", "String", "sth"),
               new ActionValueType("SameAttrValue", "String", "sth"),
               new ActionValueType("HumanCheck", null, "sth"));
 
