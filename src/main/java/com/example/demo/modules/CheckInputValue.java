@@ -14,6 +14,7 @@ public class CheckInputValue {
         return "CheckInputValue{" +
                 "inputValue='" + inputValue + '\'' +
                 ",check=" + check +
+                ",action=" + check.getActionValueType().getAction() +
                 '}';
     }
 
