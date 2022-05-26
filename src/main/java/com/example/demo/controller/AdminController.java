@@ -5,6 +5,7 @@ import com.example.demo.services.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admins")
 @RequiredArgsConstructor
+@CrossOrigin(CorsConfiguration.ALL)
 public class AdminController {
   private final AdminService adminService;
 

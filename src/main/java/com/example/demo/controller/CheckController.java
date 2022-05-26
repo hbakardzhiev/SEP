@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.cors.CorsConfiguration;
 
 /** Class that defines the API - the GET, POST, DELETE and PUT requests. */
 @RestController
 @RequestMapping("/check")
+@CrossOrigin(CorsConfiguration.ALL)
 public class CheckController {
 
   private CheckService checkService;
