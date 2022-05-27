@@ -25,7 +25,8 @@ public class ProbaService {
         List<Check> checks = checkRepository.findAll();
         var data = perserService.parseCN();
         final var relevantChecksVal = data.stream().map(element -> {
-            final var docSource = element.getKey().split("-")[0];//TODO: change it
+            final var indexOfHyphen = element.getKey().indexOf("-");
+            final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
             final var attribute = element.getValue().getKey();
 
             //list of checks relevant for this docSource and attribute
