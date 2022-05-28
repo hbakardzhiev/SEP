@@ -1,20 +1,20 @@
 package com.example.demo.modules;
 
 public class CheckInputValue {
-    private String inputValue; //we can change it to enum -> failed, passed, attention..
-    private Check check;
+    private String inputValue; //the value which is in Windchill
+    private CheckAndActionName checkAndActionName;
 
-    public CheckInputValue(String inputValue, Check check) {
+    public CheckInputValue(String inputValue, CheckAndActionName checkAndActionName) {
         this.inputValue = inputValue;
-        this.check = check;
+        this.checkAndActionName = checkAndActionName;
     }
 
     @Override
     public String toString() {
         return "CheckInputValue{" +
                 "inputValue='" + inputValue + '\'' +
-                ",check=" + check +
-                ",action=" + check.getActionValueType().getAction() +
+                ",checkAndActionName=" + checkAndActionName +
+//                ",action=" + check.getActionValueType().getAction() +
                 '}';
     }
 
@@ -26,11 +26,11 @@ public class CheckInputValue {
         this.inputValue = inputValue;
     }
 
-    public Check getCheck() {
-        return check;
+    public CheckAndActionName getCheckAndAction() {
+        return checkAndActionName;
     }
 
-    public void setCheck(Check check) {
-        this.check = check;
+    public void setCheckAndAction(CheckAndActionName checkAndActionName) {
+        this.checkAndActionName = checkAndActionName;
     }
 }

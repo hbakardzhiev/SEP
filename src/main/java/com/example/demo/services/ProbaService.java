@@ -1,8 +1,6 @@
 package com.example.demo.services;
 
-import com.example.demo.modules.Check;
-import com.example.demo.modules.CheckInputValue;
-import com.example.demo.modules.Result;
+import com.example.demo.modules.*;
 import com.example.demo.repository.CheckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,15 +26,20 @@ public class ProbaService {
             final var indexOfHyphen = element.getKey().indexOf("-");
             final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
             final var attribute = element.getValue().getKey();
+            final var inputValue = element.getValue().getValue();
 
             //list of checks relevant for this docSource and attribute
             List<Check> relCheck = checks.stream().filter(check -> Objects.equals(check.getDocSource(), docSource)
                             && Objects.equals(check.getAttribute(), attribute)).collect(Collectors.toList());
 
             var checkedChecks = relCheck.stream().map( check -> {
-                CheckInputValue checkInputValue = new CheckInputValue(element.getValue().getValue(), check);
-                Result status = executeTheCheck(checkInputValue);
-                return new AbstractMap.SimpleEntry<Result, CheckInputValue>(status, checkInputValue);
+                String action = check.getActionValueType().getAction();
+                ActionNameString actionNameString = new ActionNameString(action);
+                CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
+                CheckInputValue checkActionInputValue = new CheckInputValue(inputValue, checkAndActionName);
+
+                Result status = executeTheCheck(check, inputValue, action);
+                return new AbstractMap.SimpleEntry<Result, CheckInputValue>(status, checkActionInputValue);
             });
 
             return checkedChecks.collect(Collectors.toList());
@@ -66,17 +69,14 @@ public class ProbaService {
 //        return checkCategories.collect(Collectors.toList());
 //    }
 
-    private Result executeTheCheck(CheckInputValue checkInputValue) {
-        Check check = checkInputValue.getCheck();
-        String value = checkInputValue.getInputValue(); // this is inputValue
-        String actionValue = check.getActionValueType().getValueType();
+    private Result executeTheCheck(Check check, String inputValue, String actionValue) {
 
         Result label = null;
         switch (actionValue) {
-            case "null": label = checksNull(value, check); break;
+            case "null": label = checksNull(inputValue, check); break;
             // front end will give us ""
-            case "String": label = checksString(value, check); break;
-            case "Integer": label = checksInteger(value, check); break;
+            case "String": label = checksString(inputValue, check); break;
+            case "Integer": label = checksInteger(inputValue, check); break;
         }
         return label;
     }
@@ -86,9 +86,6 @@ public class ProbaService {
         boolean status;
         String checkAction = check.getActionValueType().getAction();
         Integer length = valueInput.length();
-//        if(check.getValue() == null){
-//            throw
-//        }
         Integer checkValue = Integer.parseInt(check.getValue()); // check value
         Integer valueInputInt = Integer.parseInt(valueInput); //attribute value
         switch(checkAction) {

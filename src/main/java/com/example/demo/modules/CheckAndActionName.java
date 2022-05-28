@@ -10,10 +10,13 @@ public class CheckAndActionName {
   public ActionNameString actionName;
 
 
-//    public CheckAndActionName(Check theCheck, ActionNameString actionName) {
-//        this.theCheck = theCheck;
-//        this.actionName = actionName;
-//    }
+    public CheckAndActionName(){
+
+    }
+    public CheckAndActionName(Check theCheck, ActionNameString actionName) {
+        this.theCheck = theCheck;
+        this.actionName = actionName;
+    }
 
     public Check getTheCheck() {
         return theCheck;
