@@ -1,6 +1,6 @@
 package com.example.demo.modules;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -38,7 +38,7 @@ public class Check {
   @ManyToOne(
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "action")
-  @JsonBackReference
+  @JsonIgnore
   private ActionValueType actionValueType;
 
   public Check() {}

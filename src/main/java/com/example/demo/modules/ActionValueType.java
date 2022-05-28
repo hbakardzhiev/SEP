@@ -1,6 +1,6 @@
 package com.example.demo.modules;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class ActionValueType {
 
   // the checks associated with this action name
   @OneToMany(mappedBy = "actionValueType")
-  @JsonManagedReference
+  @JsonIgnore
   private List<Check> checks = new ArrayList<>();
 
   public ActionValueType() {}
