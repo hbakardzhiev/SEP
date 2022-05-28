@@ -38,7 +38,7 @@ public class ProbaService {
                 CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
                 CheckInputValue checkActionInputValue = new CheckInputValue(inputValue, checkAndActionName);
 
-                Result status = executeTheCheck(check, inputValue, action);
+                Result status = executeTheCheck(check, inputValue);
                 return new AbstractMap.SimpleEntry<Result, CheckInputValue>(status, checkActionInputValue);
             });
 
@@ -69,8 +69,8 @@ public class ProbaService {
 //        return checkCategories.collect(Collectors.toList());
 //    }
 
-    private Result executeTheCheck(Check check, String inputValue, String actionValue) {
-
+    private Result executeTheCheck(Check check, String inputValue) {
+        String actionValue = check.getActionValueType().getValueType();
         Result label = null;
         switch (actionValue) {
             case "null": label = checksNull(inputValue, check); break;
