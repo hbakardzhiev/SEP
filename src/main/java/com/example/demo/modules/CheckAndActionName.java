@@ -10,9 +10,8 @@ public class CheckAndActionName {
   public ActionNameString actionName;
 
 
-    public CheckAndActionName(){
+    public CheckAndActionName(){}
 
-    }
     public CheckAndActionName(Check theCheck, ActionNameString actionName) {
         this.theCheck = theCheck;
         this.actionName = actionName;

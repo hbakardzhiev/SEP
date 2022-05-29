@@ -34,7 +34,9 @@ public class ActionValueTypeConfig {
               new ActionValueType("LengthSmallerEqual", "Integer", "sth"),
               new ActionValueType("DifferentAttrValue", "String", "sth"),
               new ActionValueType("SameAttrValue", "String", "sth"),
-              new ActionValueType("HumanCheck", "null", "sth"));
+              new ActionValueType("HumanCheck", "null", "sth"),
+              new ActionValueType("IsEqual", "String", "sth"),
+              new ActionValueType("IsNotEqual", "String", "sth"));
 
       repository.saveAll(actions);
     };

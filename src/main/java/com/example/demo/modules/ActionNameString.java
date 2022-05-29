@@ -9,6 +9,7 @@ public class ActionNameString {
       return actionName;
   }
 
+  public ActionNameString() {}
   public ActionNameString(String actionName) {
       this.actionName = actionName;
     }

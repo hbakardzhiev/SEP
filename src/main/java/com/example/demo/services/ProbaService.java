@@ -121,6 +121,8 @@ public class ProbaService {
         switch(checkAction) {
             case "Contains": if (attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;} break;
             case "NotContains": if (!attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;} break;
+            case "IsEqual": if (attributeValue.equals(value)) {result = Result.passed;} else {result = Result.failed;} break;
+            case "IsNotEqual": if (!attributeValue.equals(value)) {result = Result.passed;} else {result = Result.failed;} break;
         }
         return result;
     }
