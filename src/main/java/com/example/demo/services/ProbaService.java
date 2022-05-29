@@ -21,7 +21,7 @@ public class ProbaService {
 
     public List<AbstractMap.SimpleEntry<Result,CheckInputValue>> filterDataWithChecks () throws IOException {
         List<Check> checks = checkRepository.findAll();
-        var data = perserService.parseCN();
+        var data = perserService.parseEverything();
         final var relevantChecksVal = data.stream().map(element -> {
             final var indexOfHyphen = element.getKey().indexOf("-");
             final var docSource = element.getKey().substring(0, indexOfHyphen - 1);

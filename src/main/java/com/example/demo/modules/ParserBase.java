@@ -68,11 +68,8 @@ public abstract class ParserBase {
         document.entrySet().stream()
             .map(
                 element ->
-                    new AbstractMap.SimpleImmutableEntry<>(
-                        element.getKey(),
-                        new SimpleImmutableEntry<String, String>(
-                            id,
-                            element
+                    new AbstractMap.SimpleImmutableEntry<>(element.getKey(),
+                        new SimpleImmutableEntry<String, String>(id, element
                                 .getValue()
                                 .select((String.format("[%s=%s]", tag, id)))
                                 .text())));
@@ -93,8 +90,7 @@ public abstract class ParserBase {
     final var stream =
         sheetSourceStream
             .parallel()
-            // element is a row in table sheetsource which is connected to
-            // sheetsource_sheetsource_type
+            // element is a row in table sheet_source
             .filter(element -> element.getSheetSourceType().equals(this.getSheetType()))
             .flatMap(
                 (elementToBeParsed) ->

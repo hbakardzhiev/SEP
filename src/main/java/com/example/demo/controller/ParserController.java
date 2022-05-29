@@ -4,6 +4,8 @@ import com.example.demo.services.ParserService;
 import java.io.IOException;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,24 +29,30 @@ public class ParserController {
   @GetMapping("cn")
   public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCN()
       throws IOException {
-    return parserService.parseCN();
+    return parserService.parseCN().collect(Collectors.toList());
   }
 
   @GetMapping("cr")
   public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCR()
       throws IOException {
-    return parserService.parseCR();
+    return parserService.parseCR().collect(Collectors.toList());
   }
 
   @GetMapping("ct")
   public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCT()
       throws IOException {
-    return parserService.parseCT();
+    return parserService.parseCT().collect(Collectors.toList());
   }
 
   @GetMapping("dmr")
   public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseDMR()
       throws IOException {
-    return parserService.parseDMR();
+    return parserService.parseDMR().collect(Collectors.toList());
+  }
+
+  @GetMapping("allData")
+  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseAll()
+          throws IOException {
+    return parserService.parseEverything();
   }
 }
