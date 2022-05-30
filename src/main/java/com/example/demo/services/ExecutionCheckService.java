@@ -18,6 +18,15 @@ public class ExecutionCheckService {
     @Autowired
     private CheckRepository checkRepository;
 
+    /**
+     * Associates each parsed entry that consists of document Source, attribute and value of
+     * the attribute with the corresponding list of checks that needs to be performed on it.
+     * The association is made based on specific document type (docSource) and attribute name.
+     *
+     * @return list of entries, where each entry has as a Key the status of the check
+     * - passed, failed, attention point and the value of the entry is the check itself and the inputValue
+     * @throws IOException if the parsing of the data fails
+     */
     public List<AbstractMap.SimpleEntry<Result,CheckInputValue>> filterDataWithChecks () throws IOException {
         List<Check> checks = checkRepository.findAll();
         var data = parserService.parseEverything();
@@ -48,7 +57,14 @@ public class ExecutionCheckService {
 
     }
 
-
+    /**
+     * Based on the action value (the type of the value that is needed for the specific action)
+     * the check is propagated to one of the corresponding method.
+     *
+     * @param check the check that needs to be executed on the @param inputValue
+     * @param inputValue the value that is scraped from Windchill and needs to be checked
+     * @return the status of type Result when executing the check
+     */
     private Result executeTheCheck(Check check, String inputValue) {
         String actionValue = check.getActionValueType().getValueType();
         Result label = null;
