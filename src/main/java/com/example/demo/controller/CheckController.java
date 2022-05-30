@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -140,6 +141,8 @@ public class CheckController {
    */
   private Check extractCheck(@RequestBody CheckAndActionName checkAndActionName) {
     Check theCheck = checkAndActionName.theCheck;
+    theCheck.setAttribute(theCheck.getAttribute().toLowerCase().replaceAll("\\s", ""));
+
     String actionName = checkAndActionName.actionName.getActionName();
 
     ActionValueType theAction = actionValueTypeService.findByName(actionName);
