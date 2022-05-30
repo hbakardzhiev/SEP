@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.modules.CheckInputValue;
 import com.example.demo.modules.Result;
-import com.example.demo.services.ProbaService;
+import com.example.demo.services.ExecutionCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,14 +14,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/executedChecks") //change later
-public class ProbaController {
+public class ExecutionCheckController {
 
     @Autowired
-    private ProbaService probaService;
+    private ExecutionCheckService executionCheckService;
 
     @GetMapping("/cn")
     public List<AbstractMap.SimpleEntry<Result, CheckInputValue>> executeChecksCN() throws IOException {
-        return probaService.filterDataWithChecks();
+        return executionCheckService.filterDataWithChecks();
     }
 
 }

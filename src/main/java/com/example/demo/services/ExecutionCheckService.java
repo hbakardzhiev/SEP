@@ -8,20 +8,19 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
-public class ProbaService {
+public class ExecutionCheckService {
 
     @Autowired
-    private ParserService perserService;
+    private ParserService parserService;
 
     @Autowired
     private CheckRepository checkRepository;
 
     public List<AbstractMap.SimpleEntry<Result,CheckInputValue>> filterDataWithChecks () throws IOException {
         List<Check> checks = checkRepository.findAll();
-        var data = perserService.parseEverything();
+        var data = parserService.parseEverything();
         final var relevantChecksVal = data.stream().map(element -> {
             final var indexOfHyphen = element.getKey().indexOf("-");
             final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
@@ -43,31 +42,12 @@ public class ProbaService {
             });
 
             return checkedChecks.collect(Collectors.toList());
-//
+
         });
         return relevantChecksVal.flatMap(List::stream).collect(Collectors.toList());
 
     }
 
-//    private  List<AbstractMap.SimpleEntry<List<CheckInputValue>, String>>
-//                    executeChecks(Stream<AbstractMap.SimpleEntry<List<Check>, String>> relevantChecksValue) {
-//
-//        var checkCategories = relevantChecksValue.map(simpleEntry -> {
-//            //retrieve the relevant checks and the attribute value
-//            List<Check> relevantChecks = simpleEntry.getKey();
-//            String attributeValue = simpleEntry.getValue();
-//
-//            //execute each of the checks on the attribute value in a separate method
-//            Stream<CheckCategory> checkCategories1 = relevantChecks.stream()
-//                    .map(check -> {
-//                        CheckCategory checkCategory = executeTheCheck(attributeValue, check);
-//                        return checkCategory;
-//                    });
-//            return new AbstractMap.SimpleEntry<List<CheckCategory>,String>(
-//                    checkCategories1.collect(Collectors.toList()),attributeValue);
-//            });
-//        return checkCategories.collect(Collectors.toList());
-//    }
 
     private Result executeTheCheck(Check check, String inputValue) {
         String actionValue = check.getActionValueType().getValueType();
