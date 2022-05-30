@@ -29,12 +29,6 @@ public class Check {
   @Column(name = "comments")
   private String comments;
 
-  // Get a string value for action, if it does not exist from the defined actions,
-  // do not allow the user to make the check.
-  // This could be hardcoded on the frontend side.
-
-  // To prevent cascading deletes, so that check deletion has no relation
-  // with ActionValueType deletion.
   @ManyToOne(
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "action")
