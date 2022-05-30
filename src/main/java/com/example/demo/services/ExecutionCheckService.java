@@ -69,8 +69,7 @@ public class ExecutionCheckService {
         String actionValue = check.getActionValueType().getValueType();
         Result label = null;
         switch (actionValue) {
-            case "null": label = checksNull(inputValue, check); break;
-            // front end will give us ""
+            case "": label = checksNull(inputValue, check); break;
             case "String": label = checksString(inputValue, check); break;
             case "Integer": label = checksInteger(inputValue, check); break;
         }
