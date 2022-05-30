@@ -82,14 +82,13 @@ class AdminControllerTest {
     ResultActions actualPerformResult =
         MockMvcBuilders.standaloneSetup(this.adminController).build().perform(requestBuilder);
     actualPerformResult
-        .andExpect(MockMvcResultMatchers.status().isCreated())
+        .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
         .andExpect(
             MockMvcResultMatchers.content()
                 .string(
                     "{\"id\":123,\"username\":\"janedoe\",\"email\":\"jane.doe@example.org\",\"password\":\"iloveyou\",\"adminRole\":\"Admin"
-                        + " Role\"}"))
-        .andExpect(MockMvcResultMatchers.redirectedUrl("http://localhost/admins"));
+                        + " Role\"}")).andExpect(MockMvcResultMatchers.status().isOk());
   }
 
   /** Method under test: {@link AdminController#deleteAdminById(long)} */
@@ -101,9 +100,7 @@ class AdminControllerTest {
     MockMvcBuilders.standaloneSetup(this.adminController)
         .build()
         .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-        .andExpect(MockMvcResultMatchers.content().string("deleted"));
+        .andExpect(MockMvcResultMatchers.status().isOk());
   }
 
   /** Method under test: {@link AdminController#deleteAdminById(long)} */
@@ -116,8 +113,6 @@ class AdminControllerTest {
     MockMvcBuilders.standaloneSetup(this.adminController)
         .build()
         .perform(deleteResult)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-        .andExpect(MockMvcResultMatchers.content().string("deleted"));
+        .andExpect(MockMvcResultMatchers.status().isOk());
   }
 }

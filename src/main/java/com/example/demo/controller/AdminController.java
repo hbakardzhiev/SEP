@@ -3,12 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.modules.Admin;
 import com.example.demo.services.AdminService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -24,8 +21,8 @@ public class AdminController {
    * @return the list of admins in the database
    */
   @GetMapping()
-  public ResponseEntity<List<Admin>> getAdmins() {
-    return ResponseEntity.ok().body(adminService.getAdmins());
+  public List<Admin> getAdmins() {
+    return adminService.getAdmins();
   }
 
   /**
@@ -35,9 +32,8 @@ public class AdminController {
    * @return 200 OK status code
    */
   @DeleteMapping("/delete/{id}")
-  public ResponseEntity<String> deleteAdminById(@PathVariable(name = "id") long id) {
+  public void deleteAdminById(@PathVariable(name = "id") long id) {
     adminService.deleteAdmin(id);
-    return ResponseEntity.ok().body("deleted");
   }
 
   /**
@@ -47,10 +43,7 @@ public class AdminController {
    * @return 201 CREATED if the admin was successfully added and the admin object in body response.
    */
   @PostMapping("/add")
-  public ResponseEntity<Admin> addAdmin(@RequestBody Admin admin) {
-    URI uri =
-        URI.create(
-            ServletUriComponentsBuilder.fromCurrentContextPath().path("/admins").toUriString());
-    return ResponseEntity.created(uri).body(adminService.addAdmin(admin));
+  public Admin addAdmin(@RequestBody Admin admin) {
+    return adminService.addAdmin(admin);
   }
 }
