@@ -88,7 +88,8 @@ class AdminControllerTest {
             MockMvcResultMatchers.content()
                 .string(
                     "{\"id\":123,\"username\":\"janedoe\",\"email\":\"jane.doe@example.org\",\"password\":\"iloveyou\",\"adminRole\":\"Admin"
-                        + " Role\"}")).andExpect(MockMvcResultMatchers.status().isOk());
+                        + " Role\"}"))
+        .andExpect(MockMvcResultMatchers.status().isOk());
   }
 
   /** Method under test: {@link AdminController#deleteAdminById(long)} */
