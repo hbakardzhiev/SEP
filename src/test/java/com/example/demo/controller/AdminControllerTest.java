@@ -97,7 +97,7 @@ class AdminControllerTest {
   void testDeleteAdminById() throws Exception {
     doNothing().when(this.adminService).deleteAdmin((Long) any());
     MockHttpServletRequestBuilder requestBuilder =
-        MockMvcRequestBuilders.delete("/admins/delete/{id}", 123L);
+        MockMvcRequestBuilders.delete("/admins/{id}", 123L);
     MockMvcBuilders.standaloneSetup(this.adminController)
         .build()
         .perform(requestBuilder)
@@ -109,7 +109,7 @@ class AdminControllerTest {
   void testDeleteAdminById2() throws Exception {
     doNothing().when(this.adminService).deleteAdmin((Long) any());
     MockHttpServletRequestBuilder deleteResult =
-        MockMvcRequestBuilders.delete("/admins/delete/{id}", 123L);
+        MockMvcRequestBuilders.delete("/admins/{id}", 123L);
     deleteResult.contentType("https://example.org/example");
     MockMvcBuilders.standaloneSetup(this.adminController)
         .build()

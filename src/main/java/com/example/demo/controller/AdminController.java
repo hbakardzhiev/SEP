@@ -31,7 +31,7 @@ public class AdminController {
    * @param id the id of admin to be deleted
    * @return 200 OK status code
    */
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/{id}")
   public void deleteAdminById(@PathVariable(name = "id") long id) {
     adminService.deleteAdmin(id);
   }
@@ -40,7 +40,7 @@ public class AdminController {
    * HTTP request POST /admins/add
    *
    * @param admin the Admin object to be added
-   * @return 201 CREATED if the admin was successfully added and the admin object in body response.
+   * @return 200 OK if the admin was successfully added and the admin object in body response.
    */
   @PostMapping("/add")
   public Admin addAdmin(@RequestBody Admin admin) {
