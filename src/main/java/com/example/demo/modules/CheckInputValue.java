@@ -1,5 +1,7 @@
 package com.example.demo.modules;
 
+import java.util.Objects;
+
 /**
  * This class encapsulates the data types that needs to be sent to the FE
  * with regard of the execution of the checks. It saves the inputValue - value that is checked,
@@ -38,4 +40,13 @@ public class CheckInputValue {
     public void setCheckAndAction(CheckAndActionName checkAndActionName) {
         this.checkAndActionName = checkAndActionName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CheckInputValue that = (CheckInputValue) o;
+        return Objects.equals(inputValue, that.inputValue) && Objects.equals(checkAndActionName, that.checkAndActionName);
+    }
+
 }

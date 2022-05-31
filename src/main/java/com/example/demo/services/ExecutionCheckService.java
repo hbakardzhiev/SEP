@@ -4,10 +4,12 @@ import com.example.demo.modules.*;
 import com.example.demo.repository.CheckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.AbstractMap.*;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /** Service layer for implementation of the execution of checks */
 
@@ -20,6 +22,11 @@ public class ExecutionCheckService {
     @Autowired
     private CheckRepository checkRepository;
 
+    public ExecutionCheckService(ParserService parserService, CheckRepository checkRepository) {
+        this.parserService = parserService;
+        this.checkRepository = checkRepository;
+    }
+
     /**
      * Associates each parsed entry that consists of document Source, attribute and value of
      * the attribute with the corresponding list of checks that needs to be performed on it.
@@ -29,41 +36,47 @@ public class ExecutionCheckService {
      * - passed, failed, attention point and the value of the entry is the check itself and the inputValue
      * @throws IOException if the parsing of the data fails
      */
-    public List<AbstractMap.SimpleEntry<Result,CheckInputValue>> filterDataWithChecks () throws IOException {
+    public List<SimpleEntry<Result,CheckInputValue>> filterDataWithChecks () throws IOException {
         List<Check> checks = checkRepository.findAll();
         var data = parserService.parseEverything();
         final var relevantChecksVal = data.stream().map(element -> {
-            final var indexOfHyphen = element.getKey().indexOf("-");
-            final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
-            var tempattribute = element.getValue().getKey();
-            switch (tempattribute) {
-                //The cases are not exhaustive yet
-                case "proposedSolution": tempattribute = "solution"; break;
-                case "theRequestPriority": tempattribute = "requestpriority"; break;
-                default: tempattribute = tempattribute.toLowerCase();
-            }
-            final var attribute = tempattribute;
-            final var inputValue = element.getValue().getValue();
-
-            //list of checks relevant for this docSource and attribute
-            List<Check> relCheck = checks.stream().filter(check -> Objects.equals(check.getDocSource(), docSource)
-                            && Objects.equals(check.getAttribute(), attribute)).collect(Collectors.toList());
-
-            var checkedChecks = relCheck.stream().map( check -> {
-                String action = check.getActionValueType().getAction();
-                ActionNameString actionNameString = new ActionNameString(action);
-                CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
-                CheckInputValue checkActionInputValue = new CheckInputValue(inputValue, checkAndActionName);
-
-                Result status = executeTheCheck(check, inputValue);
-                return new AbstractMap.SimpleEntry<Result, CheckInputValue>(status, checkActionInputValue);
-            });
+            Stream<SimpleEntry<Result, CheckInputValue>> checkedChecks =
+                    mapSimpleEntry(checks, element);
 
             return checkedChecks.collect(Collectors.toList());
-
         });
         return relevantChecksVal.flatMap(List::stream).collect(Collectors.toList());
 
+    }
+
+    private Stream<SimpleEntry<Result, CheckInputValue>> mapSimpleEntry(List<Check> checks, SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>> element) {
+
+        final var indexOfHyphen = element.getKey().indexOf("-");
+        final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
+        var tempattribute = element.getValue().getKey();
+        switch (tempattribute) {
+            //The cases are not exhaustive yet
+            case "proposedSolution": tempattribute = "solution"; break;
+            case "theRequestPriority": tempattribute = "requestpriority"; break;
+            default: tempattribute = tempattribute.toLowerCase();
+        }
+        final var attribute = tempattribute;
+        final var inputValue = element.getValue().getValue();
+
+        //list of checks relevant for this docSource and attribute
+        var relCheck = checks.stream().filter(check -> Objects.equals(check.getDocSource(), docSource)
+                        && Objects.equals(check.getAttribute(), attribute));
+
+        var checkedChecks = relCheck.map( check -> {
+            String action = check.getActionValueType().getAction();
+            ActionNameString actionNameString = new ActionNameString(action);
+            CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
+            CheckInputValue checkActionInputValue = new CheckInputValue(inputValue, checkAndActionName);
+
+            Result status = executeTheCheck(check, inputValue);
+            return new SimpleEntry<Result, CheckInputValue>(status, checkActionInputValue);
+        });
+        return checkedChecks;
     }
 
     /**
@@ -89,9 +102,9 @@ public class ExecutionCheckService {
         Result result = null;
         boolean status;
         String checkAction = check.getActionValueType().getAction();
-        Integer length = valueInput.length();
-        Integer checkValue = Integer.parseInt(check.getValue()); // check value
-        Integer valueInputInt = Integer.parseInt(valueInput); //attribute value
+        int length = valueInput.length();
+        int checkValue = Integer.parseInt(check.getValue()); // check value
+        int valueInputInt = Integer.parseInt(valueInput); //attribute value
         switch(checkAction) {
             case "StrictlyGreater": status = checkValue > valueInputInt; break;
             case "StrictlySmaller": status = checkValue < valueInputInt; break;
