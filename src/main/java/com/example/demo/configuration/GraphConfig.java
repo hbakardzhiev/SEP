@@ -48,6 +48,13 @@ public class GraphConfig {
     g.addVertex("supplierApprovalRequired");
     g.addVertex("theRequestPriority");
     g.addVertex("description");
+    g.addVertex("infoPageIdentityDisplayType");
+    g.addVertex("phiSendNative");
+    g.addVertex("phiDMR");
+    g.addVertex("designcategory");
+    g.addVertex("number");
+    g.addVertex("phiPhantomManufacturingPart");
+    g.addVertex("maturity");
 
     addMultipleEdges("name");
     g.addEdge(String.valueOf(SheetType.CN), "proposedSolution");
@@ -58,5 +65,12 @@ public class GraphConfig {
     g.addEdge(String.valueOf(SheetType.CR), "supplierApprovalRequired");
     g.addEdge(String.valueOf(SheetType.CN), "description");
     g.addEdge(String.valueOf(SheetType.CT), "description");
+    g.addEdge(String.valueOf(SheetType.DMR), "infoPageIdentityDisplayType");
+    g.addEdge(String.valueOf(SheetType.DMR), "phiSendNative");
+    g.addEdge(String.valueOf(SheetType.DMR), "phiDMR");
+    g.addEdge(String.valueOf(SheetType.DMR), "designcategory");
+    g.addEdge(String.valueOf(SheetType.DMR), "number");
+    g.addEdge(String.valueOf(SheetType.DMR), "phiPhantomManufacturingPart");
+    g.addEdge(String.valueOf(SheetType.DMR), "maturity");
   }
 }
