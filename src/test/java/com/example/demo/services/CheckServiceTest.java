@@ -41,7 +41,7 @@ class CheckServiceTest {
   void canFindByName() {
     // given
     String name = "CN_description";
-    Check checkToBeSaved = new Check("CN_description", "CN", "description", "Philips", "comment", "author_username");
+    Check checkToBeSaved = new Check("CN_description", "CN", "description", "Philips", "comment", 1L);
     Optional<Check> optionalCheck = Optional.of(checkToBeSaved);
 
     given(checkRepository.findById(name)).willReturn(optionalCheck);
@@ -56,7 +56,7 @@ class CheckServiceTest {
   @Test
   void save() {
     // given
-    Check checkToBeSaved = new Check("Check 1", "CN", "description", "Philips", "comment", "author_id");
+    Check checkToBeSaved = new Check("Check 1", "CN", "description", "Philips", "comment", 2L);
 
     // when
     underTest.save(checkToBeSaved);

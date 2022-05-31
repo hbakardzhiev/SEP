@@ -38,7 +38,7 @@ public class Check {
 
   @Column(name = "author", nullable = true)
   @Audited
-  private String author;
+  private Long authorId;
 
   // Get a string value for action, if it does not exist from the defined actions,
   // do not allow the user to make the check.
@@ -54,13 +54,13 @@ public class Check {
 
   public Check() {}
 
-  public Check(String name, String docSource, String attribute, String value, String comments, String author) {
+  public Check(String name, String docSource, String attribute, String value, String comments, Long authorId) {
     this.name = name;
     this.docSource = docSource;
     this.attribute = attribute;
     this.value = value;
     this.comments = comments;
-    this.author = author;
+    this.authorId = authorId;
   }
 
   public String getName() {
@@ -103,12 +103,12 @@ public class Check {
     this.comments = comments;
   }
 
-  public String getAuthor() {
-    return author;
+  public Long getAuthorId() {
+    return authorId;
   }
 
-  public void setAuthor(String author) {
-    this.author = author;
+  public void setAuthor(Long authorId) {
+    this.authorId = authorId;
   }
 
   public ActionValueType getActionValueType() {

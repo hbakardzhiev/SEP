@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.Util;
 import com.example.demo.modules.ActionValueType;
 import com.example.demo.modules.Check;
 import com.example.demo.modules.CheckAndActionName;
+import com.example.demo.repository.AdminRepoistory;
 import com.example.demo.services.ActionValueTypeService;
 import com.example.demo.services.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class CheckController {
 
   @Autowired private ActionValueTypeService actionValueTypeService;
 
+  @Autowired
+  private AdminRepoistory adminRepoistory;
   public CheckController(CheckService checkService) {
     this.checkService = checkService;
   }
@@ -83,13 +87,7 @@ public class CheckController {
   @PostMapping
   public Check addCheck(@RequestBody CheckAndActionName checkAndActionName) {
 
-    final var context = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Check theCheck = extractCheck(checkAndActionName);
-
-    if (context instanceof User) {
-      String username = ((User) context).getUsername();
-      theCheck.setAuthor(username);
-    }
 
     return theCheck;
   }
@@ -117,13 +115,8 @@ public class CheckController {
      */
   @PutMapping
   public Check updateCheck(@RequestBody CheckAndActionName checkAndActionName) {
-    final var context = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    Check theCheck = extractCheck(checkAndActionName);
 
-    if (context instanceof User) {
-      String username = ((User)context).getUsername();
-      theCheck.setAuthor(username);
-    }
+    Check theCheck = extractCheck(checkAndActionName);
 
     return theCheck;
   }
@@ -138,6 +131,11 @@ public class CheckController {
   private Check extractCheck(@RequestBody CheckAndActionName checkAndActionName) {
     Check theCheck = checkAndActionName.theCheck;
     String actionName = checkAndActionName.actionName.getActionName();
+
+    String username = Util.getUsernameFromPrincipal();
+    Long adminId = adminRepoistory.findAdminByUsername(username).getId();
+
+    theCheck.setAuthor(adminId);
 
     ActionValueType theAction = actionValueTypeService.findByName(actionName);
 

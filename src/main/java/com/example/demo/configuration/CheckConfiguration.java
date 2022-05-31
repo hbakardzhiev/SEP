@@ -17,16 +17,16 @@ public class CheckConfiguration {
 
     return args -> {
       Check firstCheck =
-          new Check("Check1", "CN", "name", "null", "comment to show when the check fails ", "admin");
+          new Check("Check1", "CN", "name", "null", "comment to show when the check fails ", 1L);
 
       ActionValueType actionType = new ActionValueType("NotEmpty", "null", "pls1");
       actionType.add(firstCheck);
 
-      Check secondCheck = new Check("Check2", "CT", "description", "banana", "comment2", "admin");
+      Check secondCheck = new Check("Check2", "CT", "description", "banana", "comment2", 2L);
       ActionValueType actionType2 = new ActionValueType("Contains", "String", "pls2");
       actionType2.add(secondCheck);
 
-      Check thirdCheck = new Check("Check3", "CT", "description", "pineapple", "comment3", "admin");
+      Check thirdCheck = new Check("Check3", "CT", "description", "pineapple", "comment3", 3L);
       ActionValueType actionType3 = new ActionValueType("Contains", "String", "pls3");
       actionType3.add(thirdCheck);
 
