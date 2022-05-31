@@ -34,7 +34,7 @@ public class Util {
 
   public static String getUsernameFromPrincipal() {
     final var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    String username = principal.toString();
+    final var username = principal.toString();
     return username;
   }
 }
