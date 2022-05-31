@@ -7,7 +7,9 @@ import java.util.List;
 public interface AdminService {
   Admin addAdmin(Admin admin);
 
+  Admin getAdminById(Long id);
+
   List<Admin> getAdmins();
 
-  void deleteAdmin(Long id);
+  void deleteAdmin(Long id) throws IllegalAccessException;
 }

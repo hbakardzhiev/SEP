@@ -5,6 +5,7 @@ import com.example.demo.repository.AdminRepoistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,13 +38,27 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
     return adminRepoistory.save(admin);
   }
 
+  @Override
+  public Admin getAdminById(Long id) {
+    return adminRepoistory.getById(id);
+  }
+
   /**
    * Method that deletes an administrator from the database
    *
    * @param id the id of the admin object
    */
   @Override
-  public void deleteAdmin(Long id) {
+  public void deleteAdmin(Long id) throws IllegalAccessException {
+    final var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Admin admin = new Admin();
+    admin.setUsername(getAdminById(id).getUsername());
+
+    String username = principal.toString();
+
+    if (admin.getUsername().equals(username)) {
+      throw new IllegalAccessException("User cannot delete themself");
+    }
 
     adminRepoistory.deleteById(id);
   }

@@ -26,13 +26,14 @@ public class AdminController {
   }
 
   /**
-   * HTTP request DELETE /admins/delete/{id}
+   * HTTP request DELETE /admins/{id}
    *
    * @param id the id of admin to be deleted
    * @return 200 OK status code
    */
   @DeleteMapping("/{id}")
-  public void deleteAdminById(@PathVariable(name = "id") long id) {
+  public void deleteAdminById(@PathVariable(name = "id") long id) throws IllegalAccessException {
+
     adminService.deleteAdmin(id);
   }
 
