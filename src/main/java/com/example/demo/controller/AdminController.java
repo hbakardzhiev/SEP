@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.modules.Admin;
 import com.example.demo.services.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.cors.CorsConfiguration;
 
@@ -26,14 +28,18 @@ public class AdminController {
   }
 
   /**
-   * HTTP request DELETE /admins/delete/{id}
+   * HTTP request DELETE /admins/{id}
    *
    * @param id the id of admin to be deleted
    * @return 200 OK status code
    */
   @DeleteMapping("/{id}")
-  public void deleteAdminById(@PathVariable(name = "id") long id) {
-    adminService.deleteAdmin(id);
+  public void deleteAdminById(@PathVariable(name = "id") long id) throws IllegalAccessException {
+
+      adminService.deleteAdmin(id);
+
+
+
   }
 
   /**

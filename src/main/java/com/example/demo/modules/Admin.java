@@ -26,7 +26,7 @@ public class Admin {
   private String password;
 
   @Column(name = "role")
-  private String adminRole;
+  private String adminRole = "ADMIN";
 
   public Admin(String username, String email, String password) {
     this.username = username;
