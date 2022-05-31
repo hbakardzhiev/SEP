@@ -6,7 +6,6 @@ import com.example.demo.repository.AdminRepoistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -60,8 +59,6 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
 
     adminRepoistory.deleteById(id);
   }
-
-
 
   /**
    * Method that returns a list of all admins in the database

@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.modules.Admin;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.BufferedReader;

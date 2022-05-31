@@ -41,7 +41,8 @@ class CheckServiceTest {
   void canFindByName() {
     // given
     String name = "CN_description";
-    Check checkToBeSaved = new Check("CN_description", "CN", "description", "Philips", "comment", 1L);
+    Check checkToBeSaved =
+        new Check("CN_description", "CN", "description", "Philips", "comment", 1L);
     Optional<Check> optionalCheck = Optional.of(checkToBeSaved);
 
     given(checkRepository.findById(name)).willReturn(optionalCheck);

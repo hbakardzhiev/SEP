@@ -12,7 +12,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "rule")
-
 public class Check {
 
   @Id
@@ -54,7 +53,13 @@ public class Check {
 
   public Check() {}
 
-  public Check(String name, String docSource, String attribute, String value, String comments, Long authorId) {
+  public Check(
+      String name,
+      String docSource,
+      String attribute,
+      String value,
+      String comments,
+      Long authorId) {
     this.name = name;
     this.docSource = docSource;
     this.attribute = attribute;

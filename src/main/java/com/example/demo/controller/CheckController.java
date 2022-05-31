@@ -8,9 +8,6 @@ import com.example.demo.repository.AdminRepoistory;
 import com.example.demo.services.ActionValueTypeService;
 import com.example.demo.services.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +23,8 @@ public class CheckController {
 
   @Autowired private ActionValueTypeService actionValueTypeService;
 
-  @Autowired
-  private AdminRepoistory adminRepoistory;
+  @Autowired private AdminRepoistory adminRepoistory;
+
   public CheckController(CheckService checkService) {
     this.checkService = checkService;
   }
