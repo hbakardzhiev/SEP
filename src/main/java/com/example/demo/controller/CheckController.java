@@ -115,6 +115,7 @@ public class CheckController {
     Check theCheck = extractCheck(checkAndActionName);
     if (context instanceof User) {
       String username = ((User)context).getUsername();
+
       theCheck.setAuthor(username);
     }
     return theCheck;
