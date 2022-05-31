@@ -54,7 +54,6 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
     Admin admin = new Admin();
     admin.setUsername(getAdminById(id).getUsername());
 
-
     String username = principal.toString();
 
     if (admin.getUsername().equals(username)) {
