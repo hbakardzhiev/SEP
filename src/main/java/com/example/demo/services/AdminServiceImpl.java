@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.Util;
 import com.example.demo.modules.Admin;
 import com.example.demo.repository.AdminRepoistory;
 import lombok.RequiredArgsConstructor;
@@ -50,18 +51,17 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
    */
   @Override
   public void deleteAdmin(Long id) throws IllegalAccessException {
-    final var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    Admin admin = new Admin();
-    admin.setUsername(getAdminById(id).getUsername());
 
-    String username = principal.toString();
+    String username = Util.getUsernameFromPrincipal();
 
-    if (admin.getUsername().equals(username)) {
+    if (getAdminById(id).getUsername().equals(username)) {
       throw new IllegalAccessException("User cannot delete themself");
     }
 
     adminRepoistory.deleteById(id);
   }
+
+
 
   /**
    * Method that returns a list of all admins in the database
