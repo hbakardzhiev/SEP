@@ -25,10 +25,10 @@ public class ParserDMR extends ParserBase {
    */
   private void passCT(ParserCT parserCT) throws IOException {
     final var documents = parserCT.getDocument().values().parallelStream();
-    // TODO: change the mask here
+    // TODO: add more types if necessary
     final var stream = documents.map(element -> element.select(
-        //id=table chnagetask result and so on is the right div in the page which has as children the <a> tags
-        "[id=table__changeTask_resultingItems_table_TABLE] a:matchesOwn((^D[\\d]{9})|(^EngPartNr[\\d]{3}))"));
+        //div with id=table chnagetask result and so on is the right div in the page which has as children the <a> tags
+        "div[id=table__changeTask_resultingItems_table_TABLE] a:matchesOwn((^D[\\d]{9})|(^EngPartNr[\\d]{3}))"));
     final var listStrings =
         stream
             .flatMap(Collection::stream)
