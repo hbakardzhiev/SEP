@@ -36,6 +36,10 @@ public class Check {
   @Audited
   private String comments;
 
+  @Column(name = "author", nullable = true)
+  @Audited
+  private String author;
+
   // Get a string value for action, if it does not exist from the defined actions,
   // do not allow the user to make the check.
   // This could be hardcoded on the frontend side.
@@ -50,12 +54,13 @@ public class Check {
 
   public Check() {}
 
-  public Check(String name, String docSource, String attribute, String value, String comments) {
+  public Check(String name, String docSource, String attribute, String value, String comments, String author) {
     this.name = name;
     this.docSource = docSource;
     this.attribute = attribute;
     this.value = value;
     this.comments = comments;
+    this.author = author;
   }
 
   public String getName() {
@@ -96,6 +101,14 @@ public class Check {
 
   public void setComments(String comments) {
     this.comments = comments;
+  }
+
+  public String getAuthor() {
+    return author;
+  }
+
+  public void setAuthor(String author) {
+    this.author = author;
   }
 
   public ActionValueType getActionValueType() {

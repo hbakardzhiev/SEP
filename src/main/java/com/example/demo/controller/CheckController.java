@@ -106,7 +106,6 @@ public class CheckController {
      */
   @PutMapping
   public Check updateCheck(@RequestBody CheckAndActionName checkAndActionName) {
-
     Check theCheck = extractCheck(checkAndActionName);
     return theCheck;
   }
