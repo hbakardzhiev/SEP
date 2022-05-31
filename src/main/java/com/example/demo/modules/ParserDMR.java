@@ -15,7 +15,7 @@ public class ParserDMR extends ParserBase {
    * @throws IOException
    */
   public ParserDMR(ParserCT parserCT) throws IOException {
-    setSheetType(SheetType.CT);
+    setSheetType(SheetType.DMR);
     passCT(parserCT);
   }
 
@@ -35,6 +35,5 @@ public class ParserDMR extends ParserBase {
             .map(element -> element.attr("href"))
             .collect(Collectors.toCollection(ArrayList::new));
     this.setDocumentByUrl(listStrings.parallelStream());
-    listStrings.forEach(System.out::println);
   }
 }
