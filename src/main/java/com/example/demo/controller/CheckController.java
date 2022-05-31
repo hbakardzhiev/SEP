@@ -6,6 +6,9 @@ import com.example.demo.modules.CheckAndActionName;
 import com.example.demo.services.ActionValueTypeService;
 import com.example.demo.services.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -108,7 +111,12 @@ public class CheckController {
      */
   @PutMapping
   public Check updateCheck(@RequestBody CheckAndActionName checkAndActionName) {
+    final var context = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Check theCheck = extractCheck(checkAndActionName);
+    if (context instanceof User) {
+      String username = ((User)context).getUsername();
+      theCheck.setAuthor(username);
+    }
     return theCheck;
   }
 
