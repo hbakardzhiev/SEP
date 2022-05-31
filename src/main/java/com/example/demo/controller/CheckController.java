@@ -83,7 +83,13 @@ public class CheckController {
   @PostMapping
   public Check addCheck(@RequestBody CheckAndActionName checkAndActionName) {
 
+    final var context = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Check theCheck = extractCheck(checkAndActionName);
+
+    if (context instanceof User) {
+      String username = ((User) context).getUsername();
+      theCheck.setAuthor(username);
+    }
 
     return theCheck;
   }
@@ -113,11 +119,12 @@ public class CheckController {
   public Check updateCheck(@RequestBody CheckAndActionName checkAndActionName) {
     final var context = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     Check theCheck = extractCheck(checkAndActionName);
+
     if (context instanceof User) {
       String username = ((User)context).getUsername();
-
       theCheck.setAuthor(username);
     }
+
     return theCheck;
   }
 
