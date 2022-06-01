@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.springframework.web.cors.CorsConfiguration;
 
 /** Class that defines the API - the GET, POST, DELETE and PUT requests. */
@@ -43,16 +41,20 @@ public class CheckController {
 
     List<Check> allChecks = checkService.findAll();
 
-    var checksAndActions = allChecks.stream().map(e -> {
-      CheckAndActionName checkAndAction = toCheckAndActionName(e);
-      return checkAndAction;
-    });
+    var checksAndActions =
+        allChecks.stream()
+            .map(
+                e -> {
+                  CheckAndActionName checkAndAction = toCheckAndActionName(e);
+                  return checkAndAction;
+                });
 
     return checksAndActions.collect(Collectors.toList());
   }
 
   private CheckAndActionName toCheckAndActionName(Check check) {
-    ActionNameString actionNameString = new ActionNameString(check.getActionValueType().getAction());
+    ActionNameString actionNameString =
+        new ActionNameString(check.getActionValueType().getAction());
     CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
     return checkAndActionName;
   }

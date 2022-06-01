@@ -1,7 +1,6 @@
 package com.example.demo.modules;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
@@ -136,13 +135,24 @@ public class Check {
 
   @Override
   public String toString() {
-    return "Check{" +
-            "name='" + name + '\'' +
-            ", docSource='" + docSource + '\'' +
-            ", attribute='" + attribute + '\'' +
-            ", value='" + value + '\'' +
-            ", comments='" + comments + '\'' +
-            ", actionValueType=" + actionValueType +
-            '}';
+    return "Check{"
+        + "name='"
+        + name
+        + '\''
+        + ", docSource='"
+        + docSource
+        + '\''
+        + ", attribute='"
+        + attribute
+        + '\''
+        + ", value='"
+        + value
+        + '\''
+        + ", comments='"
+        + comments
+        + '\''
+        + ", actionValueType="
+        + actionValueType
+        + '}';
   }
 }

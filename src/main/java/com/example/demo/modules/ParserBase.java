@@ -68,8 +68,11 @@ public abstract class ParserBase {
         document.entrySet().stream()
             .map(
                 element ->
-                    new AbstractMap.SimpleImmutableEntry<>(element.getKey(),
-                        new SimpleImmutableEntry<String, String>(id, element
+                    new AbstractMap.SimpleImmutableEntry<>(
+                        element.getKey(),
+                        new SimpleImmutableEntry<String, String>(
+                            id,
+                            element
                                 .getValue()
                                 .select((String.format("[%s=%s]", tag, id)))
                                 .text())));
