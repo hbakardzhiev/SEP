@@ -93,8 +93,7 @@ public abstract class ParserBase {
     final var stream =
         sheetSourceStream
             .parallel()
-            // element is a row in table sheetsource which is connected to
-            // sheetsource_sheetsource_type
+            // element is a row in table sheet_source
             .filter(element -> element.getSheetSourceType().equals(this.getSheetType()))
             .flatMap(
                 (elementToBeParsed) ->

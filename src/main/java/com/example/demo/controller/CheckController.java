@@ -1,14 +1,18 @@
 package com.example.demo.controller;
 
+import com.example.demo.modules.ActionNameString;
+import com.example.demo.Util;
 import com.example.demo.modules.ActionValueType;
 import com.example.demo.modules.Check;
 import com.example.demo.modules.CheckAndActionName;
+import com.example.demo.repository.AdminRepoistory;
 import com.example.demo.services.ActionValueTypeService;
 import com.example.demo.services.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.web.cors.CorsConfiguration;
 
 /** Class that defines the API - the GET, POST, DELETE and PUT requests. */
@@ -21,18 +25,38 @@ public class CheckController {
 
   @Autowired private ActionValueTypeService actionValueTypeService;
 
+  @Autowired private AdminRepoistory adminRepoistory;
+
   public CheckController(CheckService checkService) {
     this.checkService = checkService;
   }
 
   /**
-   * Returns all checks in the database
+   * Returns all checks and their action names in the database
    *
-   * @return list of all checks in the database
+   * @return list of all checks and their action names in the database
    */
   @GetMapping
-  public List<Check> printAllCheck() {
-    return checkService.findAll();
+  public List<CheckAndActionName> printAllCheck() {
+
+    List<Check> allChecks = checkService.findAll();
+
+    var checksAndActions =
+        allChecks.stream()
+            .map(
+                e -> {
+                  CheckAndActionName checkAndAction = toCheckAndActionName(e);
+                  return checkAndAction;
+                });
+
+    return checksAndActions.collect(Collectors.toList());
+  }
+
+  private CheckAndActionName toCheckAndActionName(Check check) {
+    ActionNameString actionNameString =
+        new ActionNameString(check.getActionValueType().getAction());
+    CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
+    return checkAndActionName;
   }
 
   /**
@@ -43,7 +67,7 @@ public class CheckController {
    * @throws RuntimeException if a check with such name does not exist
    */
   @GetMapping("/{name}")
-  public Check getCheck(@PathVariable String name) {
+  public CheckAndActionName getCheck(@PathVariable String name) {
 
     Check theCheck = checkService.findByName(name);
 
@@ -51,7 +75,10 @@ public class CheckController {
       throw new RuntimeException("Check not found " + name);
     }
 
-    return theCheck;
+    ActionNameString action = new ActionNameString(theCheck.getActionValueType().getAction());
+    CheckAndActionName checkAndActionName = new CheckAndActionName(theCheck, action);
+
+    return checkAndActionName;
   }
 
   /**
@@ -110,6 +137,7 @@ public class CheckController {
   public Check updateCheck(@RequestBody CheckAndActionName checkAndActionName) {
 
     Check theCheck = extractCheck(checkAndActionName);
+
     return theCheck;
   }
 
@@ -122,7 +150,14 @@ public class CheckController {
    */
   private Check extractCheck(@RequestBody CheckAndActionName checkAndActionName) {
     Check theCheck = checkAndActionName.theCheck;
+    theCheck.setAttribute(theCheck.getAttribute().toLowerCase().replaceAll("\\s", ""));
+
     String actionName = checkAndActionName.actionName.getActionName();
+
+    String username = Util.getUsernameFromPrincipal();
+    Long adminId = adminRepoistory.findAdminByUsername(username).getId();
+
+    theCheck.setAuthor(adminId);
 
     ActionValueType theAction = actionValueTypeService.findByName(actionName);
 
