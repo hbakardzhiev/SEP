@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,5 +29,11 @@ public class Util {
       }
     }
     return resultStringBuilder.toString();
+  }
+
+  public static String getUsernameFromPrincipal() {
+    final var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    final var username = principal.toString();
+    return username;
   }
 }

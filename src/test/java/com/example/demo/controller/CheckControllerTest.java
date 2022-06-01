@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import com.example.demo.modules.ActionValueType;
 import com.example.demo.modules.Check;
 import com.example.demo.modules.CheckAndActionName;
+import com.example.demo.repository.AdminRepoistory;
 import com.example.demo.services.ActionValueTypeService;
 import com.example.demo.services.CheckService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,6 +30,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(SpringExtension.class)
 class CheckControllerTest {
   @MockBean private ActionValueTypeService actionValueTypeService;
+
+  @MockBean private AdminRepoistory adminRepoistory;
 
   @Autowired private CheckController checkController;
 
@@ -64,6 +67,7 @@ class CheckControllerTest {
     Check check = new Check();
     check.setActionValueType(actionValueType);
     check.setAttribute("Attribute");
+    check.setAuthor(123L);
     check.setComments("Comments");
     check.setDocSource("Doc Source");
     check.setName("Name");
@@ -92,6 +96,7 @@ class CheckControllerTest {
     Check check = new Check();
     check.setActionValueType(actionValueType);
     check.setAttribute("Attribute");
+    check.setAuthor(123L);
     check.setComments("Comments");
     check.setDocSource("Doc Source");
     check.setName("Name");
@@ -121,6 +126,7 @@ class CheckControllerTest {
     Check check = new Check();
     check.setActionValueType(actionValueType);
     check.setAttribute("Attribute");
+    check.setAuthor(123L);
     check.setComments("Comments");
     check.setDocSource("Doc Source");
     check.setName("Name");
@@ -137,7 +143,8 @@ class CheckControllerTest {
             MockMvcResultMatchers.content()
                 .string(
                     "{\"name\":\"Name\",\"docSource\":\"Doc"
-                        + " Source\",\"attribute\":\"Attribute\",\"value\":\"42\",\"comments\":\"Comments\"}"));
+                        + " Source\",\"attribute\":\"Attribute\",\"value\":\"42\",\"comments\":\"Comments\","
+                        + "\"authorId\":123}"));
   }
 
   /** Method under test: {@link CheckController#getCheck(String)} */
@@ -152,6 +159,7 @@ class CheckControllerTest {
     Check check = new Check();
     check.setActionValueType(actionValueType);
     check.setAttribute("Attribute");
+    check.setAuthor(123L);
     check.setComments("Comments");
     check.setDocSource("Doc Source");
     check.setName("Name");
@@ -168,23 +176,8 @@ class CheckControllerTest {
             MockMvcResultMatchers.content()
                 .string(
                     "{\"name\":\"Name\",\"docSource\":\"Doc"
-                        + " Source\",\"attribute\":\"Attribute\",\"value\":\"42\",\"comments\":\"Comments\"}"));
-  }
-
-  /** Method under test: {@link CheckController#getCheck(String)} */
-  @Test
-  void testGetCheck3() throws Exception {
-    when(this.checkService.findAll()).thenReturn(new ArrayList<>());
-    when(this.checkService.findByName((String) any()))
-        .thenThrow(new RuntimeException("An error occurred"));
-    MockHttpServletRequestBuilder requestBuilder =
-        MockMvcRequestBuilders.get("/check/{name}", "", "Uri Vars");
-    MockMvcBuilders.standaloneSetup(this.checkController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content().string("[]"));
+                        + " Source\",\"attribute\":\"Attribute\",\"value\":\"42\",\"comments\":\"Comments\","
+                        + "\"authorId\":123}"));
   }
 
   /** Method under test: {@link CheckController#printAllCheck()} */

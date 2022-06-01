@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.modules.ActionNameString;
+import com.example.demo.Util;
 import com.example.demo.modules.ActionValueType;
 import com.example.demo.modules.Check;
 import com.example.demo.modules.CheckAndActionName;
+import com.example.demo.repository.AdminRepoistory;
 import com.example.demo.services.ActionValueTypeService;
 import com.example.demo.services.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +15,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.springframework.web.cors.CorsConfiguration;
 
 /** Class that defines the API - the GET, POST, DELETE and PUT requests. */
 @RestController
 @RequestMapping("/check")
+@CrossOrigin(CorsConfiguration.ALL)
 public class CheckController {
 
   private CheckService checkService;
 
   @Autowired private ActionValueTypeService actionValueTypeService;
+
+  @Autowired private AdminRepoistory adminRepoistory;
 
   public CheckController(CheckService checkService) {
     this.checkService = checkService;
@@ -129,6 +135,7 @@ public class CheckController {
   public Check updateCheck(@RequestBody CheckAndActionName checkAndActionName) {
 
     Check theCheck = extractCheck(checkAndActionName);
+
     return theCheck;
   }
 
@@ -144,6 +151,11 @@ public class CheckController {
     theCheck.setAttribute(theCheck.getAttribute().toLowerCase().replaceAll("\\s", ""));
 
     String actionName = checkAndActionName.actionName.getActionName();
+
+    String username = Util.getUsernameFromPrincipal();
+    Long adminId = adminRepoistory.findAdminByUsername(username).getId();
+
+    theCheck.setAuthor(adminId);
 
     ActionValueType theAction = actionValueTypeService.findByName(actionName);
 
