@@ -89,13 +89,14 @@ public class ExecutionCheckService {
      */
     private Result executeTheCheck(Check check, String inputValue) {
         String actionValue = check.getActionValueType().getValueType();
-        Result label = switch (actionValue) {
-            case "" -> checksNull(inputValue, check);
-            case "String" -> checksString(inputValue, check);
-            case "Integer" -> checksInteger(inputValue, check);
-            default -> throw new IllegalStateException("Unexpected value type: " + actionValue);
+        Result result;
+        switch (actionValue) {
+            case "": result = checksNull(inputValue, check); break;
+            case "String": result = checksString(inputValue, check); break;
+            case "Integer": result = checksInteger(inputValue, check); break;
+            default: throw new IllegalStateException("Unexpected value type: " + actionValue);
         };
-        return label;
+        return result;
     }
 
     private Result checksInteger(String valueInput, Check check) { //InputValue and a check
@@ -105,31 +106,31 @@ public class ExecutionCheckService {
         int length = valueInput.length();
         int checkValue = Integer.parseInt(check.getValue()); // check value
         int valueInputInt = Integer.parseInt(valueInput); //attribute value
-        status = switch (ActionTypes.valueOf(checkAction)) {
-            case StrictlyGreater -> checkValue > valueInputInt;
-            case StrictlySmaller -> checkValue < valueInputInt;
-            case GreaterEqual -> checkValue >= valueInputInt;
-            case SmallerEqual -> checkValue <= valueInputInt;
-            case LengthStrictlyGreater -> length > checkValue;
-            case LengthStrictlySmaller -> length < checkValue;
-            case LengthGreaterEqual -> length >= checkValue;
-            case LengthSmallerEqual -> length <= checkValue;
-            default -> throw new IllegalStateException("Unexpected value: " + checkAction);
+        switch (ActionTypes.valueOf(checkAction)) {
+            case StrictlyGreater: status = checkValue > valueInputInt; break;
+            case StrictlySmaller: status = checkValue < valueInputInt; break;
+            case GreaterEqual: status = checkValue >= valueInputInt; break;
+            case SmallerEqual: status = checkValue <= valueInputInt; break;
+            case LengthStrictlyGreater: status = length > checkValue; break;
+            case LengthStrictlySmaller: status = length < checkValue; break;
+            case LengthGreaterEqual: status = length >= checkValue; break;
+            case LengthSmallerEqual: status = length <= checkValue; break;
+            default: throw new IllegalStateException("Unexpected value: " + checkAction);
         };
         result = true ? Result.passed : Result.failed;
         return result;
     }
 
     private Result checksNull(String attributeValue, Check check){
-       Result passed = null; //change it to enum
+       Result result;
         String checkAction = check.getActionValueType().getAction();
         switch(ActionTypes.valueOf(checkAction)) {
-            case Empty: passed = attributeValue.isEmpty() ? Result.passed : Result.failed; break;
-            case NotEmpty: passed = (! (attributeValue.isEmpty())) ? Result.passed : Result.failed; break;
-            case HumanCheck: passed = Result.humanCheck; break;
+            case Empty: result = attributeValue.isEmpty() ? Result.passed : Result.failed; break;
+            case NotEmpty: result = (! (attributeValue.isEmpty())) ? Result.passed : Result.failed; break;
+            case HumanCheck: result = Result.humanCheck; break;
             default: throw new IllegalStateException("Unexpected value: " + checkAction);
         }
-        return passed;
+        return result;
     }
 
 
