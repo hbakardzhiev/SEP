@@ -1,5 +1,6 @@
 package com.example.demo.modules;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.envers.Audited;
 
@@ -37,6 +38,7 @@ public class Check {
 
   @Column(name = "author", nullable = true)
   @Audited
+  @JsonIgnore
   private Long authorId;
 
   // Get a string value for action, if it does not exist from the defined actions,
@@ -48,7 +50,7 @@ public class Check {
   @ManyToOne(
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "action")
-  @JsonBackReference
+  @JsonIgnore
   private ActionValueType actionValueType;
 
   public Check() {}
@@ -66,6 +68,14 @@ public class Check {
     this.value = value;
     this.comments = comments;
     this.authorId = authorId;
+  }
+
+  public Check(String name, String docSource, String attribute, String value, String comments) {
+    this.name = name;
+    this.docSource = docSource;
+    this.attribute = attribute;
+    this.value = value;
+    this.comments = comments;
   }
 
   public String getName() {
@@ -122,5 +132,17 @@ public class Check {
 
   public void setActionValueType(ActionValueType actionValueType) {
     this.actionValueType = actionValueType;
+  }
+
+  @Override
+  public String toString() {
+    return "Check{" +
+            "name='" + name + '\'' +
+            ", docSource='" + docSource + '\'' +
+            ", attribute='" + attribute + '\'' +
+            ", value='" + value + '\'' +
+            ", comments='" + comments + '\'' +
+            ", actionValueType=" + actionValueType +
+            '}';
   }
 }

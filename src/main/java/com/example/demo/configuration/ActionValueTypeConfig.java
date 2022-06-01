@@ -17,8 +17,8 @@ public class ActionValueTypeConfig {
     return args -> {
       final var actions =
           List.of(
-              new ActionValueType("Empty", null, "This attribute value should be empty"),
-              new ActionValueType("NotEmpty", null, "Should not be empty"),
+              new ActionValueType("Empty", "", "This attribute value should be empty"),
+              new ActionValueType("NotEmpty", "", "Should not be empty"),
               new ActionValueType(
                   "Contains",
                   "String",
@@ -28,13 +28,15 @@ public class ActionValueTypeConfig {
               new ActionValueType("StrictlySmaller", "Integer", "description"),
               new ActionValueType("GreaterEqual", "Integer", "sth"),
               new ActionValueType("SmallerEqual", "Integer", "sth"),
-              new ActionValueType("LengthStrictlyGreater", "String", "sth"),
+              new ActionValueType("LengthStrictlyGreater", "Integer", "sth"),
               new ActionValueType("LengthStrictlySmaller", "Integer", "sth"),
               new ActionValueType("LengthGreaterEqual", "Integer", "sth"),
               new ActionValueType("LengthSmallerEqual", "Integer", "sth"),
-              new ActionValueType("DifferentAttrValue", "Integer", "sth"),
+              new ActionValueType("DifferentAttrValue", "String", "sth"),
               new ActionValueType("SameAttrValue", "String", "sth"),
-              new ActionValueType("HumanCheck", null, "sth"));
+              new ActionValueType("HumanCheck", "", "sth"),
+              new ActionValueType("IsEqual", "String", "sth"),
+              new ActionValueType("IsNotEqual", "String", "sth"));
 
       repository.saveAll(actions);
     };
