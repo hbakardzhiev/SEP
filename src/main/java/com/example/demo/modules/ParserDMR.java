@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 public class ParserDMR extends ParserBase {
 
   /**
-   * Takes the CT parses and parses the DMR pages
+   * Takes the CT parser and parses the DMR pages
    *
-   * @param parserCT the parses that parses CT
+   * @param parserCT the parser that parses CT pages
    * @throws IOException
    */
   public ParserDMR(ParserCT parserCT) throws IOException {
@@ -20,7 +20,11 @@ public class ParserDMR extends ParserBase {
   }
 
   /**
-   * @param parserCT
+   * Sets the dmr pages urls to the class
+   * by going through the parent pages
+   * of CT
+   *
+   * @param parserCT is the parser of CT
    * @throws IOException
    */
   private void passCT(ParserCT parserCT) throws IOException {
@@ -31,7 +35,6 @@ public class ParserDMR extends ParserBase {
         "div[id=table__changeTask_resultingItems_table_TABLE] a:matchesOwn((^D[\\d]{9})|(^EngPartNr[\\d]{3}))"));
     final var listStrings =
         stream
-            .flatMap(Collection::stream)
             .map(element -> element.attr("href"))
             .collect(Collectors.toCollection(ArrayList::new));
     this.setDocumentByUrl(listStrings.parallelStream());
