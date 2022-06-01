@@ -89,12 +89,12 @@ public class ExecutionCheckService {
      */
     private Result executeTheCheck(Check check, String inputValue) {
         String actionValue = check.getActionValueType().getValueType();
-        Result label = null;
-        switch (actionValue) {
-            case "": label = checksNull(inputValue, check); break;
-            case "String": label = checksString(inputValue, check); break;
-            case "Integer": label = checksInteger(inputValue, check); break;
-        }
+        Result label = switch (actionValue) {
+            case "" -> checksNull(inputValue, check);
+            case "String" -> checksString(inputValue, check);
+            case "Integer" -> checksInteger(inputValue, check);
+            default -> null;  // it was automatic change, maybe exception again?
+        };
         return label;
     }
 
@@ -105,16 +105,17 @@ public class ExecutionCheckService {
         int length = valueInput.length();
         int checkValue = Integer.parseInt(check.getValue()); // check value
         int valueInputInt = Integer.parseInt(valueInput); //attribute value
-        switch(checkAction) {
-            case "StrictlyGreater": status = checkValue > valueInputInt; break;
-            case "StrictlySmaller": status = checkValue < valueInputInt; break;
-            case "GreaterEqual": status = checkValue >= valueInputInt; break;
-            case "SmallerEqual": status = checkValue <= valueInputInt; break;
-            case "LengthStrictlyGreater": status = length > checkValue; break;
-            case "LengthStrictlySmaller": status = length < checkValue; break;
-            case "LengthGreaterEqual": status = length >= checkValue; break;
-            case "LengthSmallerEqual": status = length <= checkValue; break;
-        }
+        status = switch (ActionTypes.valueOf(checkAction)) {
+            case StrictlyGreater -> checkValue > valueInputInt;
+            case StrictlySmaller -> checkValue < valueInputInt;
+            case GreaterEqual -> checkValue >= valueInputInt;
+            case SmallerEqual -> checkValue <= valueInputInt;
+            case LengthStrictlyGreater -> length > checkValue;
+            case LengthStrictlySmaller -> length < checkValue;
+            case LengthGreaterEqual -> length >= checkValue;
+            case LengthSmallerEqual -> length <= checkValue;
+            default -> throw new IllegalStateException("Unexpected value: " + checkAction);
+        };
         result = true ? Result.passed : Result.failed;
         return result;
     }
@@ -122,10 +123,10 @@ public class ExecutionCheckService {
     private Result checksNull(String attributeValue, Check check){
        Result passed = null; //change it to enum
         String checkAction = check.getActionValueType().getAction();
-        switch(checkAction) {
-            case "Empty": passed = attributeValue.isEmpty() ? Result.passed : Result.failed; break;
-            case "NotEmpty": passed = (! (attributeValue.isEmpty())) ? Result.passed : Result.failed; break;
-            case "HumanCheck": passed = Result.humanCheck; break;
+        switch(ActionTypes.valueOf(checkAction)) {
+            case Empty: passed = attributeValue.isEmpty() ? Result.passed : Result.failed; break;
+            case NotEmpty: passed = (! (attributeValue.isEmpty())) ? Result.passed : Result.failed; break;
+            case HumanCheck: passed = Result.humanCheck; break;
         }
         return passed;
     }
@@ -135,11 +136,11 @@ public class ExecutionCheckService {
         Result result = Result.humanCheck;
         String value = check.getValue();
         String checkAction = check.getActionValueType().getAction();
-        switch(checkAction) {
-            case "Contains": if (attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;} break;
-            case "NotContains": if (!attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;} break;
-            case "IsEqual": if (attributeValue.equals(value)) {result = Result.passed;} else {result = Result.failed;} break;
-            case "IsNotEqual": if (!attributeValue.equals(value)) {result = Result.passed;} else {result = Result.failed;} break;
+        switch(ActionTypes.valueOf(checkAction)) {
+            case Contains: if (attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;} break;
+            case NotContains: if (!attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;} break;
+            case IsEqual: if (attributeValue.equals(value)) {result = Result.passed;} else {result = Result.failed;} break;
+            case IsNotEqual: if (!attributeValue.equals(value)) {result = Result.passed;} else {result = Result.failed;} break;
         }
         return result;
     }

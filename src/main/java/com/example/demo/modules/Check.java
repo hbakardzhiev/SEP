@@ -38,6 +38,7 @@ public class Check {
 
   @Column(name = "author", nullable = true)
   @Audited
+  @JsonIgnore
   private Long authorId;
 
   // Get a string value for action, if it does not exist from the defined actions,
@@ -67,6 +68,14 @@ public class Check {
     this.value = value;
     this.comments = comments;
     this.authorId = authorId;
+  }
+
+  public Check(String name, String docSource, String attribute, String value, String comments) {
+    this.name = name;
+    this.docSource = docSource;
+    this.attribute = attribute;
+    this.value = value;
+    this.comments = comments;
   }
 
   public String getName() {
