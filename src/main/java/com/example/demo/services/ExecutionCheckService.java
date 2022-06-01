@@ -93,7 +93,7 @@ public class ExecutionCheckService {
             case "" -> checksNull(inputValue, check);
             case "String" -> checksString(inputValue, check);
             case "Integer" -> checksInteger(inputValue, check);
-            default -> null;  // it was automatic change, maybe exception again?
+            default -> throw new IllegalStateException("Unexpected value type: " + actionValue);
         };
         return label;
     }
@@ -127,6 +127,7 @@ public class ExecutionCheckService {
             case Empty: passed = attributeValue.isEmpty() ? Result.passed : Result.failed; break;
             case NotEmpty: passed = (! (attributeValue.isEmpty())) ? Result.passed : Result.failed; break;
             case HumanCheck: passed = Result.humanCheck; break;
+            default: throw new IllegalStateException("Unexpected value: " + checkAction);
         }
         return passed;
     }
@@ -141,6 +142,7 @@ public class ExecutionCheckService {
             case NotContains: if (!attributeValue.contains(value)) {result = Result.passed;} else {result = Result.failed;} break;
             case IsEqual: if (attributeValue.equals(value)) {result = Result.passed;} else {result = Result.failed;} break;
             case IsNotEqual: if (!attributeValue.equals(value)) {result = Result.passed;} else {result = Result.failed;} break;
+            default: throw new IllegalStateException("Unexpected value: " + checkAction);
         }
         return result;
     }
