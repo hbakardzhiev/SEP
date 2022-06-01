@@ -4,6 +4,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+import com.example.demo.modules.ActionNameString;
 import com.example.demo.modules.ActionValueType;
 import com.example.demo.modules.Check;
 import com.example.demo.modules.CheckAndActionName;
@@ -29,199 +30,396 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ContextConfiguration(classes = {CheckController.class})
 @ExtendWith(SpringExtension.class)
 class CheckControllerTest {
-  @MockBean private ActionValueTypeService actionValueTypeService;
+    @MockBean
+    private ActionValueTypeService actionValueTypeService;
 
-  @MockBean private AdminRepoistory adminRepoistory;
+    @MockBean
+    private AdminRepoistory adminRepoistory;
 
-  @Autowired private CheckController checkController;
+    @Autowired
+    private CheckController checkController;
 
-  @MockBean private CheckService checkService;
+    @MockBean
+    private CheckService checkService;
 
-  /** Method under test: {@link CheckController#addCheck(CheckAndActionName)} */
-  @Test
-  void testAddCheck() throws Exception {
-    when(this.checkService.findAll()).thenReturn(new ArrayList<>());
-    MockHttpServletRequestBuilder contentTypeResult =
-        MockMvcRequestBuilders.get("/check").contentType(MediaType.APPLICATION_JSON);
+    /**
+     * Method under test: {@link CheckController#addCheck(CheckAndActionName)}
+     */
+    @Test
+    void testAddCheck() throws Exception {
+        when(this.checkService.findAll()).thenReturn(new ArrayList<>());
 
-    ObjectMapper objectMapper = new ObjectMapper();
-    MockHttpServletRequestBuilder requestBuilder =
-        contentTypeResult.content(objectMapper.writeValueAsString(new CheckAndActionName()));
-    MockMvcBuilders.standaloneSetup(this.checkController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content().string("[]"));
-  }
+        ActionValueType actionValueType = new ActionValueType();
+        actionValueType.setAction("Action");
+        actionValueType.setChecks(new ArrayList<>());
+        actionValueType.setDescription("The characteristics of someone or something");
+        actionValueType.setValueType("42");
 
-  /** Method under test: {@link CheckController#deleteCheck(String)} */
-  @Test
-  void testDeleteCheck() throws Exception {
-    ActionValueType actionValueType = new ActionValueType();
-    actionValueType.setAction("Action");
-    actionValueType.setChecks(new ArrayList<>());
-    actionValueType.setDescription("The characteristics of someone or something");
-    actionValueType.setValueType("42");
+        Check check = new Check();
+        check.setActionValueType(actionValueType);
+        check.setAttribute("Attribute");
+        check.setAuthor(123L);
+        check.setComments("Comments");
+        check.setDocSource("Doc Source");
+        check.setName("Name");
+        check.setValue("42");
 
-    Check check = new Check();
-    check.setActionValueType(actionValueType);
-    check.setAttribute("Attribute");
-    check.setAuthor(123L);
-    check.setComments("Comments");
-    check.setDocSource("Doc Source");
-    check.setName("Name");
-    check.setValue("42");
-    doNothing().when(this.checkService).deleteByName((String) any());
-    when(this.checkService.findByName((String) any())).thenReturn(check);
-    MockHttpServletRequestBuilder requestBuilder =
-        MockMvcRequestBuilders.delete("/check/{name}", "Name");
-    MockMvcBuilders.standaloneSetup(this.checkController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-        .andExpect(MockMvcResultMatchers.content().string("Deleted Name"));
-  }
+        CheckAndActionName checkAndActionName = new CheckAndActionName();
+        checkAndActionName.setActionName(new ActionNameString("Action Name"));
+        checkAndActionName.setTheCheck(check);
+        String content = (new ObjectMapper()).writeValueAsString(checkAndActionName);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/check")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+        MockMvcBuilders.standaloneSetup(this.checkController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
+    }
 
-  /** Method under test: {@link CheckController#deleteCheck(String)} */
-  @Test
-  void testDeleteCheck2() throws Exception {
-    ActionValueType actionValueType = new ActionValueType();
-    actionValueType.setAction("Action");
-    actionValueType.setChecks(new ArrayList<>());
-    actionValueType.setDescription("The characteristics of someone or something");
-    actionValueType.setValueType("42");
+    /**
+     * Method under test: {@link CheckController#addCheck(CheckAndActionName)}
+     */
+    @Test
+    void testAddCheck2() throws Exception {
+        ActionValueType actionValueType = new ActionValueType();
+        actionValueType.setAction("?");
+        actionValueType.setChecks(new ArrayList<>());
+        actionValueType.setDescription("The characteristics of someone or something");
+        actionValueType.setValueType("42");
 
-    Check check = new Check();
-    check.setActionValueType(actionValueType);
-    check.setAttribute("Attribute");
-    check.setAuthor(123L);
-    check.setComments("Comments");
-    check.setDocSource("Doc Source");
-    check.setName("Name");
-    check.setValue("42");
-    doNothing().when(this.checkService).deleteByName((String) any());
-    when(this.checkService.findByName((String) any())).thenReturn(check);
-    MockHttpServletRequestBuilder deleteResult =
-        MockMvcRequestBuilders.delete("/check/{name}", "Name");
-    deleteResult.contentType("https://example.org/example");
-    MockMvcBuilders.standaloneSetup(this.checkController)
-        .build()
-        .perform(deleteResult)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-        .andExpect(MockMvcResultMatchers.content().string("Deleted Name"));
-  }
+        Check check = new Check();
+        check.setActionValueType(actionValueType);
+        check.setAttribute("?");
+        check.setAuthor(123L);
+        check.setComments("?");
+        check.setDocSource("?");
+        check.setName("?");
+        check.setValue("42");
 
-  /** Method under test: {@link CheckController#getCheck(String)} */
-  @Test
-  void testGetCheck() throws Exception {
-    ActionValueType actionValueType = new ActionValueType();
-    actionValueType.setAction("Action");
-    actionValueType.setChecks(new ArrayList<>());
-    actionValueType.setDescription("The characteristics of someone or something");
-    actionValueType.setValueType("42");
+        ArrayList<Check> checkList = new ArrayList<>();
+        checkList.add(check);
+        when(this.checkService.findAll()).thenReturn(checkList);
 
-    Check check = new Check();
-    check.setActionValueType(actionValueType);
-    check.setAttribute("Attribute");
-    check.setAuthor(123L);
-    check.setComments("Comments");
-    check.setDocSource("Doc Source");
-    check.setName("Name");
-    check.setValue("42");
-    when(this.checkService.findByName((String) any())).thenReturn(check);
-    MockHttpServletRequestBuilder requestBuilder =
-        MockMvcRequestBuilders.get("/check/{name}", "Name");
-    MockMvcBuilders.standaloneSetup(this.checkController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(
-            MockMvcResultMatchers.content()
-                .string(
-                    "{\"name\":\"Name\",\"docSource\":\"Doc"
-                        + " Source\",\"attribute\":\"Attribute\",\"value\":\"42\",\"comments\":\"Comments\","
-                        + "\"authorId\":123}"));
-  }
+        ActionValueType actionValueType1 = new ActionValueType();
+        actionValueType1.setAction("Action");
+        actionValueType1.setChecks(new ArrayList<>());
+        actionValueType1.setDescription("The characteristics of someone or something");
+        actionValueType1.setValueType("42");
 
-  /** Method under test: {@link CheckController#getCheck(String)} */
-  @Test
-  void testGetCheck2() throws Exception {
-    ActionValueType actionValueType = new ActionValueType();
-    actionValueType.setAction("Action");
-    actionValueType.setChecks(new ArrayList<>());
-    actionValueType.setDescription("The characteristics of someone or something");
-    actionValueType.setValueType("42");
+        Check check1 = new Check();
+        check1.setActionValueType(actionValueType1);
+        check1.setAttribute("Attribute");
+        check1.setAuthor(123L);
+        check1.setComments("Comments");
+        check1.setDocSource("Doc Source");
+        check1.setName("Name");
+        check1.setValue("42");
 
-    Check check = new Check();
-    check.setActionValueType(actionValueType);
-    check.setAttribute("Attribute");
-    check.setAuthor(123L);
-    check.setComments("Comments");
-    check.setDocSource("Doc Source");
-    check.setName("Name");
-    check.setValue("42");
-    when(this.checkService.findByName((String) any())).thenReturn(check);
-    MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/check/{name}", "Name");
-    getResult.contentType("https://example.org/example");
-    MockMvcBuilders.standaloneSetup(this.checkController)
-        .build()
-        .perform(getResult)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(
-            MockMvcResultMatchers.content()
-                .string(
-                    "{\"name\":\"Name\",\"docSource\":\"Doc"
-                        + " Source\",\"attribute\":\"Attribute\",\"value\":\"42\",\"comments\":\"Comments\","
-                        + "\"authorId\":123}"));
-  }
+        CheckAndActionName checkAndActionName = new CheckAndActionName();
+        checkAndActionName.setActionName(new ActionNameString("Action Name"));
+        checkAndActionName.setTheCheck(check1);
+        String content = (new ObjectMapper()).writeValueAsString(checkAndActionName);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/check")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+        MockMvcBuilders.standaloneSetup(this.checkController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "[{\"theCheck\":{\"name\":\"?\",\"docSource\":\"?\",\"attribute\":\"?\",\"value\":\"42\",\"comments\":\"?\"},\"actionName\":{"
+                                        + "\"actionName\":\"?\"}}]"));
+    }
 
-  /** Method under test: {@link CheckController#printAllCheck()} */
-  @Test
-  void testPrintAllCheck() throws Exception {
-    when(this.checkService.findAll()).thenReturn(new ArrayList<>());
-    MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/check");
-    MockMvcBuilders.standaloneSetup(this.checkController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content().string("[]"));
-  }
+    /**
+     * Method under test: {@link CheckController#deleteCheck(String)}
+     */
+    @Test
+    void testDeleteCheck() throws Exception {
+        ActionValueType actionValueType = new ActionValueType();
+        actionValueType.setAction("Action");
+        actionValueType.setChecks(new ArrayList<>());
+        actionValueType.setDescription("The characteristics of someone or something");
+        actionValueType.setValueType("42");
 
-  /** Method under test: {@link CheckController#printAllCheck()} */
-  @Test
-  void testPrintAllCheck2() throws Exception {
-    when(this.checkService.findAll()).thenReturn(new ArrayList<>());
-    MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/check");
-    getResult.contentType("https://example.org/example");
-    MockMvcBuilders.standaloneSetup(this.checkController)
-        .build()
-        .perform(getResult)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content().string("[]"));
-  }
+        Check check = new Check();
+        check.setActionValueType(actionValueType);
+        check.setAttribute("Attribute");
+        check.setAuthor(123L);
+        check.setComments("Comments");
+        check.setDocSource("Doc Source");
+        check.setName("Name");
+        check.setValue("42");
+        doNothing().when(this.checkService).deleteByName((String) any());
+        when(this.checkService.findByName((String) any())).thenReturn(check);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/check/{name}", "Name");
+        MockMvcBuilders.standaloneSetup(this.checkController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Deleted Name"));
+    }
 
-  /** Method under test: {@link CheckController#updateCheck(CheckAndActionName)} */
-  @Test
-  void testUpdateCheck() throws Exception {
-    when(this.checkService.findAll()).thenReturn(new ArrayList<>());
-    MockHttpServletRequestBuilder contentTypeResult =
-        MockMvcRequestBuilders.get("/check").contentType(MediaType.APPLICATION_JSON);
+    /**
+     * Method under test: {@link CheckController#deleteCheck(String)}
+     */
+    @Test
+    void testDeleteCheck2() throws Exception {
+        ActionValueType actionValueType = new ActionValueType();
+        actionValueType.setAction("Action");
+        actionValueType.setChecks(new ArrayList<>());
+        actionValueType.setDescription("The characteristics of someone or something");
+        actionValueType.setValueType("42");
 
-    ObjectMapper objectMapper = new ObjectMapper();
-    MockHttpServletRequestBuilder requestBuilder =
-        contentTypeResult.content(objectMapper.writeValueAsString(new CheckAndActionName()));
-    MockMvcBuilders.standaloneSetup(this.checkController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content().string("[]"));
-  }
+        Check check = new Check();
+        check.setActionValueType(actionValueType);
+        check.setAttribute("Attribute");
+        check.setAuthor(123L);
+        check.setComments("Comments");
+        check.setDocSource("Doc Source");
+        check.setName("Name");
+        check.setValue("42");
+        doNothing().when(this.checkService).deleteByName((String) any());
+        when(this.checkService.findByName((String) any())).thenReturn(check);
+        MockHttpServletRequestBuilder deleteResult = MockMvcRequestBuilders.delete("/check/{name}", "Name");
+        deleteResult.contentType("https://example.org/example");
+        MockMvcBuilders.standaloneSetup(this.checkController)
+                .build()
+                .perform(deleteResult)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Deleted Name"));
+    }
+
+    /**
+     * Method under test: {@link CheckController#getCheck(String)}
+     */
+    @Test
+    void testGetCheck() throws Exception {
+        ActionValueType actionValueType = new ActionValueType();
+        actionValueType.setAction("Action");
+        actionValueType.setChecks(new ArrayList<>());
+        actionValueType.setDescription("The characteristics of someone or something");
+        actionValueType.setValueType("42");
+
+        Check check = new Check();
+        check.setActionValueType(actionValueType);
+        check.setAttribute("Attribute");
+        check.setAuthor(123L);
+        check.setComments("Comments");
+        check.setDocSource("Doc Source");
+        check.setName("Name");
+        check.setValue("42");
+        when(this.checkService.findByName((String) any())).thenReturn(check);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/check/{name}", "Name");
+        MockMvcBuilders.standaloneSetup(this.checkController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "{\"theCheck\":{\"name\":\"Name\",\"docSource\":\"Doc Source\",\"attribute\":\"Attribute\",\"value\":\"42\",\"comments\":"
+                                        + "\"Comments\"},\"actionName\":{\"actionName\":\"Action\"}}"));
+    }
+
+    /**
+     * Method under test: {@link CheckController#getCheck(String)}
+     */
+    @Test
+    void testGetCheck2() throws Exception {
+        ActionValueType actionValueType = new ActionValueType();
+        actionValueType.setAction("Action");
+        actionValueType.setChecks(new ArrayList<>());
+        actionValueType.setDescription("The characteristics of someone or something");
+        actionValueType.setValueType("42");
+
+        Check check = new Check();
+        check.setActionValueType(actionValueType);
+        check.setAttribute("Attribute");
+        check.setAuthor(123L);
+        check.setComments("Comments");
+        check.setDocSource("Doc Source");
+        check.setName("Name");
+        check.setValue("42");
+        when(this.checkService.findByName((String) any())).thenReturn(check);
+        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/check/{name}", "Name");
+        getResult.contentType("https://example.org/example");
+        MockMvcBuilders.standaloneSetup(this.checkController)
+                .build()
+                .perform(getResult)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "{\"theCheck\":{\"name\":\"Name\",\"docSource\":\"Doc Source\",\"attribute\":\"Attribute\",\"value\":\"42\",\"comments\":"
+                                        + "\"Comments\"},\"actionName\":{\"actionName\":\"Action\"}}"));
+    }
+
+    /**
+     * Method under test: {@link CheckController#printAllCheck()}
+     */
+    @Test
+    void testPrintAllCheck() throws Exception {
+        when(this.checkService.findAll()).thenReturn(new ArrayList<>());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/check");
+        MockMvcBuilders.standaloneSetup(this.checkController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
+    }
+
+    /**
+     * Method under test: {@link CheckController#printAllCheck()}
+     */
+    @Test
+    void testPrintAllCheck2() throws Exception {
+        ActionValueType actionValueType = new ActionValueType();
+        actionValueType.setAction("?");
+        actionValueType.setChecks(new ArrayList<>());
+        actionValueType.setDescription("The characteristics of someone or something");
+        actionValueType.setValueType("42");
+
+        Check check = new Check();
+        check.setActionValueType(actionValueType);
+        check.setAttribute("?");
+        check.setAuthor(123L);
+        check.setComments("?");
+        check.setDocSource("?");
+        check.setName("?");
+        check.setValue("42");
+
+        ArrayList<Check> checkList = new ArrayList<>();
+        checkList.add(check);
+        when(this.checkService.findAll()).thenReturn(checkList);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/check");
+        MockMvcBuilders.standaloneSetup(this.checkController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "[{\"theCheck\":{\"name\":\"?\",\"docSource\":\"?\",\"attribute\":\"?\",\"value\":\"42\",\"comments\":\"?\"},\"actionName\":{"
+                                        + "\"actionName\":\"?\"}}]"));
+    }
+
+    /**
+     * Method under test: {@link CheckController#printAllCheck()}
+     */
+    @Test
+    void testPrintAllCheck3() throws Exception {
+        when(this.checkService.findAll()).thenReturn(new ArrayList<>());
+        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/check");
+        getResult.contentType("https://example.org/example");
+        MockMvcBuilders.standaloneSetup(this.checkController)
+                .build()
+                .perform(getResult)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
+    }
+
+    /**
+     * Method under test: {@link CheckController#updateCheck(CheckAndActionName)}
+     */
+    @Test
+    void testUpdateCheck() throws Exception {
+        when(this.checkService.findAll()).thenReturn(new ArrayList<>());
+
+        ActionValueType actionValueType = new ActionValueType();
+        actionValueType.setAction("Action");
+        actionValueType.setChecks(new ArrayList<>());
+        actionValueType.setDescription("The characteristics of someone or something");
+        actionValueType.setValueType("42");
+
+        Check check = new Check();
+        check.setActionValueType(actionValueType);
+        check.setAttribute("Attribute");
+        check.setAuthor(123L);
+        check.setComments("Comments");
+        check.setDocSource("Doc Source");
+        check.setName("Name");
+        check.setValue("42");
+
+        CheckAndActionName checkAndActionName = new CheckAndActionName();
+        checkAndActionName.setActionName(new ActionNameString("Action Name"));
+        checkAndActionName.setTheCheck(check);
+        String content = (new ObjectMapper()).writeValueAsString(checkAndActionName);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/check")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+        MockMvcBuilders.standaloneSetup(this.checkController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
+    }
+
+    /**
+     * Method under test: {@link CheckController#updateCheck(CheckAndActionName)}
+     */
+    @Test
+    void testUpdateCheck2() throws Exception {
+        ActionValueType actionValueType = new ActionValueType();
+        actionValueType.setAction("?");
+        actionValueType.setChecks(new ArrayList<>());
+        actionValueType.setDescription("The characteristics of someone or something");
+        actionValueType.setValueType("42");
+
+        Check check = new Check();
+        check.setActionValueType(actionValueType);
+        check.setAttribute("?");
+        check.setAuthor(123L);
+        check.setComments("?");
+        check.setDocSource("?");
+        check.setName("?");
+        check.setValue("42");
+
+        ArrayList<Check> checkList = new ArrayList<>();
+        checkList.add(check);
+        when(this.checkService.findAll()).thenReturn(checkList);
+
+        ActionValueType actionValueType1 = new ActionValueType();
+        actionValueType1.setAction("Action");
+        actionValueType1.setChecks(new ArrayList<>());
+        actionValueType1.setDescription("The characteristics of someone or something");
+        actionValueType1.setValueType("42");
+
+        Check check1 = new Check();
+        check1.setActionValueType(actionValueType1);
+        check1.setAttribute("Attribute");
+        check1.setAuthor(123L);
+        check1.setComments("Comments");
+        check1.setDocSource("Doc Source");
+        check1.setName("Name");
+        check1.setValue("42");
+
+        CheckAndActionName checkAndActionName = new CheckAndActionName();
+        checkAndActionName.setActionName(new ActionNameString("Action Name"));
+        checkAndActionName.setTheCheck(check1);
+        String content = (new ObjectMapper()).writeValueAsString(checkAndActionName);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/check")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+        MockMvcBuilders.standaloneSetup(this.checkController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "[{\"theCheck\":{\"name\":\"?\",\"docSource\":\"?\",\"attribute\":\"?\",\"value\":\"42\",\"comments\":\"?\"},\"actionName\":{"
+                                        + "\"actionName\":\"?\"}}]"));
+    }
 }
+
