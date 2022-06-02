@@ -14,10 +14,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 /**
- * We follow somewhat the State design pattern by creating a base
- * abstract parser from which we create further classes.
- * You can only reach certain states if you pass the preconditioned specific parser.
- *
+ * We follow somewhat the State design pattern by creating a base abstract parser from which we
+ * create further classes. You can only reach certain states if you pass the preconditioned specific
+ * parser.
  */
 public abstract class ParserBase {
 
