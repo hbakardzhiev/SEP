@@ -36,5 +36,4 @@ public class Util {
     final var username = principal.toString();
     return username;
   }
-
 }
