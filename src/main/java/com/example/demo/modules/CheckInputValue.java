@@ -9,10 +9,12 @@ import java.util.Objects;
  * that are used for checking.
  */
 public class CheckInputValue {
+    private Result status;
     private String inputValue; //the value that a specific attribute has in Windchill
     private CheckAndActionName checkAndActionName;
 
-    public CheckInputValue(String inputValue, CheckAndActionName checkAndActionName) {
+    public CheckInputValue(Result status, String inputValue, CheckAndActionName checkAndActionName) {
+        this.status = status;
         this.inputValue = inputValue;
         this.checkAndActionName = checkAndActionName;
     }
@@ -20,9 +22,18 @@ public class CheckInputValue {
     @Override
     public String toString() {
         return "CheckInputValue{" +
-                "inputValue='" + inputValue + '\'' +
-                ",checkAndActionName=" + checkAndActionName +
+                "status='" + status + '\'' +
+                ", inputValue='" + inputValue + '\'' +
+                ", checkAndActionName=" + checkAndActionName +
                 '}';
+    }
+
+    public Result getStatus() {
+        return status;
+    }
+
+    public void setStatus(Result status) {
+        this.status = status;
     }
 
     public String getInputValue() {
@@ -46,7 +57,7 @@ public class CheckInputValue {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CheckInputValue that = (CheckInputValue) o;
-        return Objects.equals(inputValue, that.inputValue) && Objects.equals(checkAndActionName, that.checkAndActionName);
+        return Objects.equals(status, that.status) && Objects.equals(inputValue, that.inputValue) && Objects.equals(checkAndActionName, that.checkAndActionName);
     }
 
 }

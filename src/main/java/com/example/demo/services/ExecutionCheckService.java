@@ -36,11 +36,11 @@ public class ExecutionCheckService {
      * - passed, failed, attention point and the value of the entry is the check itself and the inputValue
      * @throws IOException if the parsing of the data fails
      */
-    public List<SimpleEntry<Result,CheckInputValue>> filterDataWithChecks () throws IOException {
+    public List<SimpleEntry<String,CheckInputValue>> filterDataWithChecks () throws IOException {
         List<Check> checks = checkRepository.findAll();
         var data = parserService.parseEverything();
         final var relevantChecksVal = data.stream().map(element -> {
-            Stream<SimpleEntry<Result, CheckInputValue>> checkedChecks =
+            Stream<SimpleEntry<String, CheckInputValue>> checkedChecks =
                     mapSimpleEntry(checks, element);
 
             return checkedChecks.collect(Collectors.toList());
@@ -49,7 +49,7 @@ public class ExecutionCheckService {
 
     }
 
-    private Stream<SimpleEntry<Result, CheckInputValue>> mapSimpleEntry(List<Check> checks, SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>> element) {
+    private Stream<SimpleEntry<String, CheckInputValue>> mapSimpleEntry(List<Check> checks, SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>> element) {
 
         final var indexOfHyphen = element.getKey().indexOf("-");
         final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
@@ -71,11 +71,13 @@ public class ExecutionCheckService {
             String action = check.getActionValueType().getAction();
             ActionNameString actionNameString = new ActionNameString(action);
             CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
-            CheckInputValue checkActionInputValue = new CheckInputValue(inputValue, checkAndActionName);
-
             Result status = executeTheCheck(check, inputValue);
-            return new SimpleEntry<Result, CheckInputValue>(status, checkActionInputValue);
+            CheckInputValue checkActionInputValue = new CheckInputValue(status, inputValue, checkAndActionName);
+
+
+            return new SimpleEntry<String, CheckInputValue>("output", checkActionInputValue);
         });
+
         return checkedChecks;
     }
 

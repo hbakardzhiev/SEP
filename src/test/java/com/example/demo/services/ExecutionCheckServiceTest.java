@@ -42,15 +42,15 @@ class ExecutionCheckServiceTest {
     @Test
     void filterDataWithChecksPassed() throws IOException {
         //given
-        List<AbstractMap.SimpleEntry< Result, CheckInputValue >> expected  =
+        List<AbstractMap.SimpleEntry<String, CheckInputValue >> expected  =
                 new ArrayList<>();
         Check checkTest = new Check("Check 1", "Change Notice", "name", "null", "comment");
         ActionValueType actionType = new ActionValueType("NotEmpty", "", "pls1");
         actionType.add(checkTest);
 
         ActionNameString actionTest = new ActionNameString("NotEmpty");
-        expected.add(new AbstractMap.SimpleEntry<>(Result.passed,
-                new CheckInputValue("CN title name", new CheckAndActionName(checkTest, actionTest))));
+        expected.add(new AbstractMap.SimpleEntry<>("output",
+                new CheckInputValue(Result.passed,"CN title name", new CheckAndActionName(checkTest, actionTest))));
 
         given(checkRepository.findAll()).willReturn(List.of(checkTest));
         given(parserService.parseEverything()).willReturn(List.of(new AbstractMap.SimpleImmutableEntry<>(
@@ -71,15 +71,15 @@ class ExecutionCheckServiceTest {
     @Test
     void filterDataWithChecksFailed() throws IOException {
         //given: name is put to empty to check whether the check will fail
-        List<AbstractMap.SimpleEntry< Result, CheckInputValue >> expected  =
+        List<AbstractMap.SimpleEntry<String, CheckInputValue >> expected  =
                 new ArrayList<>();
         Check checkTest = new Check("Check 1", "Change Notice", "name", "null", "comment");
         ActionValueType actionType = new ActionValueType("NotEmpty", "", "pls1");
         actionType.add(checkTest);
 
         ActionNameString actionTest = new ActionNameString("NotEmpty");
-        expected.add(new AbstractMap.SimpleEntry<>(Result.failed,
-                new CheckInputValue("", new CheckAndActionName(checkTest, actionTest))));
+        expected.add(new AbstractMap.SimpleEntry<>("output",
+                new CheckInputValue(Result.failed,"", new CheckAndActionName(checkTest, actionTest))));
 
         given(checkRepository.findAll()).willReturn(List.of(checkTest));
         given(parserService.parseEverything()).willReturn(List.of(new AbstractMap.SimpleImmutableEntry<>(
@@ -98,15 +98,15 @@ class ExecutionCheckServiceTest {
     @Test
     void filterDataWithChecksHuman() throws IOException {
         //given: name is put to empty to check whether the check will fail
-        List<AbstractMap.SimpleEntry< Result, CheckInputValue >> expected  =
+        List<AbstractMap.SimpleEntry< String, CheckInputValue >> expected  =
                 new ArrayList<>();
         Check checkTest = new Check("Check 1", "Change Notice", "description", "null", "comment");
         ActionValueType actionType = new ActionValueType("HumanCheck", "", "pls1");
         actionType.add(checkTest);
 
         ActionNameString actionTest = new ActionNameString("HumanCheck");
-        expected.add(new AbstractMap.SimpleEntry<>(Result.humanCheck,
-                new CheckInputValue("", new CheckAndActionName(checkTest, actionTest))));
+        expected.add(new AbstractMap.SimpleEntry<>("output",
+                new CheckInputValue(Result.humanCheck,"", new CheckAndActionName(checkTest, actionTest))));
 
         given(checkRepository.findAll()).willReturn(List.of(checkTest));
         given(parserService.parseEverything()).willReturn(List.of(new AbstractMap.SimpleImmutableEntry<>(

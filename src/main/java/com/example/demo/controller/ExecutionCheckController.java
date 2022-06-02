@@ -33,7 +33,7 @@ public class ExecutionCheckController {
      * @throws IOException if the parsing of the data fails in the Service class
      */
     @GetMapping("/all")
-    public List<AbstractMap.SimpleEntry<Result, CheckInputValue>> executeChecksAll() throws IOException {
+    public List<AbstractMap.SimpleEntry<String, CheckInputValue>> executeChecksAll() throws IOException {
         return executionCheckService.filterDataWithChecks();
     }
 
