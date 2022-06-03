@@ -2,9 +2,7 @@ package com.example.demo.configuration;
 
 import com.example.demo.modules.SheetType;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.Multigraph;
 
@@ -19,7 +17,6 @@ public class GraphConfig {
   }
 
   /**
-   *
    * @return
    */
   public List<CustomEdge> getEdges() {
