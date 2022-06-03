@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.modules.CheckInputValue;
-import com.example.demo.modules.Result;
+import com.example.demo.modules.ExecutedCheckOutput;
 import com.example.demo.services.ExecutionCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,7 +32,7 @@ public class ExecutionCheckController {
      * @throws IOException if the parsing of the data fails in the Service class
      */
     @GetMapping("/all")
-    public List<AbstractMap.SimpleEntry<String, CheckInputValue>> executeChecksAll() throws IOException {
+    public List<AbstractMap.SimpleEntry<String, ExecutedCheckOutput>> executeChecksAll() throws IOException {
         return executionCheckService.filterDataWithChecks();
     }
 

@@ -28,19 +28,20 @@ public class ExecutionCheckService {
     }
 
     /**
-     * Associates each parsed entry that consists of document Source, attribute and value of
-     * the attribute with the corresponding list of checks that needs to be performed on it.
-     * The association is made based on specific document type (docSource) and attribute name.
+     * Retrieves all checks form the DB and takes all parsed data.
+     * Associates each parsed element with the list of all checks
+     * where the correct checks need to be found.
      *
-     * @return list of entries, where each entry has as a Key the status of the check
-     * - passed, failed, attention point and the value of the entry is the check itself and the inputValue
+     * @return list of entries, where each entry has as a Key - "output"
+     * and the value of the entry is the status - passed, failed, attention point and
+     * the check itself and the inputValue
      * @throws IOException if the parsing of the data fails
      */
-    public List<SimpleEntry<String,CheckInputValue>> filterDataWithChecks () throws IOException {
+    public List<SimpleEntry<String, ExecutedCheckOutput>> filterDataWithChecks () throws IOException {
         List<Check> checks = checkRepository.findAll();
         var data = parserService.parseEverything();
         final var relevantChecksVal = data.stream().map(element -> {
-            Stream<SimpleEntry<String, CheckInputValue>> checkedChecks =
+            Stream<SimpleEntry<String, ExecutedCheckOutput>> checkedChecks =
                     mapSimpleEntry(checks, element);
 
             return checkedChecks.collect(Collectors.toList());
@@ -49,7 +50,19 @@ public class ExecutionCheckService {
 
     }
 
-    private Stream<SimpleEntry<String, CheckInputValue>> mapSimpleEntry(List<Check> checks, SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>> element) {
+    /**
+     * Associates each parsed entry that consists of document Source, attribute and value of
+     * the attribute with the corresponding list of checks that needs to be performed on it.
+     * The association is made based on specific document type (docSource) and attribute name.
+     *
+     * @param checks all available checks in the DB
+     * @param element is one entry from the data that consists of key - the type of the document (Change Notice -  some number)
+     *                the attribute and the value that needs to be checked
+     * @return stream of entries of type ExecutedCheckOutput
+     */
+    private Stream<SimpleEntry<String, ExecutedCheckOutput>>
+    mapSimpleEntry(List<Check> checks,
+                   SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>> element) {
 
         final var indexOfHyphen = element.getKey().indexOf("-");
         final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
@@ -72,10 +85,10 @@ public class ExecutionCheckService {
             ActionNameString actionNameString = new ActionNameString(action);
             CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
             Result status = executeTheCheck(check, inputValue);
-            CheckInputValue checkActionInputValue = new CheckInputValue(status, inputValue, checkAndActionName);
+            ExecutedCheckOutput checkActionInputValue = new ExecutedCheckOutput(status, inputValue, checkAndActionName);
 
 
-            return new SimpleEntry<String, CheckInputValue>("output", checkActionInputValue);
+            return new SimpleEntry<String, ExecutedCheckOutput>("output", checkActionInputValue);
         });
 
         return checkedChecks;
@@ -101,6 +114,15 @@ public class ExecutionCheckService {
         return result;
     }
 
+    /**
+     * Performs all checks that required a value of type Integer.
+     * The value is the accompanying value that is inputted when the check is created and should be a number.
+     *
+     * @param valueInput the value that needs to be checked
+     * @param check the check that needs to be performed
+     * @return the result status when the check is performed
+     * @throws IllegalStateException if the check action is none of the specified
+     */
     private Result checksInteger(String valueInput, Check check) { //InputValue and a check
         Result result = null;
         boolean status;
@@ -123,6 +145,15 @@ public class ExecutionCheckService {
         return result;
     }
 
+    /**
+     * Performs all checks that required a value of type null,
+     * which is an indication that there is no additional value needed to perform those type of checks.
+     *
+     * @param attributeValue the value that needs to be checked
+     * @param check the check that needs to be performed
+     * @return the result status when the check is performed
+     * @throws IllegalStateException if the check action is none of the specified
+     */
     private Result checksNull(String attributeValue, Check check){
        Result result;
         String checkAction = check.getActionValueType().getAction();
@@ -135,9 +166,17 @@ public class ExecutionCheckService {
         return result;
     }
 
-
+    /**
+     * Performs all checks that required a value of type String.
+     * The value is the accompanying value that is inputted when the check is created.
+     *
+     * @param attributeValue the value that needs to be checked
+     * @param check the check that needs to be performed
+     * @return the result status when the check is performed
+     * @throws IllegalStateException if the check action is none of the specified
+     */
     private Result checksString(String attributeValue, Check check) {
-        Result result = Result.humanCheck;
+        Result result;
         String value = check.getValue();
         String checkAction = check.getActionValueType().getAction();
         switch(ActionTypes.valueOf(checkAction)) {

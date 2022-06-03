@@ -8,12 +8,12 @@ import java.util.Objects;
  * and the object checkAndActionName which is the check and the action of the check
  * that are used for checking.
  */
-public class CheckInputValue {
+public class ExecutedCheckOutput {
     private Result status;
     private String inputValue; //the value that a specific attribute has in Windchill
     private CheckAndActionName checkAndActionName;
 
-    public CheckInputValue(Result status, String inputValue, CheckAndActionName checkAndActionName) {
+    public ExecutedCheckOutput(Result status, String inputValue, CheckAndActionName checkAndActionName) {
         this.status = status;
         this.inputValue = inputValue;
         this.checkAndActionName = checkAndActionName;
@@ -56,7 +56,7 @@ public class CheckInputValue {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CheckInputValue that = (CheckInputValue) o;
+        ExecutedCheckOutput that = (ExecutedCheckOutput) o;
         return Objects.equals(status, that.status) && Objects.equals(inputValue, that.inputValue) && Objects.equals(checkAndActionName, that.checkAndActionName);
     }
 
