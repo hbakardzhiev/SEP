@@ -73,7 +73,7 @@ public class ParserService {
     final var sheetSourceStream = sheetSourceRepository.findAll().stream();
     final var cnParser = new ParserCN(Util.CHANGE_NOTICE_EXAMPLE_HTML);
     final var ctParser = new ParserCT(cnParser);
-    final var dmrParser = new ParserDMR(ctParser.getDocument().values().stream().parallel());
+    final var dmrParser = new ParserDMR(ctParser);
     return dmrParser.parsePage(sheetSourceStream);
   }
 

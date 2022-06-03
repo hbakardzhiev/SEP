@@ -29,13 +29,6 @@ public class Configuration {
     return args -> {
       final var list = new ArrayList<SheetSource>();
 
-      // TODO: add the sheetTypeCT to the graphConfig
-      for (var sheetType : List.of(SheetType.CT, SheetType.CN, SheetType.CR, SheetType.DMR)) {
-        list.add(
-            new SheetSource(
-                "id", "infoPageIdentityDisplayType", String.class.getTypeName(), sheetType));
-      }
-
       for (CustomEdge e : edges) {
         list.add(
             new SheetSource(
