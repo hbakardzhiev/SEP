@@ -43,18 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.addFilterBefore(
         new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
   }
-
-  @Bean
-  CorsConfigurationSource corsConfigurationSource() {
-    final var configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(Collections.singletonList(CorsConfiguration.ALL));
-    configuration.setAllowedMethods(List.of("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS"));
-    final var source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
-  }
-
-  @Bean
+  
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
