@@ -41,7 +41,7 @@ class ExecutionCheckServiceTest {
         List<AbstractMap.SimpleEntry<String, ExecutedCheckOutput>> expected  =
                 new ArrayList<>();
         Check checkTest = new Check("Check 1", "Change Notice", "name", "null", "comment");
-        ActionValueType actionType = new ActionValueType("NotEmpty", "", "pls1");
+        Action actionType = new Action("NotEmpty", "", "pls1");
         actionType.add(checkTest);
 
         ActionNameString actionTest = new ActionNameString("NotEmpty");
@@ -70,7 +70,7 @@ class ExecutionCheckServiceTest {
         List<AbstractMap.SimpleEntry<String, ExecutedCheckOutput>> expected  =
                 new ArrayList<>();
         Check checkTest = new Check("Check 1", "Change Notice", "name", "null", "comment");
-        ActionValueType actionType = new ActionValueType("NotEmpty", "", "pls1");
+        Action actionType = new Action("NotEmpty", "", "pls1");
         actionType.add(checkTest);
 
         ActionNameString actionTest = new ActionNameString("NotEmpty");
@@ -97,7 +97,7 @@ class ExecutionCheckServiceTest {
         List<AbstractMap.SimpleEntry< String, ExecutedCheckOutput>> expected  =
                 new ArrayList<>();
         Check checkTest = new Check("Check 1", "Change Notice", "description", "null", "comment");
-        ActionValueType actionType = new ActionValueType("HumanCheck", "", "pls1");
+        Action actionType = new Action("HumanCheck", "", "pls1");
         actionType.add(checkTest);
 
         ActionNameString actionTest = new ActionNameString("HumanCheck");

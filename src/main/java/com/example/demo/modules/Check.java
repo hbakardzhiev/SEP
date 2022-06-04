@@ -1,7 +1,6 @@
 package com.example.demo.modules;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
@@ -46,12 +45,12 @@ public class Check {
   // This could be hardcoded on the frontend side.
 
   // To prevent cascading deletes, so that check deletion has no relation
-  // with ActionValueType deletion.
+  // with Action deletion.
   @ManyToOne(
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "action")
   @JsonIgnore
-  private ActionValueType actionValueType;
+  private Action action;
 
   public Check() {}
 
@@ -126,12 +125,12 @@ public class Check {
     this.authorId = authorId;
   }
 
-  public ActionValueType getActionValueType() {
-    return actionValueType;
+  public Action getActionValueType() {
+    return action;
   }
 
-  public void setActionValueType(ActionValueType actionValueType) {
-    this.actionValueType = actionValueType;
+  public void setActionValueType(Action action) {
+    this.action = action;
   }
 
   @Override
@@ -142,7 +141,7 @@ public class Check {
             ", attribute='" + attribute + '\'' +
             ", value='" + value + '\'' +
             ", comments='" + comments + '\'' +
-            ", actionValueType=" + actionValueType +
+            ", action=" + action +
             '}';
   }
 }

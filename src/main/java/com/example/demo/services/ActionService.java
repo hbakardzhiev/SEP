@@ -1,23 +1,23 @@
 package com.example.demo.services;
 
-import com.example.demo.modules.ActionValueType;
-import com.example.demo.repository.ActionValueTypeRepository;
+import com.example.demo.modules.Action;
+import com.example.demo.repository.ActionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-/** Service layer for ActionValueType class - holds the relevant business logic. */
+/** Service layer for Action class - holds the relevant business logic. */
 @Service
-public class ActionValueTypeService {
+public class ActionService {
 
-  private ActionValueTypeRepository actionValueTypeRepository;
+  private ActionRepository actionRepository;
 
   /** Constructor to use the correct repository */
   @Autowired
-  public ActionValueTypeService(ActionValueTypeRepository repository) {
-    this.actionValueTypeRepository = repository;
+  public ActionService(ActionRepository repository) {
+    this.actionRepository = repository;
   }
 
   /**
@@ -25,8 +25,8 @@ public class ActionValueTypeService {
    *
    * @return list of actions
    */
-  public List<ActionValueType> findAll() {
-    return actionValueTypeRepository.findAll();
+  public List<Action> findAll() {
+    return actionRepository.findAll();
   }
 
   /**
@@ -36,10 +36,10 @@ public class ActionValueTypeService {
    * @return the action that has the name given as param
    * @throws RuntimeException if no action with the name is found
    */
-  public ActionValueType findByName(String name) {
-    Optional<ActionValueType> result = actionValueTypeRepository.findById(name);
+  public Action findByName(String name) {
+    Optional<Action> result = actionRepository.findById(name);
 
-    ActionValueType theAction = null;
+    Action theAction = null;
 
     if (result.isPresent()) {
       theAction = result.get();
@@ -54,8 +54,8 @@ public class ActionValueTypeService {
    *
    * @param theAction the action to be saved in the database
    */
-  public void save(ActionValueType theAction) {
-    actionValueTypeRepository.save(theAction);
+  public void save(Action theAction) {
+    actionRepository.save(theAction);
   }
 
   /**
@@ -64,6 +64,6 @@ public class ActionValueTypeService {
    * @param name the name of the action to be deleted
    */
   public void deleteByName(String name) {
-    actionValueTypeRepository.deleteById(name);
+    actionRepository.deleteById(name);
   }
 }

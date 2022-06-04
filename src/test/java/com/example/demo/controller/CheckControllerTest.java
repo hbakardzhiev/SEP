@@ -4,12 +4,12 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+import com.example.demo.modules.Action;
 import com.example.demo.modules.ActionNameString;
-import com.example.demo.modules.ActionValueType;
 import com.example.demo.modules.Check;
 import com.example.demo.modules.CheckAndActionName;
 import com.example.demo.repository.AdminRepoistory;
-import com.example.demo.services.ActionValueTypeService;
+import com.example.demo.services.ActionService;
 import com.example.demo.services.CheckService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,7 +31,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(SpringExtension.class)
 class CheckControllerTest {
     @MockBean
-    private ActionValueTypeService actionValueTypeService;
+    private ActionService actionService;
 
     @MockBean
     private AdminRepoistory adminRepoistory;
@@ -49,14 +49,14 @@ class CheckControllerTest {
     void testAddCheck() throws Exception {
         when(this.checkService.findAll()).thenReturn(new ArrayList<>());
 
-        ActionValueType actionValueType = new ActionValueType();
-        actionValueType.setAction("Action");
-        actionValueType.setChecks(new ArrayList<>());
-        actionValueType.setDescription("The characteristics of someone or something");
-        actionValueType.setValueType("42");
+        Action action = new Action();
+        action.setAction("Action");
+        action.setChecks(new ArrayList<>());
+        action.setDescription("The characteristics of someone or something");
+        action.setValueType("42");
 
         Check check = new Check();
-        check.setActionValueType(actionValueType);
+        check.setActionValueType(action);
         check.setAttribute("Attribute");
         check.setAuthor(123L);
         check.setComments("Comments");
@@ -84,14 +84,14 @@ class CheckControllerTest {
      */
     @Test
     void testAddCheck2() throws Exception {
-        ActionValueType actionValueType = new ActionValueType();
-        actionValueType.setAction("?");
-        actionValueType.setChecks(new ArrayList<>());
-        actionValueType.setDescription("The characteristics of someone or something");
-        actionValueType.setValueType("42");
+        Action action = new Action();
+        action.setAction("?");
+        action.setChecks(new ArrayList<>());
+        action.setDescription("The characteristics of someone or something");
+        action.setValueType("42");
 
         Check check = new Check();
-        check.setActionValueType(actionValueType);
+        check.setActionValueType(action);
         check.setAttribute("?");
         check.setAuthor(123L);
         check.setComments("?");
@@ -103,14 +103,14 @@ class CheckControllerTest {
         checkList.add(check);
         when(this.checkService.findAll()).thenReturn(checkList);
 
-        ActionValueType actionValueType1 = new ActionValueType();
-        actionValueType1.setAction("Action");
-        actionValueType1.setChecks(new ArrayList<>());
-        actionValueType1.setDescription("The characteristics of someone or something");
-        actionValueType1.setValueType("42");
+        Action action1 = new Action();
+        action1.setAction("Action");
+        action1.setChecks(new ArrayList<>());
+        action1.setDescription("The characteristics of someone or something");
+        action1.setValueType("42");
 
         Check check1 = new Check();
-        check1.setActionValueType(actionValueType1);
+        check1.setActionValueType(action1);
         check1.setAttribute("Attribute");
         check1.setAuthor(123L);
         check1.setComments("Comments");
@@ -141,14 +141,14 @@ class CheckControllerTest {
      */
     @Test
     void testDeleteCheck() throws Exception {
-        ActionValueType actionValueType = new ActionValueType();
-        actionValueType.setAction("Action");
-        actionValueType.setChecks(new ArrayList<>());
-        actionValueType.setDescription("The characteristics of someone or something");
-        actionValueType.setValueType("42");
+        Action action = new Action();
+        action.setAction("Action");
+        action.setChecks(new ArrayList<>());
+        action.setDescription("The characteristics of someone or something");
+        action.setValueType("42");
 
         Check check = new Check();
-        check.setActionValueType(actionValueType);
+        check.setActionValueType(action);
         check.setAttribute("Attribute");
         check.setAuthor(123L);
         check.setComments("Comments");
@@ -171,14 +171,14 @@ class CheckControllerTest {
      */
     @Test
     void testDeleteCheck2() throws Exception {
-        ActionValueType actionValueType = new ActionValueType();
-        actionValueType.setAction("Action");
-        actionValueType.setChecks(new ArrayList<>());
-        actionValueType.setDescription("The characteristics of someone or something");
-        actionValueType.setValueType("42");
+        Action action = new Action();
+        action.setAction("Action");
+        action.setChecks(new ArrayList<>());
+        action.setDescription("The characteristics of someone or something");
+        action.setValueType("42");
 
         Check check = new Check();
-        check.setActionValueType(actionValueType);
+        check.setActionValueType(action);
         check.setAttribute("Attribute");
         check.setAuthor(123L);
         check.setComments("Comments");
@@ -202,14 +202,14 @@ class CheckControllerTest {
      */
     @Test
     void testGetCheck() throws Exception {
-        ActionValueType actionValueType = new ActionValueType();
-        actionValueType.setAction("Action");
-        actionValueType.setChecks(new ArrayList<>());
-        actionValueType.setDescription("The characteristics of someone or something");
-        actionValueType.setValueType("42");
+        Action action = new Action();
+        action.setAction("Action");
+        action.setChecks(new ArrayList<>());
+        action.setDescription("The characteristics of someone or something");
+        action.setValueType("42");
 
         Check check = new Check();
-        check.setActionValueType(actionValueType);
+        check.setActionValueType(action);
         check.setAttribute("Attribute");
         check.setAuthor(123L);
         check.setComments("Comments");
@@ -234,14 +234,14 @@ class CheckControllerTest {
      */
     @Test
     void testGetCheck2() throws Exception {
-        ActionValueType actionValueType = new ActionValueType();
-        actionValueType.setAction("Action");
-        actionValueType.setChecks(new ArrayList<>());
-        actionValueType.setDescription("The characteristics of someone or something");
-        actionValueType.setValueType("42");
+        Action action = new Action();
+        action.setAction("Action");
+        action.setChecks(new ArrayList<>());
+        action.setDescription("The characteristics of someone or something");
+        action.setValueType("42");
 
         Check check = new Check();
-        check.setActionValueType(actionValueType);
+        check.setActionValueType(action);
         check.setAttribute("Attribute");
         check.setAuthor(123L);
         check.setComments("Comments");
@@ -282,14 +282,14 @@ class CheckControllerTest {
      */
     @Test
     void testPrintAllCheck2() throws Exception {
-        ActionValueType actionValueType = new ActionValueType();
-        actionValueType.setAction("?");
-        actionValueType.setChecks(new ArrayList<>());
-        actionValueType.setDescription("The characteristics of someone or something");
-        actionValueType.setValueType("42");
+        Action action = new Action();
+        action.setAction("?");
+        action.setChecks(new ArrayList<>());
+        action.setDescription("The characteristics of someone or something");
+        action.setValueType("42");
 
         Check check = new Check();
-        check.setActionValueType(actionValueType);
+        check.setActionValueType(action);
         check.setAttribute("?");
         check.setAuthor(123L);
         check.setComments("?");
@@ -335,14 +335,14 @@ class CheckControllerTest {
     void testUpdateCheck() throws Exception {
         when(this.checkService.findAll()).thenReturn(new ArrayList<>());
 
-        ActionValueType actionValueType = new ActionValueType();
-        actionValueType.setAction("Action");
-        actionValueType.setChecks(new ArrayList<>());
-        actionValueType.setDescription("The characteristics of someone or something");
-        actionValueType.setValueType("42");
+        Action action = new Action();
+        action.setAction("Action");
+        action.setChecks(new ArrayList<>());
+        action.setDescription("The characteristics of someone or something");
+        action.setValueType("42");
 
         Check check = new Check();
-        check.setActionValueType(actionValueType);
+        check.setActionValueType(action);
         check.setAttribute("Attribute");
         check.setAuthor(123L);
         check.setComments("Comments");
@@ -370,14 +370,14 @@ class CheckControllerTest {
      */
     @Test
     void testUpdateCheck2() throws Exception {
-        ActionValueType actionValueType = new ActionValueType();
-        actionValueType.setAction("?");
-        actionValueType.setChecks(new ArrayList<>());
-        actionValueType.setDescription("The characteristics of someone or something");
-        actionValueType.setValueType("42");
+        Action action = new Action();
+        action.setAction("?");
+        action.setChecks(new ArrayList<>());
+        action.setDescription("The characteristics of someone or something");
+        action.setValueType("42");
 
         Check check = new Check();
-        check.setActionValueType(actionValueType);
+        check.setActionValueType(action);
         check.setAttribute("?");
         check.setAuthor(123L);
         check.setComments("?");
@@ -389,14 +389,14 @@ class CheckControllerTest {
         checkList.add(check);
         when(this.checkService.findAll()).thenReturn(checkList);
 
-        ActionValueType actionValueType1 = new ActionValueType();
-        actionValueType1.setAction("Action");
-        actionValueType1.setChecks(new ArrayList<>());
-        actionValueType1.setDescription("The characteristics of someone or something");
-        actionValueType1.setValueType("42");
+        Action action1 = new Action();
+        action1.setAction("Action");
+        action1.setChecks(new ArrayList<>());
+        action1.setDescription("The characteristics of someone or something");
+        action1.setValueType("42");
 
         Check check1 = new Check();
-        check1.setActionValueType(actionValueType1);
+        check1.setActionValueType(action1);
         check1.setAttribute("Attribute");
         check1.setAuthor(123L);
         check1.setComments("Comments");

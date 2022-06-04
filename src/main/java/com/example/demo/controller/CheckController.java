@@ -1,20 +1,19 @@
 package com.example.demo.controller;
 
+import com.example.demo.modules.Action;
 import com.example.demo.modules.ActionNameString;
 import com.example.demo.Util;
-import com.example.demo.modules.ActionValueType;
 import com.example.demo.modules.Check;
 import com.example.demo.modules.CheckAndActionName;
 import com.example.demo.repository.AdminRepoistory;
-import com.example.demo.services.ActionValueTypeService;
+import com.example.demo.services.ActionService;
 import com.example.demo.services.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 import org.springframework.web.cors.CorsConfiguration;
 
 /** Class that defines the API - the GET, POST, DELETE and PUT requests. */
@@ -25,7 +24,7 @@ public class CheckController {
 
   private CheckService checkService;
 
-  @Autowired private ActionValueTypeService actionValueTypeService;
+  @Autowired private ActionService actionService;
 
   @Autowired private AdminRepoistory adminRepoistory;
 
@@ -157,7 +156,7 @@ public class CheckController {
 
     theCheck.setAuthor(adminId);
 
-    ActionValueType theAction = actionValueTypeService.findByName(actionName);
+    Action theAction = actionService.findByName(actionName);
 
     theAction.add(theCheck);
 

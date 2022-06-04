@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "actions")
-public class ActionValueType {
+public class Action {
 
   @Id
   @Column(name = "action")
@@ -25,13 +25,13 @@ public class ActionValueType {
   private String description;
 
   // the checks associated with this action name
-  @OneToMany(mappedBy = "actionValueType")
+  @OneToMany(mappedBy = "action")
   @JsonIgnore
   private List<Check> checks = new ArrayList<>();
 
-  public ActionValueType() {}
+  public Action() {}
 
-  public ActionValueType(String action, String valueType, String description) {
+  public Action(String action, String valueType, String description) {
     this.action = action;
     this.valueType = valueType;
     this.description = description;
@@ -86,7 +86,7 @@ public class ActionValueType {
 
   @Override
   public String toString() {
-    return "ActionValueType{"
+    return "Action{"
         + ", action='"
         + action
         + '\''
