@@ -28,7 +28,7 @@ public class ExecutionCheckService {
     }
 
     /**
-     * Retrieves all checks form the DB and takes all parsed data.
+     * Retrieves all checks form the DB and gathers all parsed data.
      * Associates each parsed element with the list of all checks
      * where the correct checks need to be found.
      *
@@ -99,16 +99,16 @@ public class ExecutionCheckService {
      * the check is propagated to one of the corresponding method.
      *
      * @param check the check that needs to be executed on the @param inputValue
-     * @param inputValue the value that is scraped from Windchill and needs to be checked
-     * @return the status of type Result when executing the check
+     * @param attributeValue the value that is scraped from Windchill and needs to be checked
+     * @return the status of type Result when the check is executed
      */
-    private Result executeTheCheck(Check check, String inputValue) {
+    private Result executeTheCheck(Check check, String attributeValue) {
         String actionValue = check.getActionValueType().getValueType();
         Result result;
         switch (actionValue) {
-            case "": result = checksNull(inputValue, check); break;
-            case "String": result = checksString(inputValue, check); break;
-            case "Integer": result = checksInteger(inputValue, check); break;
+            case "": result = checksNull(attributeValue, check); break;
+            case "String": result = checksString(attributeValue, check); break;
+            case "Integer": result = checksInteger(attributeValue, check); break;
             default: throw new IllegalStateException("Unexpected value type: " + actionValue);
         };
         return result;
@@ -118,18 +118,18 @@ public class ExecutionCheckService {
      * Performs all checks that required a value of type Integer.
      * The value is the accompanying value that is inputted when the check is created and should be a number.
      *
-     * @param valueInput the value that needs to be checked
+     * @param attributeValue the value that needs to be checked
      * @param check the check that needs to be performed
      * @return the result status when the check is performed
      * @throws IllegalStateException if the check action is none of the specified
      */
-    private Result checksInteger(String valueInput, Check check) { //InputValue and a check
+    private Result checksInteger(String attributeValue, Check check) { //InputValue and a check
         Result result = null;
         boolean status;
         String checkAction = check.getActionValueType().getAction();
-        int length = valueInput.length();
+        int length = attributeValue.length();
         int checkValue = Integer.parseInt(check.getValue()); // check value
-        int valueInputInt = Integer.parseInt(valueInput); //attribute value
+        int valueInputInt = Integer.parseInt(attributeValue);
         switch (ActionTypes.valueOf(checkAction)) {
             case StrictlyGreater: status = checkValue > valueInputInt; break;
             case StrictlySmaller: status = checkValue < valueInputInt; break;
