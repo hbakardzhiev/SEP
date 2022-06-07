@@ -5,7 +5,7 @@ import com.example.demo.Util;
 import com.example.demo.modules.ActionValueType;
 import com.example.demo.modules.Check;
 import com.example.demo.modules.CheckAndActionName;
-import com.example.demo.repository.AdminRepoistory;
+import com.example.demo.repository.AdminRepository;
 import com.example.demo.services.ActionValueTypeService;
 import com.example.demo.services.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class CheckController {
 
   @Autowired private ActionValueTypeService actionValueTypeService;
 
-  @Autowired private AdminRepoistory adminRepoistory;
+  @Autowired private AdminRepository adminRepository;
 
   public CheckController(CheckService checkService) {
     this.checkService = checkService;
@@ -155,7 +155,7 @@ public class CheckController {
     String actionName = checkAndActionName.actionName.getActionName();
 
     String username = Util.getUsernameFromPrincipal();
-    Long adminId = adminRepoistory.findAdminByUsername(username).getId();
+    Long adminId = adminRepository.findAdminByUsername(username).getId();
 
     theCheck.setAuthor(adminId);
 
