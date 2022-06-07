@@ -52,7 +52,7 @@ public class ParserController {
 
   @GetMapping("allData")
   public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseAll()
-      throws IOException {
+          throws IOException {
     return parserService.parseEverything();
   }
 }

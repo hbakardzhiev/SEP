@@ -4,6 +4,7 @@ import static org.mockito.Mockito.when;
 
 import com.example.demo.services.ParserService;
 
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
