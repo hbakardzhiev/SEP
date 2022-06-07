@@ -2,7 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.Util;
 import com.example.demo.modules.Admin;
-import com.example.demo.repository.AdminRepository;
+import com.example.demo.repository.AdminRepoistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class AdminServiceImpl implements AdminService, UserDetailsService {
-  @Autowired AdminRepository adminRepository;
+  @Autowired AdminRepoistory adminRepoistory;
 
   private final PasswordEncoder passwordEncoder;
 
@@ -35,12 +35,12 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
   public Admin addAdmin(Admin admin) {
     admin.setPassword(passwordEncoder.encode(admin.getPassword()));
     admin.setAdminRole("ADMIN");
-    return adminRepository.save(admin);
+    return adminRepoistory.save(admin);
   }
 
   @Override
   public Admin getAdminById(Long id) {
-    return adminRepository.getById(id);
+    return adminRepoistory.getById(id);
   }
 
   /**
@@ -57,7 +57,7 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
       throw new IllegalAccessException("User cannot delete themself");
     }
 
-    adminRepository.deleteById(id);
+    adminRepoistory.deleteById(id);
   }
 
   /**
@@ -67,7 +67,7 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
    */
   @Override
   public List<Admin> getAdmins() {
-    return adminRepository.findAll();
+    return adminRepoistory.findAll();
   }
 
   /**
@@ -79,7 +79,7 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
    */
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Admin admin = adminRepository.findAdminByUsername(username);
+    Admin admin = adminRepoistory.findAdminByUsername(username);
 
     if (admin == null) {
       throw new UsernameNotFoundException("Admin not found in database");

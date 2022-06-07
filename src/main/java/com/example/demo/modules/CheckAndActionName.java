@@ -11,39 +11,43 @@ public class CheckAndActionName {
   public Check theCheck;
   public ActionNameString actionName;
 
-  public CheckAndActionName() {}
 
-  public CheckAndActionName(Check theCheck, ActionNameString actionName) {
-    this.theCheck = theCheck;
-    this.actionName = actionName;
-  }
+    public CheckAndActionName(){}
 
-  public Check getTheCheck() {
-    return theCheck;
-  }
+    public CheckAndActionName(Check theCheck, ActionNameString actionName) {
+        this.theCheck = theCheck;
+        this.actionName = actionName;
+    }
 
-  public void setTheCheck(Check theCheck) {
-    this.theCheck = theCheck;
-  }
+    public Check getTheCheck() {
+        return theCheck;
+    }
 
-  public ActionNameString getActionName() {
-    return actionName;
-  }
+    public void setTheCheck(Check theCheck) {
+        this.theCheck = theCheck;
+    }
 
-  public void setActionName(ActionNameString actionName) {
-    this.actionName = actionName;
-  }
+    public ActionNameString getActionName() {
+        return actionName;
+    }
 
-  @Override
-  public String toString() {
-    return "CheckAndActionName{" + "theCheck=" + theCheck + ", actionName=" + actionName + '}';
-  }
+    public void setActionName(ActionNameString actionName) {
+        this.actionName = actionName;
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    CheckAndActionName that = (CheckAndActionName) o;
-    return Objects.equals(theCheck, that.theCheck) && Objects.equals(actionName, that.actionName);
-  }
+    @Override
+    public String toString() {
+        return "CheckAndActionName{" +
+                "theCheck=" + theCheck +
+                ", actionName=" + actionName +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CheckAndActionName that = (CheckAndActionName) o;
+        return Objects.equals(theCheck, that.theCheck) && Objects.equals(actionName, that.actionName);
+    }
 }

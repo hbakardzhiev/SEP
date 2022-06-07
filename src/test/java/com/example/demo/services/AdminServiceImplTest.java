@@ -11,7 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.example.demo.modules.Admin;
-import com.example.demo.repository.AdminRepository;
+import com.example.demo.repository.AdminRepoistory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = {AdminServiceImpl.class})
 @ExtendWith(SpringExtension.class)
 class AdminServiceImplTest {
-  @MockBean private AdminRepository adminRepository;
+  @MockBean private AdminRepoistory adminRepoistory;
 
   @Autowired private AdminServiceImpl adminServiceImpl;
 
@@ -47,7 +47,7 @@ class AdminServiceImplTest {
     admin.setId(123L);
     admin.setPassword("iloveyou");
     admin.setUsername("janedoe");
-    when(this.adminRepository.save((Admin) any())).thenReturn(admin);
+    when(this.adminRepoistory.save((Admin) any())).thenReturn(admin);
 
     Admin admin1 = new Admin();
     admin1.setAdminRole("Admin Role");
@@ -57,7 +57,7 @@ class AdminServiceImplTest {
     admin1.setUsername("janedoe");
     assertSame(admin, this.adminServiceImpl.addAdmin(admin1));
     verify(this.passwordEncoder).encode((CharSequence) any());
-    verify(this.adminRepository).save((Admin) any());
+    verify(this.adminRepoistory).save((Admin) any());
     assertEquals("ADMIN", admin1.getAdminRole());
     assertEquals("secret", admin1.getPassword());
   }
@@ -66,7 +66,7 @@ class AdminServiceImplTest {
   @Test
   void testAddAdmin2() {
     when(this.passwordEncoder.encode((CharSequence) any())).thenReturn("secret");
-    when(this.adminRepository.save((Admin) any()))
+    when(this.adminRepoistory.save((Admin) any()))
         .thenThrow(new UsernameNotFoundException("ADMIN"));
 
     Admin admin = new Admin();
@@ -77,7 +77,7 @@ class AdminServiceImplTest {
     admin.setUsername("janedoe");
     assertThrows(UsernameNotFoundException.class, () -> this.adminServiceImpl.addAdmin(admin));
     verify(this.passwordEncoder).encode((CharSequence) any());
-    verify(this.adminRepository).save((Admin) any());
+    verify(this.adminRepoistory).save((Admin) any());
   }
 
   /** Method under test: {@link AdminServiceImpl#getAdminById(Long)} */
@@ -89,18 +89,18 @@ class AdminServiceImplTest {
     admin.setId(123L);
     admin.setPassword("iloveyou");
     admin.setUsername("janedoe");
-    when(this.adminRepository.getById((Long) any())).thenReturn(admin);
+    when(this.adminRepoistory.getById((Long) any())).thenReturn(admin);
     assertSame(admin, this.adminServiceImpl.getAdminById(123L));
-    verify(this.adminRepository).getById((Long) any());
+    verify(this.adminRepoistory).getById((Long) any());
   }
 
   /** Method under test: {@link AdminServiceImpl#getAdminById(Long)} */
   @Test
   void testGetAdminById2() {
-    when(this.adminRepository.getById((Long) any()))
+    when(this.adminRepoistory.getById((Long) any()))
         .thenThrow(new UsernameNotFoundException("Msg"));
     assertThrows(UsernameNotFoundException.class, () -> this.adminServiceImpl.getAdminById(123L));
-    verify(this.adminRepository).getById((Long) any());
+    verify(this.adminRepoistory).getById((Long) any());
   }
 
   /** Method under test: {@link AdminServiceImpl#deleteAdmin(Long)} */
@@ -128,19 +128,19 @@ class AdminServiceImplTest {
   @Test
   void testGetAdmins() {
     ArrayList<Admin> adminList = new ArrayList<>();
-    when(this.adminRepository.findAll()).thenReturn(adminList);
+    when(this.adminRepoistory.findAll()).thenReturn(adminList);
     List<Admin> actualAdmins = this.adminServiceImpl.getAdmins();
     assertSame(adminList, actualAdmins);
     assertTrue(actualAdmins.isEmpty());
-    verify(this.adminRepository).findAll();
+    verify(this.adminRepoistory).findAll();
   }
 
   /** Method under test: {@link AdminServiceImpl#getAdmins()} */
   @Test
   void testGetAdmins2() {
-    when(this.adminRepository.findAll()).thenThrow(new UsernameNotFoundException("Msg"));
+    when(this.adminRepoistory.findAll()).thenThrow(new UsernameNotFoundException("Msg"));
     assertThrows(UsernameNotFoundException.class, () -> this.adminServiceImpl.getAdmins());
-    verify(this.adminRepository).findAll();
+    verify(this.adminRepoistory).findAll();
   }
 
   /** Method under test: {@link AdminServiceImpl#loadUserByUsername(String)} */
@@ -152,7 +152,7 @@ class AdminServiceImplTest {
     admin.setId(123L);
     admin.setPassword("iloveyou");
     admin.setUsername("janedoe");
-    when(this.adminRepository.findAdminByUsername((String) any())).thenReturn(admin);
+    when(this.adminRepoistory.findAdminByUsername((String) any())).thenReturn(admin);
     UserDetails actualLoadUserByUsernameResult =
         this.adminServiceImpl.loadUserByUsername("janedoe");
     assertEquals(1, actualLoadUserByUsernameResult.getAuthorities().size());
@@ -162,7 +162,7 @@ class AdminServiceImplTest {
     assertTrue(actualLoadUserByUsernameResult.isAccountNonExpired());
     assertEquals("janedoe", actualLoadUserByUsernameResult.getUsername());
     assertEquals("iloveyou", actualLoadUserByUsernameResult.getPassword());
-    verify(this.adminRepository).findAdminByUsername((String) any());
+    verify(this.adminRepoistory).findAdminByUsername((String) any());
   }
 
   /** Method under test: {@link AdminServiceImpl#loadUserByUsername(String)} */
@@ -198,7 +198,7 @@ class AdminServiceImplTest {
     admin.setId(123L);
     admin.setPassword("iloveyou");
     admin.setUsername("janedoe");
-    when(this.adminRepository.findAdminByUsername((String) any())).thenReturn(admin);
+    when(this.adminRepoistory.findAdminByUsername((String) any())).thenReturn(admin);
     this.adminServiceImpl.loadUserByUsername("janedoe");
   }
 }

@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.modules.ActionValueType;
-import com.example.demo.services.ActionValueTypeService;
+import com.example.demo.modules.Action;
+import com.example.demo.services.ActionService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,16 +12,14 @@ import java.util.List;
 import org.springframework.web.cors.CorsConfiguration;
 
 /** Defines the needed API for the table with the actions and value types. */
+@AllArgsConstructor
 @RestController
 @RequestMapping("/action")
 @CrossOrigin(CorsConfiguration.ALL)
-public class ActionValueTypeController {
+public class ActionController {
 
-  private ActionValueTypeService actionValueTypeService;
+  private ActionService actionService;
 
-  public ActionValueTypeController(ActionValueTypeService actionValueTypeService) {
-    this.actionValueTypeService = actionValueTypeService;
-  }
 
   /**
    * Retrieves all actions from the database.
@@ -28,12 +27,12 @@ public class ActionValueTypeController {
    * @return list of all actions in the database
    */
   @GetMapping
-  public List<ActionValueType> getAllAction() {
-    return actionValueTypeService.findAll();
+  public List<Action> getAllAction() {
+    return actionService.findAll();
   }
 
   /*@GetMapping
-  public ActionValueType getByAction(String action){
-      return actionValueTypeService.findByName(action);
+  public Action getByAction(String action){
+      return actionService.findByName(action);
   }*/
 }

@@ -15,8 +15,7 @@ import org.jsoup.nodes.Document;
 
 /**
  * We follow somewhat the State design pattern by creating a base abstract parser from which we
- * create further classes. You can only reach certain states if you pass the preconditioned specific
- * parser.
+ * create further classes.
  */
 public abstract class ParserBase {
 
@@ -56,7 +55,8 @@ public abstract class ParserBase {
 
   /**
    * Goes through the page and finds all HTML elements that satisfy the tag, id capture. Returns the
-   * pair of unique name of the page with value being: html tag and its value on the html page.
+   * pair of unique name of the page with value (id on the page with key the html value of the
+   * element).
    *
    * @param tag the attribute of the html tag eg. "attrid" or "id", etc.
    * @param id the value of the tag
@@ -68,11 +68,8 @@ public abstract class ParserBase {
         document.entrySet().stream()
             .map(
                 element ->
-                    new AbstractMap.SimpleImmutableEntry<>(
-                        element.getKey(),
-                        new SimpleImmutableEntry<String, String>(
-                            id,
-                            element
+                    new AbstractMap.SimpleImmutableEntry<>(element.getKey(),
+                        new SimpleImmutableEntry<String, String>(id, element
                                 .getValue()
                                 .select((String.format("[%s=%s]", tag, id)))
                                 .text())));

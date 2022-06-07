@@ -1,7 +1,7 @@
 package com.example.demo.services;
 
-import com.example.demo.modules.ActionValueType;
-import com.example.demo.repository.ActionValueTypeRepository;
+import com.example.demo.modules.Action;
+import com.example.demo.repository.ActionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -19,36 +19,36 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class ActionValueTypeServiceTest {
+public class ActionServiceTest {
 
-  @Mock private ActionValueTypeRepository actionValueTypeRepository;
-  private ActionValueTypeService underTest;
+  @Mock private ActionRepository actionRepository;
+  private ActionService underTest;
 
   @BeforeEach
   void setUp() {
-    underTest = new ActionValueTypeService(actionValueTypeRepository);
+    underTest = new ActionService(actionRepository);
   }
 
   @Test
   void canFindAll() {
 
-    List<ActionValueType> actions = underTest.findAll();
+    List<Action> actions = underTest.findAll();
 
     System.out.println(actions);
 
-    verify(actionValueTypeRepository).findAll();
+    verify(actionRepository).findAll();
   }
 
   @Test
   void canFindByName() {
 
     String name = "Test";
-    ActionValueType actionToBeSaved = new ActionValueType("Test", "String", "Desc");
-    Optional<ActionValueType> optionalAction = Optional.of(actionToBeSaved);
+    Action actionToBeSaved = new Action("Test", "String", "Desc");
+    Optional<Action> optionalAction = Optional.of(actionToBeSaved);
 
-    given(actionValueTypeRepository.findById(name)).willReturn(optionalAction);
+    given(actionRepository.findById(name)).willReturn(optionalAction);
 
-    ActionValueType returnedAction = underTest.findByName(name);
+    Action returnedAction = underTest.findByName(name);
 
     assertThat(returnedAction).isEqualTo(actionToBeSaved);
   }
@@ -58,9 +58,9 @@ public class ActionValueTypeServiceTest {
   void canFindByNameException() {
 
     String name = "Not_exist_test";
-    Optional<ActionValueType> optionalAction = Optional.empty();
+    Optional<Action> optionalAction = Optional.empty();
 
-    given(actionValueTypeRepository.findById(name)).willReturn(optionalAction);
+    given(actionRepository.findById(name)).willReturn(optionalAction);
 
     assertThatThrownBy(() -> underTest.findByName(name))
         .isInstanceOf(RuntimeException.class)
@@ -70,16 +70,16 @@ public class ActionValueTypeServiceTest {
   @Test
   void save() {
 
-    ActionValueType actionToBeSaved = new ActionValueType("Check 1", "Integer", "Description");
+    Action actionToBeSaved = new Action("Check 1", "Integer", "Description");
 
     underTest.save(actionToBeSaved);
 
-    ArgumentCaptor<ActionValueType> actionArgumentCaptor =
-        ArgumentCaptor.forClass(ActionValueType.class);
+    ArgumentCaptor<Action> actionArgumentCaptor =
+        ArgumentCaptor.forClass(Action.class);
 
-    verify(actionValueTypeRepository).save(actionArgumentCaptor.capture());
+    verify(actionRepository).save(actionArgumentCaptor.capture());
 
-    ActionValueType capturedAction = actionArgumentCaptor.getValue();
+    Action capturedAction = actionArgumentCaptor.getValue();
 
     assertThat(capturedAction).isEqualTo(actionToBeSaved);
   }
@@ -93,7 +93,7 @@ public class ActionValueTypeServiceTest {
 
     ArgumentCaptor<String> actionArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-    verify(actionValueTypeRepository).deleteById(actionArgumentCaptor.capture());
+    verify(actionRepository).deleteById(actionArgumentCaptor.capture());
 
     String capturedName = actionArgumentCaptor.getValue();
 

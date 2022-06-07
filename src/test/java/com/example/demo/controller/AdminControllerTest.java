@@ -76,7 +76,7 @@ class AdminControllerTest {
     admin1.setUsername("janedoe");
     String content = (new ObjectMapper()).writeValueAsString(admin1);
     MockHttpServletRequestBuilder requestBuilder =
-        MockMvcRequestBuilders.post("/admins")
+        MockMvcRequestBuilders.post("/admins/add")
             .contentType(MediaType.APPLICATION_JSON)
             .content(content);
     ResultActions actualPerformResult =
