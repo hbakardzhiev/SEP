@@ -5,7 +5,6 @@ import com.example.demo.modules.Result;
 import com.example.demo.services.ExecutionCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,8 +34,8 @@ public class ExecutionCheckController {
    * @throws IOException if the parsing of the data fails in the Service class
    */
   @PostMapping("/all")
-  public List<AbstractMap.SimpleEntry<Result, CheckInputValue>> executeChecksAll(@RequestBody String input)
-      throws IOException {
+  public List<AbstractMap.SimpleEntry<Result, CheckInputValue>> executeChecksAll(
+      @RequestBody String input) throws IOException {
     return executionCheckService.filterDataWithChecks(input);
   }
 }

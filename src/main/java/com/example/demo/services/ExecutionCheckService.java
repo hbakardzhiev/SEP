@@ -33,7 +33,8 @@ public class ExecutionCheckService {
    *     failed, attention point and the value of the entry is the check itself and the inputValue
    * @throws IOException if the parsing of the data fails
    */
-  public List<SimpleEntry<Result, CheckInputValue>> filterDataWithChecks(String input) throws IOException {
+  public List<SimpleEntry<Result, CheckInputValue>> filterDataWithChecks(String input)
+      throws IOException {
     List<Check> checks = checkRepository.findAll();
     var data = parserService.parseEverything(input);
     final var relevantChecksVal =

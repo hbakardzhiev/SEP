@@ -4,7 +4,6 @@ import com.example.demo.services.ParserService;
 import java.io.IOException;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class ParserController {
 
-  /**
-   * Autowired ParserService to access the parsing methods
-   */
+  /** Autowired ParserService to access the parsing methods */
   private final ParserService parserService;
 
   @Autowired
@@ -38,8 +35,8 @@ public class ParserController {
    * @throws IOException
    */
   @GetMapping("allData")
-  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseAll(@RequestBody String input)
-      throws IOException {
+  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseAll(
+      @RequestBody String input) throws IOException {
     return parserService.parseEverything(input);
   }
 }

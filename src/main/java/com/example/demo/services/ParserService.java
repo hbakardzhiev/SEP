@@ -13,18 +13,15 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * The Service which calls the repository and parses the correct page.
- */
+/** The Service which calls the repository and parses the correct page. */
 @Service
 public class ParserService {
 
-  @Autowired
-  protected SheetSourceRepository sheetSourceRepository;
+  @Autowired protected SheetSourceRepository sheetSourceRepository;
 
   /**
-   * Combines all parsed pages in one list.
-   * and combine the streams and also make the methods private
+   * Combines all parsed pages in one list. and combine the streams and also make the methods
+   * private
    *
    * @return List of the parsed Cn, CR, Cts, DMRs pages
    * @throws IOException
@@ -43,6 +40,7 @@ public class ParserService {
     final var parsedDMR = parserDMR.parsePage(sheetSourceStream.stream());
 
     return Stream.of(parsedCN, parsedCT, parsedCR, parsedDMR)
-        .flatMap(x -> x).collect(Collectors.toList());
+        .flatMap(x -> x)
+        .collect(Collectors.toList());
   }
 }
