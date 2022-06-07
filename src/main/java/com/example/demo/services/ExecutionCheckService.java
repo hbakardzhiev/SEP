@@ -37,9 +37,9 @@ public class ExecutionCheckService {
      * the check itself and the inputValue
      * @throws IOException if the parsing of the data fails
      */
-    public List<SimpleEntry<String, ExecutedCheckOutput>> filterDataWithChecks () throws IOException {
+    public List<SimpleEntry<String, ExecutedCheckOutput>> filterDataWithChecks (String input) throws IOException {
         List<Check> checks = checkRepository.findAll();
-        var data = parserService.parseEverything();
+        var data = parserService.parseEverything(input);
         final var relevantChecksVal = data.stream().map(element -> {
             Stream<SimpleEntry<String, ExecutedCheckOutput>> checkedChecks =
                     mapSimpleEntry(checks, element);

@@ -4,7 +4,8 @@ import com.example.demo.modules.ExecutedCheckOutput;
 import com.example.demo.services.ExecutionCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.cors.CorsConfiguration;
@@ -32,9 +33,10 @@ public class ExecutionCheckController {
      * the check itself and the attributeValue that is being checked
      * @throws IOException if the parsing of the data fails in the Service class
      */
-    @GetMapping("/all")
-    public List<AbstractMap.SimpleEntry<String, ExecutedCheckOutput>> executeChecksAll() throws IOException {
-        return executionCheckService.filterDataWithChecks();
-    }
+  @PostMapping("/all")
+  public List<AbstractMap.SimpleEntry<String, ExecutedCheckOutput>> executeChecksAll(
+      @RequestBody String input) throws IOException {
+    return executionCheckService.filterDataWithChecks(input);
+  }
 
 }

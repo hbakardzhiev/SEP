@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import com.example.demo.Util;
 import com.example.demo.modules.ParserCN;
 import com.example.demo.modules.ParserCR;
 import com.example.demo.modules.ParserCT;
@@ -11,7 +10,6 @@ import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,80 +20,27 @@ public class ParserService {
   @Autowired protected SheetSourceRepository sheetSourceRepository;
 
   /**
-   * Calls the ParserCN object and gives a static url
+   * Combines all parsed pages in one list. and combine the streams and also make the methods
+   * private
    *
-   * @return parsed CN page
-   * @throws IOException
-   */
-  public Stream<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCN()
-      throws IOException {
-    final var sheetSourceStream = sheetSourceRepository.findAll().stream();
-    final var cnParser =
-        new ParserCN(Util.CHANGE_NOTICE_EXAMPLE_HTML)
-            .parsePage(sheetSourceStream);
-    return cnParser;
-  }
-
-  /**
-   * Calls the parserCR object and returns the parsed CR page
-   *
-   * @return parsed CR page
-   * @throws IOException
-   */
-  public Stream<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCR()
-      throws IOException {
-    final var sheetSourceStream = sheetSourceRepository.findAll().stream();
-    final var cnParser = new ParserCN(Util.CHANGE_NOTICE_EXAMPLE_HTML);
-    final var crParser = new ParserCR(cnParser);
-    return crParser.parsePage(sheetSourceStream);
-  }
-
-  /**
-   * Calls the parserCT object and returns the parsed CT page
-   *
-   * @return parsed CT page
-   * @throws IOException
-   */
-  public Stream<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCT()
-      throws IOException {
-    final var sheetSourceStream = sheetSourceRepository.findAll().stream();
-    final var cnParser = new ParserCN(Util.CHANGE_NOTICE_EXAMPLE_HTML);
-    final var ctParser = new ParserCT(cnParser);
-    return ctParser.parsePage(sheetSourceStream);
-  }
-
-  /**
-   * Calls the parserDMR object and returns the parsed DMR page
-   *
-   * @return parsed DMR page
-   * @throws IOException
-   */
-  public Stream<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseDMR()
-      throws IOException {
-    final var sheetSourceStream = sheetSourceRepository.findAll().stream();
-    final var cnParser = new ParserCN(Util.CHANGE_NOTICE_EXAMPLE_HTML);
-    final var ctParser = new ParserCT(cnParser);
-    final var dmrParser = new ParserDMR(ctParser.getDocument().values().stream().parallel());
-    return dmrParser.parsePage(sheetSourceStream);
-  }
-
-  /**
-   * Combines all parsed pages in one list. TODO: Maybe make the methods above return streams
-   * TODO: and combine the streams and also make the methods private
    * @return List of the parsed Cn, CR, Cts, DMRs pages
    * @throws IOException
    */
+  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseEverything(
+      String input) throws IOException {
+    final var sheetSourceStream = sheetSourceRepository.findAll();
+    final var parserCN = new ParserCN(input);
+    final var parserCT = new ParserCT(parserCN);
+    final var parserCR = new ParserCR(parserCN);
+    final var parserDMR = new ParserDMR(parserCT);
 
-  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseEverything()
-          throws IOException {
-    final var cn = this.parseCN();
-    final var cts = this.parseCT();
-    final var cr = this.parseCR();
-    final var dmrs = this.parseDMR();
+    final var parsedCN = parserCN.parsePage(sheetSourceStream.stream());
+    final var parsedCT = parserCT.parsePage(sheetSourceStream.stream());
+    final var parsedCR = parserCR.parsePage(sheetSourceStream.stream());
+    final var parsedDMR = parserDMR.parsePage(sheetSourceStream.stream());
 
-    return Stream.of(cn, cr, cts, dmrs)
-            .flatMap(x -> x)
-            .collect(Collectors.toList());
+    return Stream.of(parsedCN, parsedCT, parsedCR, parsedDMR)
+        .flatMap(x -> x)
+        .collect(Collectors.toList());
   }
-
 }
