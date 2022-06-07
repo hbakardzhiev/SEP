@@ -23,7 +23,7 @@ public class ParserService {
   protected SheetSourceRepository sheetSourceRepository;
 
   /**
-   * Combines all parsed pages in one list. TODO: Maybe make the methods above return streams TODO:
+   * Combines all parsed pages in one list.
    * and combine the streams and also make the methods private
    *
    * @return List of the parsed Cn, CR, Cts, DMRs pages
@@ -42,8 +42,7 @@ public class ParserService {
     final var parsedCR = parserCR.parsePage(sheetSourceStream.stream());
     final var parsedDMR = parserDMR.parsePage(sheetSourceStream.stream());
 
-    final var parsedData = Stream.of(parsedCN, parsedCT, parsedCR, parsedDMR)
+    return Stream.of(parsedCN, parsedCT, parsedCR, parsedDMR)
         .flatMap(x -> x).collect(Collectors.toList());
-    return parsedData;
   }
 }

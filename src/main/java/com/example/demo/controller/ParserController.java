@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class ParserController {
 
+  /**
+   * Autowired ParserService to access the parsing methods
+   */
   private final ParserService parserService;
 
   @Autowired
@@ -27,6 +30,13 @@ public class ParserController {
     this.parserService = demoService;
   }
 
+  /**
+   * Calls the ParserService and parses every type of document
+   *
+   * @param input String that specifies which url you have to parse
+   * @return list of entries containing the parsed data
+   * @throws IOException
+   */
   @GetMapping("allData")
   public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseAll(@RequestBody String input)
       throws IOException {
