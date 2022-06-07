@@ -2,9 +2,7 @@ package com.example.demo.configuration;
 
 import com.example.demo.modules.SheetType;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.Multigraph;
 
@@ -18,15 +16,11 @@ public class GraphConfig {
     this.populateGraph();
   }
 
+  /**
+   * @return
+   */
   public List<CustomEdge> getEdges() {
-    Set<CustomEdge> edges = new HashSet<>();
-    ArrayList arr = new ArrayList();
-    for (CustomEdge e : g.edgeSet()) {
-      arr.add(e);
-    }
-    // ArrayList arr = (ArrayList) List.of(g.edgeSet());
-
-    return arr;
+    return new ArrayList(g.edgeSet());
   }
 
   private void addMultipleEdges(String attribute) {
@@ -48,8 +42,18 @@ public class GraphConfig {
     g.addVertex("supplierApprovalRequired");
     g.addVertex("theRequestPriority");
     g.addVertex("description");
+    g.addVertex("infoPageIdentityDisplayType");
+    g.addVertex("phiSendNative");
+    g.addVertex("phiDMR");
+    g.addVertex("designcategory");
+    g.addVertex("number");
+    g.addVertex("phiPhantomManufacturingPart");
+    g.addVertex("maturity");
 
+    // if you add multiple edges it connects to all child nodes
     addMultipleEdges("name");
+    addMultipleEdges("infoPageIdentityDisplayType");
+
     g.addEdge(String.valueOf(SheetType.CN), "proposedSolution");
     g.addEdge(String.valueOf(SheetType.CR), "theRequestPriority");
     g.addEdge(String.valueOf(SheetType.CN), "customerApprovalRequired");
@@ -58,5 +62,11 @@ public class GraphConfig {
     g.addEdge(String.valueOf(SheetType.CR), "supplierApprovalRequired");
     g.addEdge(String.valueOf(SheetType.CN), "description");
     g.addEdge(String.valueOf(SheetType.CT), "description");
+    g.addEdge(String.valueOf(SheetType.DMR), "phiSendNative");
+    g.addEdge(String.valueOf(SheetType.DMR), "phiDMR");
+    g.addEdge(String.valueOf(SheetType.DMR), "designcategory");
+    g.addEdge(String.valueOf(SheetType.DMR), "number");
+    g.addEdge(String.valueOf(SheetType.DMR), "phiPhantomManufacturingPart");
+    g.addEdge(String.valueOf(SheetType.DMR), "maturity");
   }
 }

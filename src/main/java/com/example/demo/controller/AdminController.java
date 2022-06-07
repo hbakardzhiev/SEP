@@ -38,12 +38,12 @@ public class AdminController {
   }
 
   /**
-   * HTTP request POST /admins/add
+   * HTTP request POST /admins
    *
    * @param admin the Admin object to be added
    * @return 200 OK if the admin was successfully added and the admin object in body response.
    */
-  @PostMapping("/add")
+  @PostMapping()
   public Admin addAdmin(@RequestBody Admin admin) {
     return adminService.addAdmin(admin);
   }

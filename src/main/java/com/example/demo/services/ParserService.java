@@ -30,9 +30,7 @@ public class ParserService {
   public Stream<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCN()
       throws IOException {
     final var sheetSourceStream = sheetSourceRepository.findAll().stream();
-    final var cnParser =
-        new ParserCN(Util.CHANGE_NOTICE_EXAMPLE_HTML)
-            .parsePage(sheetSourceStream);
+    final var cnParser = new ParserCN(Util.CHANGE_NOTICE_EXAMPLE_HTML).parsePage(sheetSourceStream);
     return cnParser;
   }
 
@@ -75,27 +73,24 @@ public class ParserService {
     final var sheetSourceStream = sheetSourceRepository.findAll().stream();
     final var cnParser = new ParserCN(Util.CHANGE_NOTICE_EXAMPLE_HTML);
     final var ctParser = new ParserCT(cnParser);
-    final var dmrParser = new ParserDMR(ctParser.getDocument().values().stream().parallel());
+    final var dmrParser = new ParserDMR(ctParser);
     return dmrParser.parsePage(sheetSourceStream);
   }
 
   /**
-   * Combines all parsed pages in one list. TODO: Maybe make the methods above return streams
-   * TODO: and combine the streams and also make the methods private
+   * Combines all parsed pages in one list. TODO: Maybe make the methods above return streams TODO:
+   * and combine the streams and also make the methods private
+   *
    * @return List of the parsed Cn, CR, Cts, DMRs pages
    * @throws IOException
    */
-
   public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseEverything()
-          throws IOException {
+      throws IOException {
     final var cn = this.parseCN();
     final var cts = this.parseCT();
     final var cr = this.parseCR();
     final var dmrs = this.parseDMR();
 
-    return Stream.of(cn, cr, cts, dmrs)
-            .flatMap(x -> x)
-            .collect(Collectors.toList());
+    return Stream.of(cn, cr, cts, dmrs).flatMap(x -> x).collect(Collectors.toList());
   }
-
 }

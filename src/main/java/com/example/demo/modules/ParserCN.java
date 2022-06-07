@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 public class ParserCN extends ParserBase {
 
   /**
-   * Creates the CN parser which implements ParserBase
+   * Creates the CN parser which extends ParserBase
    *
    * @param input String url of the page
    * @throws IOException

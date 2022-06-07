@@ -3,7 +3,6 @@ package com.example.demo.security;
 import com.example.demo.filters.CustomAuthenticationFilter;
 import com.example.demo.filters.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -37,12 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests().antMatchers( "/check/**").hasAnyAuthority("ADMIN");
     http.authorizeRequests().antMatchers( "/action/**").hasAnyAuthority("ADMIN");
     http.authorizeRequests().antMatchers( "/admins/**").hasAnyAuthority("ADMIN");
+    http.authorizeRequests().anyRequest().permitAll();
+    http.cors();
     http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
     http.addFilterBefore(
         new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
   }
 
-  @Bean
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
