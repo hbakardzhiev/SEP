@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class ParserController {
 
+  /**
+   * Autowired ParserService to access the parsing methods
+   */
   private final ParserService parserService;
 
   @Autowired
@@ -26,33 +30,16 @@ public class ParserController {
     this.parserService = demoService;
   }
 
-  @GetMapping("cn")
-  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCN()
-      throws IOException {
-    return parserService.parseCN().collect(Collectors.toList());
-  }
-
-  @GetMapping("cr")
-  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCR()
-      throws IOException {
-    return parserService.parseCR().collect(Collectors.toList());
-  }
-
-  @GetMapping("ct")
-  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseCT()
-      throws IOException {
-    return parserService.parseCT().collect(Collectors.toList());
-  }
-
-  @GetMapping("dmr")
-  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseDMR()
-      throws IOException {
-    return parserService.parseDMR().collect(Collectors.toList());
-  }
-
+  /**
+   * Calls the ParserService and parses every type of document
+   *
+   * @param input String that specifies which url you have to parse
+   * @return list of entries containing the parsed data
+   * @throws IOException
+   */
   @GetMapping("allData")
-  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseAll()
+  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseAll(@RequestBody String input)
       throws IOException {
-    return parserService.parseEverything();
+    return parserService.parseEverything(input);
   }
 }
