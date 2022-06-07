@@ -24,11 +24,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ContextConfiguration(classes = {ExecutionCheckController.class})
 @ExtendWith(SpringExtension.class)
 class ExecutionCheckControllerTest {
-    @Autowired
-    private ExecutionCheckController executionCheckController;
+  @Autowired private ExecutionCheckController executionCheckController;
 
-    @MockBean
-    private ExecutionCheckService executionCheckService;
+  @MockBean private ExecutionCheckService executionCheckService;
 
   /** Method under test: */
   @Test
@@ -77,6 +75,4 @@ class ExecutionCheckControllerTest {
         .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
         .andExpect(MockMvcResultMatchers.content().string("[]"));
   }
-
 }
-

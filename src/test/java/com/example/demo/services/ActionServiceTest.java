@@ -74,8 +74,7 @@ public class ActionServiceTest {
 
     underTest.save(actionToBeSaved);
 
-    ArgumentCaptor<Action> actionArgumentCaptor =
-        ArgumentCaptor.forClass(Action.class);
+    ArgumentCaptor<Action> actionArgumentCaptor = ArgumentCaptor.forClass(Action.class);
 
     verify(actionRepository).save(actionArgumentCaptor.capture());
 

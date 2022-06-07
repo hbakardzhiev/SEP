@@ -30,8 +30,7 @@ class ActionTest {
     actualAction.setValueType("42");
     assertEquals("Action", actualAction.getAction());
     assertSame(checkList, actualAction.getChecks());
-    assertEquals(
-        "The characteristics of someone or something", actualAction.getDescription());
+    assertEquals("The characteristics of someone or something", actualAction.getDescription());
     assertEquals("42", actualAction.getValueType());
   }
 
@@ -48,8 +47,7 @@ class ActionTest {
    */
   @Test
   void testConstructor2() {
-    Action actualAction =
-        new Action("Action", "42", "The characteristics of someone or something");
+    Action actualAction = new Action("Action", "42", "The characteristics of someone or something");
     actualAction.setAction("Action");
     ArrayList<Check> checkList = new ArrayList<>();
     actualAction.setChecks(checkList);
@@ -57,8 +55,7 @@ class ActionTest {
     actualAction.setValueType("42");
     assertEquals("Action", actualAction.getAction());
     assertSame(checkList, actualAction.getChecks());
-    assertEquals(
-        "The characteristics of someone or something", actualAction.getDescription());
+    assertEquals("The characteristics of someone or something", actualAction.getDescription());
     assertEquals("42", actualAction.getValueType());
   }
 

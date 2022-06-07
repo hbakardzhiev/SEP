@@ -20,7 +20,6 @@ public class ActionController {
 
   private ActionService actionService;
 
-
   /**
    * Retrieves all actions from the database.
    *

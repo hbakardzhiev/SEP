@@ -42,16 +42,20 @@ public class CheckController {
 
     List<Check> allChecks = checkService.findAll();
 
-    var checksAndActions = allChecks.stream().map(e -> {
-      CheckAndActionName checkAndAction = toCheckAndActionName(e);
-      return checkAndAction;
-    });
+    var checksAndActions =
+        allChecks.stream()
+            .map(
+                e -> {
+                  CheckAndActionName checkAndAction = toCheckAndActionName(e);
+                  return checkAndAction;
+                });
 
     return checksAndActions.collect(Collectors.toList());
   }
 
   private CheckAndActionName toCheckAndActionName(Check check) {
-    ActionNameString actionNameString = new ActionNameString(check.getActionValueType().getAction());
+    ActionNameString actionNameString =
+        new ActionNameString(check.getActionValueType().getAction());
     CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
     return checkAndActionName;
   }

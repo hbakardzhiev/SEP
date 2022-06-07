@@ -1,7 +1,6 @@
 package com.example.demo.modules;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -34,7 +33,6 @@ public class Action {
   @JsonIgnore
   private List<Check> checks = new ArrayList<>();
 
-
   public Action(String action, String valueType, String description) {
     this.action = action;
     this.valueType = valueType;
@@ -58,13 +56,6 @@ public class Action {
 
   @Override
   public String toString() {
-    return "Action{"
-        + ", action='"
-        + action
-        + '\''
-        + ", valueType='"
-        + valueType
-        + '\''
-        + '}';
+    return "Action{" + ", action='" + action + '\'' + ", valueType='" + valueType + '\'' + '}';
   }
 }

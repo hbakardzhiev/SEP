@@ -19,8 +19,7 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class CheckServiceTest {
 
-  @Mock
-  private CheckRepository checkRepository;
+  @Mock private CheckRepository checkRepository;
   private CheckService underTest;
 
   @BeforeEach

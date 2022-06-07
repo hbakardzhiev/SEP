@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import org.jsoup.nodes.Document;
 
 /** Creates parses that parses DMR pages */
 public class ParserDMR extends ParserBase {
@@ -27,7 +25,9 @@ public class ParserDMR extends ParserBase {
    */
   private void passCT(ParserCT parserCT) throws IOException {
     // TODO: change the mask here
-    final var stream = parserCT.getDocument().values().stream().map(element -> element.select("a:matchesOwn(^ECT[\\d]{6})"));
+    final var stream =
+        parserCT.getDocument().values().stream()
+            .map(element -> element.select("a:matchesOwn(^ECT[\\d]{6})"));
     final var listStrings =
         stream
             .flatMap(Collection::stream)

@@ -135,13 +135,24 @@ public class Check {
 
   @Override
   public String toString() {
-    return "Check{" +
-            "name='" + name + '\'' +
-            ", docSource='" + docSource + '\'' +
-            ", attribute='" + attribute + '\'' +
-            ", value='" + value + '\'' +
-            ", comments='" + comments + '\'' +
-            ", action=" + action +
-            '}';
+    return "Check{"
+        + "name='"
+        + name
+        + '\''
+        + ", docSource='"
+        + docSource
+        + '\''
+        + ", attribute='"
+        + attribute
+        + '\''
+        + ", value='"
+        + value
+        + '\''
+        + ", comments='"
+        + comments
+        + '\''
+        + ", action="
+        + action
+        + '}';
   }
 }
