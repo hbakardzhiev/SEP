@@ -25,7 +25,7 @@ public class GraphConfig {
       arr.add(e);
     }
     // ArrayList arr = (ArrayList) List.of(g.edgeSet());
-    System.out.println("4urulik");
+
     return arr;
   }
 

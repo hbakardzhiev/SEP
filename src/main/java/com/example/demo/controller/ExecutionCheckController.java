@@ -27,8 +27,9 @@ public class ExecutionCheckController {
 
     /**
      * Serves as an end point for the FE to get all executed checks.
-     * @return list of entries, where each entry has as a Key the status of the check
-     *   - passed, failed, attention point and the value of the entry is the check itself and the inputValue
+     * @return list of entries, where each entry has as a Key the string ``output",
+     * and the value of the entry is the status of the check - passed, failed, attention point,
+     * the check itself and the attributeValue that is being checked
      * @throws IOException if the parsing of the data fails in the Service class
      */
     @GetMapping("/all")
