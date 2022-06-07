@@ -132,8 +132,9 @@ class CheckControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "[{\"theCheck\":{\"name\":\"?\",\"docSource\":\"?\",\"attribute\":\"?\",\"value\":\"42\",\"comments\":\"?\"},\"actionName\":{"
-                                        + "\"actionName\":\"?\"}}]"));
+                                "[{\"theCheck\":{\"name\":\"?\",\"docSource\":\"?\",\"attribute\":\"?\",\"value\":\"42\",\"comments\":\"?\",\"actionValueType"
+                                        + "\":{\"action\":\"?\",\"valueType\":\"42\",\"description\":\"The characteristics of someone or something\"}},"
+                                        + "\"actionName\":{\"actionName\":\"?\"}}]"));
     }
 
     /**
@@ -226,7 +227,8 @@ class CheckControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"theCheck\":{\"name\":\"Name\",\"docSource\":\"Doc Source\",\"attribute\":\"Attribute\",\"value\":\"42\",\"comments\":"
-                                        + "\"Comments\"},\"actionName\":{\"actionName\":\"Action\"}}"));
+                                        + "\"Comments\",\"actionValueType\":{\"action\":\"Action\",\"valueType\":\"42\",\"description\":\"The characteristics"
+                                        + " of someone or something\"}},\"actionName\":{\"actionName\":\"Action\"}}"));
     }
 
     /**
@@ -259,7 +261,8 @@ class CheckControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"theCheck\":{\"name\":\"Name\",\"docSource\":\"Doc Source\",\"attribute\":\"Attribute\",\"value\":\"42\",\"comments\":"
-                                        + "\"Comments\"},\"actionName\":{\"actionName\":\"Action\"}}"));
+                                        + "\"Comments\",\"actionValueType\":{\"action\":\"Action\",\"valueType\":\"42\",\"description\":\"The characteristics"
+                                        + " of someone or something\"}},\"actionName\":{\"actionName\":\"Action\"}}"));
     }
 
     /**
@@ -308,8 +311,9 @@ class CheckControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "[{\"theCheck\":{\"name\":\"?\",\"docSource\":\"?\",\"attribute\":\"?\",\"value\":\"42\",\"comments\":\"?\"},\"actionName\":{"
-                                        + "\"actionName\":\"?\"}}]"));
+                                "[{\"theCheck\":{\"name\":\"?\",\"docSource\":\"?\",\"attribute\":\"?\",\"value\":\"42\",\"comments\":\"?\",\"actionValueType"
+                                        + "\":{\"action\":\"?\",\"valueType\":\"42\",\"description\":\"The characteristics of someone or something\"}},"
+                                        + "\"actionName\":{\"actionName\":\"?\"}}]"));
     }
 
     /**
@@ -418,8 +422,9 @@ class CheckControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "[{\"theCheck\":{\"name\":\"?\",\"docSource\":\"?\",\"attribute\":\"?\",\"value\":\"42\",\"comments\":\"?\"},\"actionName\":{"
-                                        + "\"actionName\":\"?\"}}]"));
+                                "[{\"theCheck\":{\"name\":\"?\",\"docSource\":\"?\",\"attribute\":\"?\",\"value\":\"42\",\"comments\":\"?\",\"actionValueType"
+                                        + "\":{\"action\":\"?\",\"valueType\":\"42\",\"description\":\"The characteristics of someone or something\"}},"
+                                        + "\"actionName\":{\"actionName\":\"?\"}}]"));
     }
 }
 
