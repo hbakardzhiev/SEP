@@ -1,6 +1,9 @@
 package com.example.demo.modules;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +13,9 @@ import java.util.List;
  * Class that defines the action table which consists of the actionTypes (PK), the type of the value
  * that the user needs to input and description of the action.
  */
+@Data
 @Entity
+@NoArgsConstructor
 @Table(name = "actions")
 public class Action {
 
@@ -29,44 +34,11 @@ public class Action {
   @JsonIgnore
   private List<Check> checks = new ArrayList<>();
 
-  public Action() {}
 
   public Action(String action, String valueType, String description) {
     this.action = action;
     this.valueType = valueType;
     this.description = description;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getAction() {
-    return action;
-  }
-
-  public void setAction(String action) {
-    this.action = action;
-  }
-
-  public String getValueType() {
-    return valueType;
-  }
-
-  public void setValueType(String valueType) {
-    this.valueType = valueType;
-  }
-
-  public List<Check> getChecks() {
-    return checks;
-  }
-
-  public void setChecks(List<Check> checks) {
-    this.checks = checks;
   }
 
   /**
