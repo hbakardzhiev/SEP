@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import static org.mockito.Mockito.when;
 
+import com.example.demo.Util;
 import com.example.demo.services.ExecutionCheckService;
 
 import java.util.ArrayList;
@@ -24,10 +25,10 @@ class ExecutionCheckControllerTest {
 
   @MockBean private ExecutionCheckService executionCheckService;
 
-  /** Method under test: {@link ExecutionCheckController#executeChecksAll()} */
+  /** Method under test:  */
   @Test
   void testExecuteChecksAll() throws Exception {
-    when(this.executionCheckService.filterDataWithChecks()).thenReturn(new ArrayList<>());
+    when(this.executionCheckService.filterDataWithChecks(Util.CHANGE_NOTICE_EXAMPLE_HTML)).thenReturn(new ArrayList<>());
     MockHttpServletRequestBuilder requestBuilder =
         MockMvcRequestBuilders.get("/executedChecks/all");
     MockMvcBuilders.standaloneSetup(this.executionCheckController)
@@ -38,10 +39,10 @@ class ExecutionCheckControllerTest {
         .andExpect(MockMvcResultMatchers.content().string("[]"));
   }
 
-  /** Method under test: {@link ExecutionCheckController#executeChecksAll()} */
+  /** Method under test:*/
   @Test
   void testExecuteChecksAll2() throws Exception {
-    when(this.executionCheckService.filterDataWithChecks()).thenReturn(new ArrayList<>());
+    when(this.executionCheckService.filterDataWithChecks(Util.CHANGE_NOTICE_EXAMPLE_HTML)).thenReturn(new ArrayList<>());
     MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/executedChecks/all");
     getResult.contentType("https://example.org/example");
     MockMvcBuilders.standaloneSetup(this.executionCheckController)

@@ -1,7 +1,10 @@
 package com.example.demo.services;
 
+import com.example.demo.Util;
 import com.example.demo.modules.*;
 import com.example.demo.repository.CheckRepository;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,31 +39,31 @@ class ExecutionCheckServiceTest {
   @Test
   void filterDataWithChecksPassed() throws IOException {
     // given
-    List<AbstractMap.SimpleEntry<Result, CheckInputValue>> expected = new ArrayList<>();
+    List<SimpleEntry<Result, CheckInputValue>> expected = new ArrayList<>();
     Check checkTest = new Check("Check 1", "Change Notice", "name", "null", "comment");
     ActionValueType actionType = new ActionValueType("NotEmpty", "", "pls1");
     actionType.add(checkTest);
 
     ActionNameString actionTest = new ActionNameString("NotEmpty");
     expected.add(
-        new AbstractMap.SimpleEntry<>(
+        new SimpleEntry<>(
             Result.passed,
             new CheckInputValue("CN title name", new CheckAndActionName(checkTest, actionTest))));
 
     given(checkRepository.findAll()).willReturn(List.of(checkTest));
-    given(parserService.parseEverything())
+    given(parserService.parseEverything(Util.CHANGE_NOTICE_EXAMPLE_HTML))
         .willReturn(
             List.of(
-                new AbstractMap.SimpleImmutableEntry<>(
+                new SimpleImmutableEntry<>(
                     "Change Notice - CN000001, CN title name, E0011 LocationId002, A",
-                    new AbstractMap.SimpleImmutableEntry<>("name", "CN title name"))));
+                    new SimpleImmutableEntry<>("name", "CN title name"))));
 
     // when
-    var actual = underTest.filterDataWithChecks();
+    var actual = underTest.filterDataWithChecks(Util.CHANGE_NOTICE_EXAMPLE_HTML);
 
     // then: verifies that the findAll, parsedEverything were invoked and check the result
     verify(checkRepository).findAll();
-    verify(parserService).parseEverything();
+    verify(parserService).parseEverything(Util.CHANGE_NOTICE_EXAMPLE_HTML);
     assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
   }
 
@@ -78,7 +81,7 @@ class ExecutionCheckServiceTest {
             Result.failed, new CheckInputValue("", new CheckAndActionName(checkTest, actionTest))));
 
     given(checkRepository.findAll()).willReturn(List.of(checkTest));
-    given(parserService.parseEverything())
+    given(parserService.parseEverything(Util.CHANGE_NOTICE_EXAMPLE_HTML))
         .willReturn(
             List.of(
                 new AbstractMap.SimpleImmutableEntry<>(
@@ -86,7 +89,7 @@ class ExecutionCheckServiceTest {
                     new AbstractMap.SimpleImmutableEntry<>("name", ""))));
 
     // when
-    var actual = underTest.filterDataWithChecks();
+    var actual = underTest.filterDataWithChecks(Util.CHANGE_NOTICE_EXAMPLE_HTML);
 
     // then: verifies that the findAll, parsedEverything were invoked and check the result
     assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
@@ -107,7 +110,7 @@ class ExecutionCheckServiceTest {
             new CheckInputValue("", new CheckAndActionName(checkTest, actionTest))));
 
     given(checkRepository.findAll()).willReturn(List.of(checkTest));
-    given(parserService.parseEverything())
+    given(parserService.parseEverything(Util.CHANGE_NOTICE_EXAMPLE_HTML))
         .willReturn(
             List.of(
                 new AbstractMap.SimpleImmutableEntry<>(
@@ -115,7 +118,7 @@ class ExecutionCheckServiceTest {
                     new AbstractMap.SimpleImmutableEntry<>("description", ""))));
 
     // when
-    var actual = underTest.filterDataWithChecks();
+    var actual = underTest.filterDataWithChecks(Util.CHANGE_NOTICE_EXAMPLE_HTML);
 
     // then: verifies that the findAll, parsedEverything were invoked and check the result
     assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
