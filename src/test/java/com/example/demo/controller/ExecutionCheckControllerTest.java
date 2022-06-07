@@ -30,7 +30,7 @@ class ExecutionCheckControllerTest {
   void testExecuteChecksAll() throws Exception {
     when(this.executionCheckService.filterDataWithChecks(Util.CHANGE_NOTICE_EXAMPLE_HTML)).thenReturn(new ArrayList<>());
     MockHttpServletRequestBuilder requestBuilder =
-        MockMvcRequestBuilders.get("/executedChecks/all");
+        MockMvcRequestBuilders.post("/executedChecks/all");
     MockMvcBuilders.standaloneSetup(this.executionCheckController)
         .build()
         .perform(requestBuilder)
@@ -43,7 +43,7 @@ class ExecutionCheckControllerTest {
   @Test
   void testExecuteChecksAll2() throws Exception {
     when(this.executionCheckService.filterDataWithChecks(Util.CHANGE_NOTICE_EXAMPLE_HTML)).thenReturn(new ArrayList<>());
-    MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/executedChecks/all");
+    MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.post("/executedChecks/all");
     getResult.contentType("https://example.org/example");
     MockMvcBuilders.standaloneSetup(this.executionCheckController)
         .build()
