@@ -21,7 +21,7 @@ class ParserCNTest {
         //   java.lang.NullPointerException
         //       at java.io.Reader.<init>(Reader.java:168)
         //       at java.io.InputStreamReader.<init>(InputStreamReader.java:76)
-        //       at com.example.demo.Util.readFromInputStream(Util.java:25)
+        //       at com.example.demo.UtilTests.readFromInputStream(UtilTests.java:25)
         //       at com.example.demo.modules.ParserBase.lambda$setDocumentByUrl$0(ParserBase.java:46)
         //       at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
         //       at java.util.stream.Streams$StreamBuilderImpl.forEachRemaining(Streams.java:411)

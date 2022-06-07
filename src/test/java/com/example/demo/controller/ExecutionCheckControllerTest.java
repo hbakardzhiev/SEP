@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
-import com.example.demo.Util;
+import com.example.demo.UtilTests;
 import com.example.demo.services.ExecutionCheckService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -35,15 +35,15 @@ class ExecutionCheckControllerTest {
    */
   @Test
   void testExecuteChecksAll() throws Exception {
-    when(this.executionCheckService.filterDataWithChecks(Util.CHANGE_NOTICE_EXAMPLE_HTML)).thenReturn(new ArrayList<>());
+    when(this.executionCheckService.filterDataWithChecks(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML)).thenReturn(new ArrayList<>());
     MockHttpServletRequestBuilder requestBuilder =
             MockMvcRequestBuilders.post("/executedChecks/all");
+    requestBuilder.content(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
     MockMvcBuilders.standaloneSetup(this.executionCheckController)
             .build()
             .perform(requestBuilder)
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-            .andExpect(MockMvcResultMatchers.content().string("[]"));
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
   }
 
   /**
@@ -51,15 +51,14 @@ class ExecutionCheckControllerTest {
    */
   @Test
   void testExecuteChecksAll2() throws Exception {
-    when(this.executionCheckService.filterDataWithChecks(Util.CHANGE_NOTICE_EXAMPLE_HTML)).thenReturn(new ArrayList<>());
+    when(this.executionCheckService.filterDataWithChecks(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML)).thenReturn(new ArrayList<>());
     MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.post("/executedChecks/all");
-    getResult.contentType("https://example.org/example");
+    getResult.content(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
     MockMvcBuilders.standaloneSetup(this.executionCheckController)
             .build()
             .perform(getResult)
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-            .andExpect(MockMvcResultMatchers.content().string("[]"));
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
   }
 
   /**
