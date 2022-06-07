@@ -2,6 +2,7 @@ package com.example.demo.configuration;
 
 import com.example.demo.modules.Admin;
 import com.example.demo.repository.AdminRepository;
+import com.example.demo.services.AdminService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,11 +11,11 @@ import org.springframework.context.annotation.Configuration;
 public class AdminConfiguration {
 
     @Bean
-    CommandLineRunner commandLineRunnerAdmin (AdminRepository repository) {
+    CommandLineRunner commandLineRunnerAdmin (AdminService service) {
         return args -> {
             Admin def_admin = new Admin("admin", "admin@phillips", "admin");
 
-            repository.save(def_admin);
+            service.addAdmin(def_admin);
 
         };
     }
