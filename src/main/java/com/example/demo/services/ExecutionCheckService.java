@@ -2,6 +2,8 @@ package com.example.demo.services;
 
 import com.example.demo.modules.*;
 import com.example.demo.repository.CheckRepository;
+import java.time.OffsetDateTime;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.AbstractMap.*;
@@ -37,11 +39,11 @@ public class ExecutionCheckService {
     List<Check> checks = checkRepository.findAll();
     var data = parserService.parseEverything(input);
     final var relevantChecksVal =
-        data.stream()
+        data.getKey().stream()
             .map(
                 element -> {
                   Stream<SimpleEntry<String, ExecutedCheckOutput>> checkedChecks =
-                      mapSimpleEntry(checks, element);
+                      mapSimpleEntry(checks, element , data.getValue());
 
                   return checkedChecks.collect(Collectors.toList());
                 });
@@ -60,22 +62,18 @@ public class ExecutionCheckService {
    */
   private Stream<SimpleEntry<String, ExecutedCheckOutput>> mapSimpleEntry(
       List<Check> checks,
-      SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>> element) {
+      SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>> element,
+      OffsetDateTime dateTime) {
 
     final var indexOfHyphen = element.getKey().indexOf("-");
     final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
-    var tempattribute = element.getValue().getKey();
-    switch (tempattribute) {
-        // The cases are not exhaustive yet
-      case "proposedSolution":
-        tempattribute = "solution";
-        break;
-      case "theRequestPriority":
-        tempattribute = "requestpriority";
-        break;
-      default:
-        tempattribute = tempattribute.toLowerCase();
-    }
+    final var tempKey = element.getValue().getKey();
+    String tempattribute = switch (tempKey) {
+      // The cases are not exhaustive yet
+      case "proposedSolution" -> "solution";
+      case "theRequestPriority" -> "requestpriority";
+      default -> tempKey.toLowerCase();
+    };
     final var attribute = tempattribute;
     final var inputValue = element.getValue().getValue();
 
@@ -96,7 +94,7 @@ public class ExecutionCheckService {
                   new CheckAndActionName(check, actionNameString);
               Result status = executeTheCheck(check, inputValue);
               ExecutedCheckOutput checkActionInputValue =
-                  new ExecutedCheckOutput(status, inputValue, checkAndActionName);
+                  new ExecutedCheckOutput(status, inputValue, checkAndActionName, dateTime);
 
               return new SimpleEntry<String, ExecutedCheckOutput>("output", checkActionInputValue);
             });

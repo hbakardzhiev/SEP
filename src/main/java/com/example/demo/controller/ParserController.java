@@ -37,6 +37,6 @@ public class ParserController {
   @GetMapping("allData")
   public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseAll(
       @RequestBody String input) throws IOException {
-    return parserService.parseEverything(input);
+    return parserService.parseEverything(input).getKey();
   }
 }
