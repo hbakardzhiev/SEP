@@ -12,13 +12,11 @@ import org.joda.time.DateTime;
  * checkAndActionName which is the check and the action of the check that are used for checking.
  */
 @Data
-@AllArgsConstructor
 public class ExecutedCheckOutput {
   private Result status;
   private String inputValue; // the value that a specific attribute has in Windchill
   private CheckAndActionName checkAndActionName;
 
-  private OffsetDateTime dateTime;
 
   public ExecutedCheckOutput(
       Result status, String inputValue, CheckAndActionName checkAndActionName) {
