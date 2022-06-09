@@ -58,6 +58,7 @@ public class ExecutionCheckService {
    * @param checks all available checks in the DB
    * @param element is one entry from the data that consists of key - the type of the document
    *     (Change Notice - some number) the attribute and the value that needs to be checked
+   * @param dateTime the time of the parsing
    * @return stream of entries of type ExecutedCheckOutput
    */
   private Stream<SimpleEntry<String, ExecutedCheckOutput>> mapSimpleEntry(
@@ -68,13 +69,12 @@ public class ExecutionCheckService {
     final var indexOfHyphen = element.getKey().indexOf("-");
     final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
     final var tempKey = element.getValue().getKey();
-    String tempattribute = switch (tempKey) {
+    final var attribute = switch (tempKey) {
       // The cases are not exhaustive yet
       case "proposedSolution" -> "solution";
       case "theRequestPriority" -> "requestpriority";
       default -> tempKey.toLowerCase();
     };
-    final var attribute = tempattribute;
     final var inputValue = element.getValue().getValue();
 
     // list of checks relevant for this docSource and attribute

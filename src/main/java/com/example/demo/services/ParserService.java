@@ -22,8 +22,8 @@ public class ParserService {
   @Autowired protected SheetSourceRepository sheetSourceRepository;
 
   /**
-   * Combines all parsed pages in one list. and combine the streams and also make the methods
-   * private
+   * Combines all parsed pages in one list. and combine the streams and also
+   * returns the timestamp of the parsing of data
    *
    * @return List of the parsed Cn, CR, Cts, DMRs pages
    * @throws IOException
