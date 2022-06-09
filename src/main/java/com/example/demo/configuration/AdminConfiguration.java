@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AdminConfiguration {
 
-    @Bean
-    CommandLineRunner commandLineRunnerAdmin(AdminService service) {
-        return args -> {
-            Admin def_admin = new Admin("admin", "admin@phillips", "admin");
+  @Bean
+  CommandLineRunner commandLineRunnerAdmin(AdminService service) {
+    return args -> {
+      Admin def_admin = new Admin("admin", "admin@phillips", "admin");
 
-            service.addAdmin(def_admin);
-        };
-    }
+      service.addAdmin(def_admin);
+    };
+  }
 }
