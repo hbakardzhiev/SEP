@@ -35,6 +35,7 @@ public class ParserService {
     final var parserCT = new ParserCT(parserCN);
     final var parserCR = new ParserCR(parserCN);
     final var parserDMR = new ParserDMR(parserCT);
+    final var offsetTime = OffsetDateTime.now();
 
     final var parsedCN = parserCN.parsePage(sheetSourceStream.stream());
     final var parsedCT = parserCT.parsePage(sheetSourceStream.stream());
@@ -43,6 +44,6 @@ public class ParserService {
 
     return new SimpleImmutableEntry<>(Stream.of(parsedCN, parsedCT, parsedCR, parsedDMR)
         .flatMap(x -> x)
-        .collect(Collectors.toList()), OffsetDateTime.now());
+        .collect(Collectors.toList()), offsetTime);
   }
 }
