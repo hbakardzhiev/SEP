@@ -1,20 +1,22 @@
 package com.example.demo.modules;
 
-import java.io.BufferedReader;
+import com.example.demo.Util;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.Getter;
 import lombok.Setter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 
 /**
  * We follow somewhat the State design pattern by creating a base abstract parser from which we
@@ -26,9 +28,8 @@ public abstract class ParserBase {
   @Setter
   private SheetType sheetType = SheetType.CN;
 
-  @Autowired
-  ResourceLoader resourceLoader;
 
+  public static String sandboxFolder;
   /**
    * Dictionary which holds the unique name of the page eg. CR000001, ProjectName01 - SW Tooling,
    * E0011 LocationId002 as key and the parsed HTML content as key
@@ -45,9 +46,27 @@ public abstract class ParserBase {
    * @throws IOException
    */
   public void setDocumentByUrl(Stream<String> url) throws IOException {
-    document = url.map(element -> {
-      final var currentDocument = Jsoup.parse(getResourceFileAsString(element));
-      return new AbstractMap.SimpleEntry<>(readDocumentName(currentDocument), currentDocument);
+    document = url.filter(Objects::nonNull).map(element -> {
+      final var split = element.split("/");
+      String tempName;
+      if (element.contains("/")) {
+        sandboxFolder = split[0];
+        tempName = split[1];
+      } else {
+        tempName = element;
+      }
+      if (sheetType.equals(SheetType.CN)){
+        tempName = Util.CHANGE_NOTICE_EXAMPLE_HTML;
+      }
+      final String finalName;
+      finalName = tempName;
+      final Path path = Paths.get(Util.RESOURCE_LOCATION, sandboxFolder, finalName);
+      try {
+        final var currentDocument = Jsoup.parse(Files.readString(path));
+        return new SimpleEntry<>(readDocumentName(currentDocument), currentDocument);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
     }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (prev, next) -> next,
         HashMap::new));
   }
@@ -98,17 +117,4 @@ public abstract class ParserBase {
     stringBuilder.append(secondPart);
     return stringBuilder.toString();
   }
-
-
-  private String getResourceFileAsString(String fileName) {
-    final var resource = resourceLoader.getResource(fileName);
-    try {
-      final var is = resource.getInputStream();
-      final var reader = new BufferedReader(new InputStreamReader(is));
-      return reader.lines().collect(Collectors.joining(System.lineSeparator()));
-    } catch (IOException exception) {
-      throw new RuntimeException("resource not found");
-    }
-  }
-
 }

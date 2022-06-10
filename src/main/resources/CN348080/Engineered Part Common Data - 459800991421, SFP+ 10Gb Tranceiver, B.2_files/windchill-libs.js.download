@@ -1,0 +1,26 @@
+function myUglyButWorkingDisplayFuntion (TabToDisplay,PanelToDisplay) {
+
+  document.getElementById("infoPage_myTab_object_lotInfoDetails").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_enterpriseDataInfoHistoryTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_enterpriseDataInfoRelatedItemsTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_changesTab").classList.add("x-hide-display");
+
+  document.getElementById(TabToDisplay).classList.remove("x-hide-display");
+
+
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_lotInfoDetails").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_enterpriseDataInfoHistoryTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_enterpriseDataInfoRelatedItemsTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_changesTab").classList.remove("x-tab-strip-active");
+
+  document.getElementById(PanelToDisplay).classList.add("x-tab-strip-active");
+}
+
+
+
+window.onload = function(){
+  document.getElementById("ext-gen8018").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_lotInfoDetails','infoPageinfoPanelID__infoPage_myTab_object_lotInfoDetails')";
+  document.getElementById("ext-gen8020").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_enterpriseDataInfoHistoryTab','infoPageinfoPanelID__infoPage_myTab_object_enterpriseDataInfoHistoryTab')";
+  document.getElementById("ext-gen8022").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_enterpriseDataInfoRelatedItemsTab','infoPageinfoPanelID__infoPage_myTab_object_enterpriseDataInfoRelatedItemsTab')";
+  document.getElementById("ext-gen8024").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changesTab','infoPageinfoPanelID__infoPage_myTab_object_changesTab')";
+}

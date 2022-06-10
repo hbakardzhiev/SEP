@@ -1,5 +1,6 @@
 package com.example.demo.modules;
 
+import static com.example.demo.UtilTests.SANDBOX_AND_CHANGE_NOTICE_EXAMPLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -16,8 +17,8 @@ class ParserCTTest {
   /** Method under test: {@link ParserCT#ParserCT(ParserCN)} */
   @Test
   void testConstructor() throws IOException {
-    ParserCT actualParserCT = new ParserCT(new ParserCN(""));
-    assertTrue(actualParserCT.getDocument().isEmpty());
+    ParserCT actualParserCT = new ParserCT(new ParserCN(SANDBOX_AND_CHANGE_NOTICE_EXAMPLE));
+    assertTrue(!actualParserCT.getDocument().isEmpty());
     assertEquals(SheetType.CT, actualParserCT.getSheetType());
   }
 
@@ -45,7 +46,7 @@ class ParserCTTest {
   /** Method under test: {@link ParserCT#ParserCT(ParserCN)} */
   @Test
   void testConstructor3() throws IOException {
-    ParserCN parserCN = new ParserCN("");
+    ParserCN parserCN = new ParserCN(SANDBOX_AND_CHANGE_NOTICE_EXAMPLE);
     parserCN.setDocument(new HashMap<>());
     ParserCT actualParserCT = new ParserCT(parserCN);
     assertTrue(actualParserCT.getDocument().isEmpty());
