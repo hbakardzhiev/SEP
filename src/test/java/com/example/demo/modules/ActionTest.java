@@ -71,14 +71,14 @@ class ActionTest {
     action1.setValueType("42");
 
     Check check = new Check();
-    check.setActiontype(action1);
+    check.setActionType(action1);
     check.setAttribute("Attribute");
     check.setComments("Comments");
     check.setDocSource("Doc Source");
     check.setName("Name");
     check.setValue("42");
     action.add(check);
-    Action action2 = check.getActiontype();
+    Action action2 = check.getActionType();
     assertSame(action, action2);
     assertEquals(1, action2.getChecks().size());
   }

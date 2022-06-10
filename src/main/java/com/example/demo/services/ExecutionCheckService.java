@@ -85,7 +85,7 @@ public class ExecutionCheckService {
     var checkedChecks =
         relCheck.map(
             check -> {
-              String action = check.getActiontype().getAction();
+              String action = check.getActionType().getAction();
               ActionNameString actionNameString = new ActionNameString(action);
               CheckAndActionName checkAndActionName =
                   new CheckAndActionName(check, actionNameString);
@@ -108,7 +108,7 @@ public class ExecutionCheckService {
    * @return the status of type Result when the check is executed
    */
   private Result executeTheCheck(Check check, String attributeValue) {
-    String actionValue = check.getActiontype().getValueType();
+    String actionValue = check.getActionType().getValueType();
     Result result;
     switch (actionValue) {
       case "":
@@ -139,7 +139,7 @@ public class ExecutionCheckService {
   private Result checksInteger(String attributeValue, Check check) { // InputValue and a check
     Result result = null;
     boolean status;
-    String checkAction = check.getActiontype().getAction();
+    String checkAction = check.getActionType().getAction();
     int length = attributeValue.length();
     int checkValue = Integer.parseInt(check.getValue()); // check value
     int valueInputInt = Integer.parseInt(attributeValue);
@@ -170,7 +170,7 @@ public class ExecutionCheckService {
    */
   private Result checksNull(String attributeValue, Check check) {
     Result result;
-    String checkAction = check.getActiontype().getAction();
+    String checkAction = check.getActionType().getAction();
     result = switch (ActionTypes.valueOf(checkAction)) {
       case Empty -> attributeValue.isEmpty() ? Result.passed : Result.failed;
       case NotEmpty -> (!(attributeValue.isEmpty())) ? Result.passed : Result.failed;
@@ -192,7 +192,7 @@ public class ExecutionCheckService {
   private Result checksString(String attributeValue, Check check) {
     Result result;
     String value = check.getValue();
-    String checkAction = check.getActiontype().getAction();
+    String checkAction = check.getActionType().getAction();
     switch (ActionTypes.valueOf(checkAction)) {
       case Contains:
         if (attributeValue.contains(value)) {
