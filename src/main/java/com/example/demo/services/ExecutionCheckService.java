@@ -2,8 +2,6 @@ package com.example.demo.services;
 
 import com.example.demo.modules.*;
 import com.example.demo.repository.CheckRepository;
-import java.time.OffsetDateTime;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.AbstractMap.*;
@@ -87,7 +85,7 @@ public class ExecutionCheckService {
     var checkedChecks =
         relCheck.map(
             check -> {
-              String action = check.getActionValueType().getAction();
+              String action = check.getActiontype().getAction();
               ActionNameString actionNameString = new ActionNameString(action);
               CheckAndActionName checkAndActionName =
                   new CheckAndActionName(check, actionNameString);
@@ -110,7 +108,7 @@ public class ExecutionCheckService {
    * @return the status of type Result when the check is executed
    */
   private Result executeTheCheck(Check check, String attributeValue) {
-    String actionValue = check.getActionValueType().getValueType();
+    String actionValue = check.getActiontype().getValueType();
     Result result;
     switch (actionValue) {
       case "":
@@ -141,7 +139,7 @@ public class ExecutionCheckService {
   private Result checksInteger(String attributeValue, Check check) { // InputValue and a check
     Result result = null;
     boolean status;
-    String checkAction = check.getActionValueType().getAction();
+    String checkAction = check.getActiontype().getAction();
     int length = attributeValue.length();
     int checkValue = Integer.parseInt(check.getValue()); // check value
     int valueInputInt = Integer.parseInt(attributeValue);
@@ -172,7 +170,7 @@ public class ExecutionCheckService {
    */
   private Result checksNull(String attributeValue, Check check) {
     Result result;
-    String checkAction = check.getActionValueType().getAction();
+    String checkAction = check.getActiontype().getAction();
     result = switch (ActionTypes.valueOf(checkAction)) {
       case Empty -> attributeValue.isEmpty() ? Result.passed : Result.failed;
       case NotEmpty -> (!(attributeValue.isEmpty())) ? Result.passed : Result.failed;
@@ -194,7 +192,7 @@ public class ExecutionCheckService {
   private Result checksString(String attributeValue, Check check) {
     Result result;
     String value = check.getValue();
-    String checkAction = check.getActionValueType().getAction();
+    String checkAction = check.getActiontype().getAction();
     switch (ActionTypes.valueOf(checkAction)) {
       case Contains:
         if (attributeValue.contains(value)) {

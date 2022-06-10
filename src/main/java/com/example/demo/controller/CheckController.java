@@ -55,7 +55,7 @@ public class CheckController {
 
   private CheckAndActionName toCheckAndActionName(Check check) {
     ActionNameString actionNameString =
-        new ActionNameString(check.getActionValueType().getAction());
+        new ActionNameString(check.getActiontype().getAction());
     CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
     return checkAndActionName;
   }
@@ -76,7 +76,7 @@ public class CheckController {
       throw new RuntimeException("Check not found " + name);
     }
 
-    ActionNameString action = new ActionNameString(theCheck.getActionValueType().getAction());
+    ActionNameString action = new ActionNameString(theCheck.getActiontype().getAction());
     CheckAndActionName checkAndActionName = new CheckAndActionName(theCheck, action);
 
     return checkAndActionName;

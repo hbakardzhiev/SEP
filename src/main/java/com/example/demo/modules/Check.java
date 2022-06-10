@@ -50,7 +50,7 @@ public class Check {
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "action")
   @JsonIgnore
-  private Action action;
+  private Action actiontype;
 
   public Check() {}
 
@@ -125,12 +125,12 @@ public class Check {
     this.authorId = authorId;
   }
 
-  public Action getActionValueType() {
-    return action;
+  public Action getActiontype() {
+    return actiontype;
   }
 
-  public void setActionValueType(Action action) {
-    this.action = action;
+  public void setActiontype(Action action) {
+    this.actiontype = action;
   }
 
   @Override
@@ -152,7 +152,7 @@ public class Check {
         + comments
         + '\''
         + ", action="
-        + action
+        + actiontype
         + '}';
   }
 }

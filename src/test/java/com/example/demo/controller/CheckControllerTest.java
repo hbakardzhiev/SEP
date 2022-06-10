@@ -50,7 +50,7 @@ class CheckControllerTest {
     action.setValueType("42");
 
     Check check = new Check();
-    check.setActionValueType(action);
+    check.setActiontype(action);
     check.setAttribute("Attribute");
     check.setAuthor(123L);
     check.setComments("Comments");
@@ -84,7 +84,7 @@ class CheckControllerTest {
     action.setValueType("42");
 
     Check check = new Check();
-    check.setActionValueType(action);
+    check.setActiontype(action);
     check.setAttribute("?");
     check.setAuthor(123L);
     check.setComments("?");
@@ -103,7 +103,7 @@ class CheckControllerTest {
     action1.setValueType("42");
 
     Check check1 = new Check();
-    check1.setActionValueType(action1);
+    check1.setActiontype(action1);
     check1.setAttribute("Attribute");
     check1.setAuthor(123L);
     check1.setComments("Comments");
@@ -142,7 +142,7 @@ class CheckControllerTest {
     action.setValueType("42");
 
     Check check = new Check();
-    check.setActionValueType(action);
+    check.setActiontype(action);
     check.setAttribute("Attribute");
     check.setAuthor(123L);
     check.setComments("Comments");
@@ -171,7 +171,7 @@ class CheckControllerTest {
     action.setValueType("42");
 
     Check check = new Check();
-    check.setActionValueType(action);
+    check.setActiontype(action);
     check.setAttribute("Attribute");
     check.setAuthor(123L);
     check.setComments("Comments");
@@ -201,7 +201,7 @@ class CheckControllerTest {
     action.setValueType("42");
 
     Check check = new Check();
-    check.setActionValueType(action);
+    check.setActiontype(action);
     check.setAttribute("Attribute");
     check.setAuthor(123L);
     check.setComments("Comments");
@@ -235,7 +235,7 @@ class CheckControllerTest {
     action.setValueType("42");
 
     Check check = new Check();
-    check.setActionValueType(action);
+    check.setActiontype(action);
     check.setAttribute("Attribute");
     check.setAuthor(123L);
     check.setComments("Comments");
@@ -282,7 +282,7 @@ class CheckControllerTest {
     action.setValueType("42");
 
     Check check = new Check();
-    check.setActionValueType(action);
+    check.setActiontype(action);
     check.setAttribute("?");
     check.setAuthor(123L);
     check.setComments("?");
@@ -333,7 +333,7 @@ class CheckControllerTest {
     action.setValueType("42");
 
     Check check = new Check();
-    check.setActionValueType(action);
+    check.setActiontype(action);
     check.setAttribute("Attribute");
     check.setAuthor(123L);
     check.setComments("Comments");
@@ -367,7 +367,7 @@ class CheckControllerTest {
     action.setValueType("42");
 
     Check check = new Check();
-    check.setActionValueType(action);
+    check.setActiontype(action);
     check.setAttribute("?");
     check.setAuthor(123L);
     check.setComments("?");
@@ -386,7 +386,7 @@ class CheckControllerTest {
     action1.setValueType("42");
 
     Check check1 = new Check();
-    check1.setActionValueType(action1);
+    check1.setActiontype(action1);
     check1.setAttribute("Attribute");
     check1.setAuthor(123L);
     check1.setComments("Comments");
