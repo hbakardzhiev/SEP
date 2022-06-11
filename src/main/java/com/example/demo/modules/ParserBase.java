@@ -46,21 +46,19 @@ public abstract class ParserBase {
    * @throws IOException
    */
   public void setDocumentByUrl(Stream<String> url) throws IOException {
-    document = url.filter(Objects::nonNull).map(element -> {
+    document = url.filter(element -> element != null && !element.equals("")).map(element -> {
       final var split = element.split("/");
       String tempName;
-      if (element.contains("/")) {
-        sandboxFolder = split[0];
-        tempName = split[1];
-      } else {
-        tempName = element;
-      }
       if (sheetType.equals(SheetType.CN)){
         tempName = Util.CHANGE_NOTICE_EXAMPLE_HTML;
       }
-      final String finalName;
-      finalName = tempName;
-      final Path path = Paths.get(Util.RESOURCE_LOCATION, sandboxFolder, finalName);
+      else {
+        tempName = element;
+      }
+      if (element.matches("^CN[\\d]{6}$")) {
+        sandboxFolder = element;
+      }
+      final Path path = Paths.get(Util.RESOURCE_LOCATION, sandboxFolder, tempName);
       try {
         final var currentDocument = Jsoup.parse(Files.readString(path));
         return new SimpleEntry<>(readDocumentName(currentDocument), currentDocument);
@@ -82,7 +80,7 @@ public abstract class ParserBase {
    */
   private Stream<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseElementByTag(
       String tag, String id) {
-    final var content = document.entrySet().stream().map(
+    final var content = document.entrySet().parallelStream().map(
         element -> new AbstractMap.SimpleImmutableEntry<>(element.getKey(),
             new SimpleImmutableEntry<String, String>(id,
                 element.getValue().select((String.format("[%s=%s]", tag, id))).text())));

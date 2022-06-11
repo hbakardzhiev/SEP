@@ -20,17 +20,24 @@ public class ParserDMR extends ParserBase {
   }
 
   /**
-   * @param parserCT
+   * Sets the dmr pages urls to the class by going through the parent pages of CT
+   *
+   * @param parserCT is the parser of CT
    * @throws IOException
    */
   private void passCT(ParserCT parserCT) throws IOException {
-    // TODO: change the mask here
+    final var documents = parserCT.getDocument().values().parallelStream();
+    // TODO: add more types if necessary
     final var stream =
-        parserCT.getDocument().values().stream()
-            .map(element -> element.select("a:matchesOwn(^ECT[\\d]{6})"));
+        documents.map(
+            element ->
+                element.select(
+                    // div with id=table chnagetask result and so on is the right div in the page
+                    // which has as children the <a> tags
+                    "div[id=table__changeTask_resultingItems_table_TABLE]"
+                        + " a:matchesOwn((^D[\\d]{9})|(^EngPartNr[\\d]{3})|(^[\\d]{12}))"));
     final var listStrings =
         stream
-            .flatMap(Collection::stream)
             .map(element -> element.attr("href"))
             .collect(Collectors.toCollection(ArrayList::new));
     this.setDocumentByUrl(listStrings.parallelStream());
