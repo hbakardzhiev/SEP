@@ -3,6 +3,7 @@ package com.example.demo.modules;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.example.demo.UtilTests;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -16,7 +17,7 @@ class ParserCRTest {
   /** Method under test: {@link ParserCR#ParserCR(ParserCN)} */
   @Test
   void testConstructor() throws IOException {
-    ParserCR actualParserCR = new ParserCR(new ParserCN(""));
+    ParserCR actualParserCR = new ParserCR(new ParserCN(UtilTests.SANDBOX_AND_CHANGE_NOTICE_EXAMPLE));
     assertEquals(1, actualParserCR.getDocument().size());
     assertEquals(SheetType.CR, actualParserCR.getSheetType());
   }
