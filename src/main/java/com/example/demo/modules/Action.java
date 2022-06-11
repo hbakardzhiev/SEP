@@ -29,7 +29,7 @@ public class Action {
   private String description;
 
   // the checks associated with this action name
-  @OneToMany(mappedBy = "action")
+  @OneToMany(mappedBy = "actionType")
   @JsonIgnore
   private List<Check> checks = new ArrayList<>();
 
@@ -51,7 +51,7 @@ public class Action {
 
     checks.add(tempCheck);
 
-    tempCheck.setActionValueType(this);
+    tempCheck.setActionType(this);
   }
 
   @Override

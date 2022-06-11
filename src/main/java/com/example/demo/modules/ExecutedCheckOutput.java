@@ -1,16 +1,22 @@
 package com.example.demo.modules;
 
+import java.time.OffsetDateTime;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.joda.time.DateTime;
 
 /**
  * This class encapsulates the data types that needs to be sent to the FE with regard of the
  * execution of the checks. It saves the inputValue - value that is checked, and the object
  * checkAndActionName which is the check and the action of the check that are used for checking.
  */
+@Data
 public class ExecutedCheckOutput {
   private Result status;
   private String inputValue; // the value that a specific attribute has in Windchill
   private CheckAndActionName checkAndActionName;
+
 
   public ExecutedCheckOutput(
       Result status, String inputValue, CheckAndActionName checkAndActionName) {
@@ -33,30 +39,6 @@ public class ExecutedCheckOutput {
         + '}';
   }
 
-  public Result getStatus() {
-    return status;
-  }
-
-  public void setStatus(Result status) {
-    this.status = status;
-  }
-
-  public String getInputValue() {
-    return inputValue;
-  }
-
-  public void setInputValue(String inputValue) {
-    this.inputValue = inputValue;
-  }
-
-  public CheckAndActionName getCheckAndAction() {
-    return checkAndActionName;
-  }
-
-  public void setCheckAndAction(CheckAndActionName checkAndActionName) {
-    this.checkAndActionName = checkAndActionName;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -65,5 +47,10 @@ public class ExecutedCheckOutput {
     return Objects.equals(status, that.status)
         && Objects.equals(inputValue, that.inputValue)
         && Objects.equals(checkAndActionName, that.checkAndActionName);
+  }
+
+  @Override
+  public int hashCode() {
+    return super.hashCode();
   }
 }
