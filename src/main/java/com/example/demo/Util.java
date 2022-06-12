@@ -13,7 +13,7 @@ public class Util {
   // TODO the swap out this hardcoded url once we get access to web based WindChill
   public static final String CHANGE_NOTICE_EXAMPLE_HTML = "Change Notice - Example.html";
 
-  public static final String RESOURCE_LOCATION = "src/main/resources/";
+  public static final String RESOURCE_LOCATION = "/home/sep/backend/src/main/resources/";
   /**
    * Reads the input stream and builds a string out of it.
    *
