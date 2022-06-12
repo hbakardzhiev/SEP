@@ -4,6 +4,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
 import com.example.demo.UtilTests;
+import com.example.demo.modules.DateExecutedChecks;
 import com.example.demo.services.ExecutionCheckService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,7 +33,7 @@ class ExecutionCheckControllerTest {
   @Test
   void testExecuteChecksAll() throws Exception {
     when(this.executionCheckService.filterDataWithChecks(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML))
-        .thenReturn(new ArrayList<>());
+        .thenReturn(new DateExecutedChecks(null, null));
     MockHttpServletRequestBuilder requestBuilder =
         MockMvcRequestBuilders.post("/executedChecks/all");
     requestBuilder.content(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
@@ -47,7 +48,7 @@ class ExecutionCheckControllerTest {
   @Test
   void testExecuteChecksAll2() throws Exception {
     when(this.executionCheckService.filterDataWithChecks(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML))
-        .thenReturn(new ArrayList<>());
+        .thenReturn(new DateExecutedChecks(null, null));
     MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.post("/executedChecks/all");
     getResult.content(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
     MockMvcBuilders.standaloneSetup(this.executionCheckController)
@@ -61,7 +62,7 @@ class ExecutionCheckControllerTest {
   @Test
   void testExecuteChecksAll3() throws Exception {
     when(this.executionCheckService.filterDataWithChecks((String) any()))
-        .thenReturn(new ArrayList<>());
+        .thenReturn(new DateExecutedChecks(null, null));
     MockHttpServletRequestBuilder contentTypeResult =
         MockMvcRequestBuilders.post("/executedChecks/all").contentType(MediaType.APPLICATION_JSON);
 
@@ -73,6 +74,6 @@ class ExecutionCheckControllerTest {
         .perform(requestBuilder)
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content().string("[]"));
+        .andExpect(MockMvcResultMatchers.content().string("{\"date\":null,\"executedChecks\":null}"));
   }
 }

@@ -6,10 +6,12 @@ import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.cors.CorsConfiguration;
 
 /**
  * An exemplary controller built for web scrapping. It can be deleted in the future but it is useful
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/")
+@CrossOrigin(CorsConfiguration.ALL)
 public class ParserController {
 
   /** Autowired ParserService to access the parsing methods */
@@ -37,6 +40,6 @@ public class ParserController {
   @GetMapping("allData")
   public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseAll(
       @RequestBody String input) throws IOException {
-    return parserService.parseEverything(input);
+    return parserService.parseEverything(input).getKey();
   }
 }

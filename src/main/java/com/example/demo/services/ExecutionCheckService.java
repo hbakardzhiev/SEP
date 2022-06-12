@@ -32,20 +32,21 @@ public class ExecutionCheckService {
    *     the status - passed, failed, attention point and the check itself and the inputValue
    * @throws IOException if the parsing of the data fails
    */
-  public List<SimpleEntry<String, ExecutedCheckOutput>> filterDataWithChecks(String input)
+  public DateExecutedChecks filterDataWithChecks(String input)
       throws IOException {
     List<Check> checks = checkRepository.findAll();
     var data = parserService.parseEverything(input);
     final var relevantChecksVal =
-        data.stream()
+        data.getKey().stream()
             .map(
                 element -> {
                   Stream<SimpleEntry<String, ExecutedCheckOutput>> checkedChecks =
                       mapSimpleEntry(checks, element);
 
                   return checkedChecks.collect(Collectors.toList());
-                });
-    return relevantChecksVal.flatMap(List::stream).collect(Collectors.toList());
+                }).flatMap(List::stream).collect(Collectors.toList());
+    DateExecutedChecks dateExecutedChecks = new DateExecutedChecks(data.getValue(), relevantChecksVal);
+    return dateExecutedChecks;
   }
 
   /**
@@ -64,19 +65,13 @@ public class ExecutionCheckService {
 
     final var indexOfHyphen = element.getKey().indexOf("-");
     final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
-    var tempattribute = element.getValue().getKey();
-    switch (tempattribute) {
-        // The cases are not exhaustive yet
-      case "proposedSolution":
-        tempattribute = "solution";
-        break;
-      case "theRequestPriority":
-        tempattribute = "requestpriority";
-        break;
-      default:
-        tempattribute = tempattribute.toLowerCase();
-    }
-    final var attribute = tempattribute;
+    final var tempKey = element.getValue().getKey();
+    final var attribute = switch (tempKey) {
+      // The cases are not exhaustive yet
+      case "proposedSolution" -> "solution";
+      case "theRequestPriority" -> "requestpriority";
+      default -> tempKey.toLowerCase();
+    };
     final var inputValue = element.getValue().getValue();
 
     // list of checks relevant for this docSource and attribute
@@ -90,7 +85,7 @@ public class ExecutionCheckService {
     var checkedChecks =
         relCheck.map(
             check -> {
-              String action = check.getActionValueType().getAction();
+              String action = check.getActionType().getAction();
               ActionNameString actionNameString = new ActionNameString(action);
               CheckAndActionName checkAndActionName =
                   new CheckAndActionName(check, actionNameString);
@@ -113,7 +108,7 @@ public class ExecutionCheckService {
    * @return the status of type Result when the check is executed
    */
   private Result executeTheCheck(Check check, String attributeValue) {
-    String actionValue = check.getActionValueType().getValueType();
+    String actionValue = check.getActionType().getValueType();
     Result result;
     switch (actionValue) {
       case "":
@@ -144,38 +139,21 @@ public class ExecutionCheckService {
   private Result checksInteger(String attributeValue, Check check) { // InputValue and a check
     Result result = null;
     boolean status;
-    String checkAction = check.getActionValueType().getAction();
+    String checkAction = check.getActionType().getAction();
     int length = attributeValue.length();
     int checkValue = Integer.parseInt(check.getValue()); // check value
     int valueInputInt = Integer.parseInt(attributeValue);
-    switch (ActionTypes.valueOf(checkAction)) {
-      case StrictlyGreater:
-        status = checkValue > valueInputInt;
-        break;
-      case StrictlySmaller:
-        status = checkValue < valueInputInt;
-        break;
-      case GreaterEqual:
-        status = checkValue >= valueInputInt;
-        break;
-      case SmallerEqual:
-        status = checkValue <= valueInputInt;
-        break;
-      case LengthStrictlyGreater:
-        status = length > checkValue;
-        break;
-      case LengthStrictlySmaller:
-        status = length < checkValue;
-        break;
-      case LengthGreaterEqual:
-        status = length >= checkValue;
-        break;
-      case LengthSmallerEqual:
-        status = length <= checkValue;
-        break;
-      default:
-        throw new IllegalStateException("Unexpected value: " + checkAction);
-    }
+    status = switch (ActionTypes.valueOf(checkAction)) {
+      case StrictlyGreater -> checkValue > valueInputInt;
+      case StrictlySmaller -> checkValue < valueInputInt;
+      case GreaterEqual -> checkValue >= valueInputInt;
+      case SmallerEqual -> checkValue <= valueInputInt;
+      case LengthStrictlyGreater -> length > checkValue;
+      case LengthStrictlySmaller -> length < checkValue;
+      case LengthGreaterEqual -> length >= checkValue;
+      case LengthSmallerEqual -> length <= checkValue;
+      default -> throw new IllegalStateException("Unexpected value: " + checkAction);
+    };
     ;
     result = true ? Result.passed : Result.failed;
     return result;
@@ -192,20 +170,13 @@ public class ExecutionCheckService {
    */
   private Result checksNull(String attributeValue, Check check) {
     Result result;
-    String checkAction = check.getActionValueType().getAction();
-    switch (ActionTypes.valueOf(checkAction)) {
-      case Empty:
-        result = attributeValue.isEmpty() ? Result.passed : Result.failed;
-        break;
-      case NotEmpty:
-        result = (!(attributeValue.isEmpty())) ? Result.passed : Result.failed;
-        break;
-      case HumanCheck:
-        result = Result.humanCheck;
-        break;
-      default:
-        throw new IllegalStateException("Unexpected value: " + checkAction);
-    }
+    String checkAction = check.getActionType().getAction();
+    result = switch (ActionTypes.valueOf(checkAction)) {
+      case Empty -> attributeValue.isEmpty() ? Result.passed : Result.failed;
+      case NotEmpty -> (!(attributeValue.isEmpty())) ? Result.passed : Result.failed;
+      case HumanCheck -> Result.humanCheck;
+      default -> throw new IllegalStateException("Unexpected value: " + checkAction);
+    };
     return result;
   }
 
@@ -221,7 +192,7 @@ public class ExecutionCheckService {
   private Result checksString(String attributeValue, Check check) {
     Result result;
     String value = check.getValue();
-    String checkAction = check.getActionValueType().getAction();
+    String checkAction = check.getActionType().getAction();
     switch (ActionTypes.valueOf(checkAction)) {
       case Contains:
         if (attributeValue.contains(value)) {

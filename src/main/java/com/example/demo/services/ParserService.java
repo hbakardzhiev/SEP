@@ -6,10 +6,12 @@ import com.example.demo.modules.ParserCT;
 import com.example.demo.modules.ParserDMR;
 import com.example.demo.repository.SheetSourceRepository;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,27 +22,28 @@ public class ParserService {
   @Autowired protected SheetSourceRepository sheetSourceRepository;
 
   /**
-   * Combines all parsed pages in one list. and combine the streams and also make the methods
-   * private
+   * Combines all parsed pages in one list. and combine the streams and also
+   * returns the timestamp of the parsing of data
    *
    * @return List of the parsed Cn, CR, Cts, DMRs pages
    * @throws IOException
    */
-  public List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parseEverything(
+  public SimpleImmutableEntry<List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>>, OffsetDateTime> parseEverything(
       String input) throws IOException {
     final var sheetSourceStream = sheetSourceRepository.findAll();
     final var parserCN = new ParserCN(input);
     final var parserCT = new ParserCT(parserCN);
     final var parserCR = new ParserCR(parserCN);
     final var parserDMR = new ParserDMR(parserCT);
+    final var offsetTime = OffsetDateTime.now();
 
     final var parsedCN = parserCN.parsePage(sheetSourceStream.parallelStream());
     final var parsedCT = parserCT.parsePage(sheetSourceStream.parallelStream());
     final var parsedCR = parserCR.parsePage(sheetSourceStream.parallelStream());
     final var parsedDMR = parserDMR.parsePage(sheetSourceStream.parallelStream());
 
-    return Stream.of(parsedCN, parsedCT, parsedCR, parsedDMR)
+    return new SimpleImmutableEntry<>(Stream.of(parsedCN, parsedCT, parsedCR, parsedDMR)
         .flatMap(x -> x)
-        .collect(Collectors.toList());
+        .collect(Collectors.toList()), offsetTime);
   }
 }
