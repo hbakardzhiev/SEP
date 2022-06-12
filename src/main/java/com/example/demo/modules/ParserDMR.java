@@ -38,8 +38,7 @@ public class ParserDMR extends ParserBase {
                         + " a:matchesOwn((^D[\\d]{9})|(^EngPartNr[\\d]{3})|(^[\\d]{12}))"));
     final var listStrings =
         stream
-            .map(element -> element.attr("href"))
-            .collect(Collectors.toCollection(ArrayList::new));
-    this.setDocumentByUrl(listStrings.parallelStream());
+            .map(element -> element.attr("href"));
+    this.setDocumentByUrl(listStrings);
   }
 }
