@@ -3,6 +3,7 @@ package com.example.demo.modules;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.example.demo.UtilTests;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Disabled;
@@ -13,7 +14,7 @@ class ParserDMRTest {
   /** Method under test: {@link ParserDMR#ParserDMR(ParserCT)} */
   @Test
   void testConstructor() throws IOException {
-    ParserDMR actualParserDMR = new ParserDMR(new ParserCT(new ParserCN("")));
+    ParserDMR actualParserDMR = new ParserDMR(new ParserCT(new ParserCN(UtilTests.SANDBOX_AND_CHANGE_NOTICE_EXAMPLE)));
     assertTrue(actualParserDMR.getDocument().isEmpty());
     assertEquals(SheetType.DMR, actualParserDMR.getSheetType());
   }

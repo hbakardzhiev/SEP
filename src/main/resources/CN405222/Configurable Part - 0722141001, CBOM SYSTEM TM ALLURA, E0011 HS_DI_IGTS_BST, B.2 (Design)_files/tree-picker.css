@@ -1,0 +1,107 @@
+.treePickerDisplay {
+    border-width: 1px;
+    border-color: #acacac;
+    border-style: none solid solid;
+    background-color: #f1f1f1;
+}
+
+.treePickerVisualPanel {
+    background-color: white;
+    padding-right: 1px;
+    padding-bottom: 2px;
+}
+
+.visualPanel-undocked {
+    border-left-width: 0px;
+    border-left-color: #acacac;
+    border-left-style: solid;
+}
+
+.innerVisualPanel-undocked {
+    padding-right: 6px;
+    padding-bottom: 11px;
+    background-color: #f1f1f1;
+}
+
+.treePickerAllocateBarText {
+    font-size: 11px;
+    font-weight: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/**** Side Tabs ****/
+.expandCollapseContainer
+{
+	height:27px;
+	width:27px;	
+}
+
+.treePickerCollapse
+{
+	position:relative;
+	left:-1px;
+	top:5px;
+	height:16px;
+	width:16px;
+	background-image:url(../../netmarkets/images/collapseTreePicker.png);
+}
+
+.treePickerExpand
+{
+	position:relative;
+	left:-1px;
+	top:5px;
+	height:16px;
+	width:16px;
+	background-image:url(../../netmarkets/images/show_nav2.png);
+}
+
+.treePickerSideTab:hover
+{
+   	background-color:rgb(251,251,251);
+}
+
+.treePickerSideTabSelected
+{
+    margin-bottom:1px;
+   	width:22px;
+   	height:30px;
+   	background-color:white;
+   	border-style:solid;
+   	border-top-width:3px;
+   	border-left-width:1px;
+   	border-right-width:1px;
+   	border-bottom-width:1px;
+   	border-color:rgb(204,102,0);
+   	border-radius:1px;
+}
+
+.treePickerSideTab
+{
+   	margin-bottom:1px;
+   	width:22px;
+   	height:30px;
+   	background-color:rgb(238,238,238);
+   	border-style:solid;
+   	border-width:1px;
+   	border-color:rgb(208,208,208);
+   	border-radius:1px;
+   	padding-top:2px;
+}
+
+.treePickerSideTabImage
+{
+   	position:relative;
+	left:3px;
+	top:7px;
+}
+
+.treePickerTreeViz-hide {
+  display: block !important;
+  height: 0 !important;
+  width: 0 !important;
+  visibility: hidden !important;
+}

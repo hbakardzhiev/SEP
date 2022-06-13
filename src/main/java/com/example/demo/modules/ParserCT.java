@@ -35,8 +35,7 @@ public class ParserCT extends ParserBase {
         stream
             .parallel()
             .flatMap(Collection::stream)
-            .map(element -> element.attr("href"))
-            .collect(Collectors.toCollection(ArrayList::new));
-    this.setDocumentByUrl(listStrings.parallelStream());
+            .map(element -> element.attr("href"));
+    this.setDocumentByUrl(listStrings);
   }
 }

@@ -37,10 +37,10 @@ public class ParserService {
     final var parserDMR = new ParserDMR(parserCT);
     final var offsetTime = OffsetDateTime.now();
 
-    final var parsedCN = parserCN.parsePage(sheetSourceStream.stream());
-    final var parsedCT = parserCT.parsePage(sheetSourceStream.stream());
-    final var parsedCR = parserCR.parsePage(sheetSourceStream.stream());
-    final var parsedDMR = parserDMR.parsePage(sheetSourceStream.stream());
+    final var parsedCN = parserCN.parsePage(sheetSourceStream.parallelStream());
+    final var parsedCT = parserCT.parsePage(sheetSourceStream.parallelStream());
+    final var parsedCR = parserCR.parsePage(sheetSourceStream.parallelStream());
+    final var parsedDMR = parserDMR.parsePage(sheetSourceStream.parallelStream());
 
     return new SimpleImmutableEntry<>(Stream.of(parsedCN, parsedCT, parsedCR, parsedDMR)
         .flatMap(x -> x)

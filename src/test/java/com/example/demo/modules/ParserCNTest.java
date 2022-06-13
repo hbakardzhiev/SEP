@@ -1,7 +1,9 @@
 package com.example.demo.modules;
 
+import static com.example.demo.UtilTests.SANDBOX_AND_CHANGE_NOTICE_EXAMPLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.example.demo.UtilTests;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Disabled;
@@ -42,7 +44,7 @@ class ParserCNTest {
   /** Method under test: {@link ParserCN#ParserCN(String)} */
   @Test
   void testConstructor2() throws IOException {
-    ParserCN actualParserCN = new ParserCN("");
+    ParserCN actualParserCN = new ParserCN(SANDBOX_AND_CHANGE_NOTICE_EXAMPLE);
     assertEquals(1, actualParserCN.getDocument().size());
     assertEquals(SheetType.CN, actualParserCN.getSheetType());
   }
