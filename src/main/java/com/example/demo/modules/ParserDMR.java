@@ -32,7 +32,7 @@ public class ParserDMR extends ParserBase {
         documents.map(
             element ->
                 element.select(
-                    // div with id=table chnagetask result and so on is the right div in the page
+                    // div with id=table changetask result and so on is the right div in the page
                     // which has as children the <a> tags
                     "div[id=table__changeTask_resultingItems_table_TABLE]"
                         + " a:matchesOwn((^D[\\d]{9})|(^EngPartNr[\\d]{3})|(^[\\d]{12}))"));

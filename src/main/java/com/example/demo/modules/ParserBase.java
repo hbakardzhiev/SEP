@@ -18,6 +18,8 @@ import lombok.Setter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import static com.example.demo.Util.EXTERNAL_PAGE;
+
 /**
  * We follow somewhat the State design pattern by creating a base abstract parser from which we
  * create further classes.
@@ -46,7 +48,8 @@ public abstract class ParserBase {
    * @throws IOException
    */
   public void setDocumentByUrl(Stream<String> url) throws IOException {
-    document = url.filter(element -> element != null && !element.equals("")).map(element -> {
+    document = url.filter(element -> element != null && !element.equals("") &&
+            !element.equals(EXTERNAL_PAGE)).map(element -> {
       final var split = element.split("/");
       String tempName;
       if (sheetType.equals(SheetType.CN)){

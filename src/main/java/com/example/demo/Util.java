@@ -15,6 +15,8 @@ public class Util {
 
 //  public static final String RESOURCE_LOCATION = "/home/sep/backend/src/main/resources/"; // for testing on server
   public static final String RESOURCE_LOCATION = "src/main/resources/"; // for testing locally
+
+  public static final String EXTERNAL_PAGE = "ExternalPage.html";
   /**
    * Reads the input stream and builds a string out of it.
    *
