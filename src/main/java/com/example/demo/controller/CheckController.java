@@ -54,8 +54,7 @@ public class CheckController {
   }
 
   private CheckAndActionName toCheckAndActionName(Check check) {
-    ActionNameString actionNameString =
-        new ActionNameString(check.getActionType().getAction());
+    ActionNameString actionNameString = new ActionNameString(check.getActionType().getAction());
     CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
     return checkAndActionName;
   }

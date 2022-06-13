@@ -11,7 +11,6 @@ import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +21,15 @@ public class ParserService {
   @Autowired protected SheetSourceRepository sheetSourceRepository;
 
   /**
-   * Combines all parsed pages in one list. and combine the streams and also
-   * returns the timestamp of the parsing of data
+   * Combines all parsed pages in one list. and combine the streams and also returns the timestamp
+   * of the parsing of data
    *
    * @return List of the parsed Cn, CR, Cts, DMRs pages
    * @throws IOException
    */
-  public SimpleImmutableEntry<List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>>, OffsetDateTime> parseEverything(
-      String input) throws IOException {
+  public SimpleImmutableEntry<
+          List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>>, OffsetDateTime>
+      parseEverything(String input) throws IOException {
     final var sheetSourceStream = sheetSourceRepository.findAll();
     final var parserCN = new ParserCN(input);
     final var parserCT = new ParserCT(parserCN);
@@ -42,8 +42,10 @@ public class ParserService {
     final var parsedCR = parserCR.parsePage(sheetSourceStream.parallelStream());
     final var parsedDMR = parserDMR.parsePage(sheetSourceStream.parallelStream());
 
-    return new SimpleImmutableEntry<>(Stream.of(parsedCN, parsedCT, parsedCR, parsedDMR)
-        .flatMap(x -> x)
-        .collect(Collectors.toList()), offsetTime);
+    return new SimpleImmutableEntry<>(
+        Stream.of(parsedCN, parsedCT, parsedCR, parsedDMR)
+            .flatMap(x -> x)
+            .collect(Collectors.toList()),
+        offsetTime);
   }
 }

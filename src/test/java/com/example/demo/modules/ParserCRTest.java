@@ -17,7 +17,8 @@ class ParserCRTest {
   /** Method under test: {@link ParserCR#ParserCR(ParserCN)} */
   @Test
   void testConstructor() throws IOException {
-    ParserCR actualParserCR = new ParserCR(new ParserCN(UtilTests.SANDBOX_AND_CHANGE_NOTICE_EXAMPLE));
+    ParserCR actualParserCR =
+        new ParserCR(new ParserCN(UtilTests.SANDBOX_AND_CHANGE_NOTICE_EXAMPLE));
     assertEquals(1, actualParserCR.getDocument().size());
     assertEquals(SheetType.CR, actualParserCR.getSheetType());
   }

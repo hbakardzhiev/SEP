@@ -1,10 +1,7 @@
 package com.example.demo.modules;
 
-import java.time.OffsetDateTime;
 import java.util.Objects;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.joda.time.DateTime;
 
 /**
  * This class encapsulates the data types that needs to be sent to the FE with regard of the
@@ -16,7 +13,6 @@ public class ExecutedCheckOutput {
   private Result status;
   private String inputValue; // the value that a specific attribute has in Windchill
   private CheckAndActionName checkAndActionName;
-
 
   public ExecutedCheckOutput(
       Result status, String inputValue, CheckAndActionName checkAndActionName) {

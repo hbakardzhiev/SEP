@@ -14,7 +14,8 @@ class ParserDMRTest {
   /** Method under test: {@link ParserDMR#ParserDMR(ParserCT)} */
   @Test
   void testConstructor() throws IOException {
-    ParserDMR actualParserDMR = new ParserDMR(new ParserCT(new ParserCN(UtilTests.SANDBOX_AND_CHANGE_NOTICE_EXAMPLE)));
+    ParserDMR actualParserDMR =
+        new ParserDMR(new ParserCT(new ParserCN(UtilTests.SANDBOX_AND_CHANGE_NOTICE_EXAMPLE)));
     assertTrue(actualParserDMR.getDocument().isEmpty());
     assertEquals(SheetType.DMR, actualParserDMR.getSheetType());
   }

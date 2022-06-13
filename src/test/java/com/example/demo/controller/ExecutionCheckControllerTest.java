@@ -8,7 +8,6 @@ import com.example.demo.modules.DateExecutedChecks;
 import com.example.demo.services.ExecutionCheckService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -74,6 +73,7 @@ class ExecutionCheckControllerTest {
         .perform(requestBuilder)
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content().string("{\"date\":null,\"executedChecks\":null}"));
+        .andExpect(
+            MockMvcResultMatchers.content().string("{\"date\":null,\"executedChecks\":null}"));
   }
 }

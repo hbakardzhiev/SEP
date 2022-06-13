@@ -11,11 +11,8 @@ import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleImmutableEntry;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -25,14 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 @ExtendWith(MockitoExtension.class)
 class ExecutionCheckServiceTest {
 
-  @Autowired
-  private ExecutionCheckService underTest;
+  @Autowired private ExecutionCheckService underTest;
 
-  @Mock
-  private CheckRepository checkRepository;
+  @Mock private CheckRepository checkRepository;
 
-  @Mock
-  private ParserService parserService;
+  @Mock private ParserService parserService;
 
   @BeforeEach
   void setUp() {
@@ -48,16 +42,26 @@ class ExecutionCheckServiceTest {
     actionType.add(checkTest);
 
     ActionNameString actionTest = new ActionNameString("NotEmpty");
-    DateExecutedChecks expected = new DateExecutedChecks(null,
-            List.of(new AbstractMap.SimpleEntry<>("output",
-                    new ExecutedCheckOutput(Result.passed, "CN title name",
-                            new CheckAndActionName(checkTest, actionTest)))));
+    DateExecutedChecks expected =
+        new DateExecutedChecks(
+            null,
+            List.of(
+                new AbstractMap.SimpleEntry<>(
+                    "output",
+                    new ExecutedCheckOutput(
+                        Result.passed,
+                        "CN title name",
+                        new CheckAndActionName(checkTest, actionTest)))));
 
     given(checkRepository.findAll()).willReturn(List.of(checkTest));
-    given(parserService.parseEverything(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML)).willReturn(
-        new SimpleImmutableEntry<>(List.of(new SimpleImmutableEntry<>(
-            "Change Notice - CN000001, CN title name, E0011 LocationId002, A",
-            new SimpleImmutableEntry<>("name", "CN title name"))), null));
+    given(parserService.parseEverything(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML))
+        .willReturn(
+            new SimpleImmutableEntry<>(
+                List.of(
+                    new SimpleImmutableEntry<>(
+                        "Change Notice - CN000001, CN title name, E0011 LocationId002, A",
+                        new SimpleImmutableEntry<>("name", "CN title name"))),
+                null));
 
     // when
     var actual = underTest.filterDataWithChecks(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
@@ -76,16 +80,24 @@ class ExecutionCheckServiceTest {
     actionType.add(checkTest);
 
     ActionNameString actionTest = new ActionNameString("NotEmpty");
-    DateExecutedChecks expected = new DateExecutedChecks(null,
-            List.of(new AbstractMap.SimpleEntry<>("output",
-        new ExecutedCheckOutput(Result.failed, "",
-                new CheckAndActionName(checkTest, actionTest)))));
+    DateExecutedChecks expected =
+        new DateExecutedChecks(
+            null,
+            List.of(
+                new AbstractMap.SimpleEntry<>(
+                    "output",
+                    new ExecutedCheckOutput(
+                        Result.failed, "", new CheckAndActionName(checkTest, actionTest)))));
 
     given(checkRepository.findAll()).willReturn(List.of(checkTest));
-    given(parserService.parseEverything(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML)).willReturn(
-        new AbstractMap.SimpleImmutableEntry<>(List.of(new AbstractMap.SimpleImmutableEntry<>(
-            "Change Notice - CN000001, CN title name, E0011 LocationId002, A",
-            new AbstractMap.SimpleImmutableEntry<>("name", ""))), null));
+    given(parserService.parseEverything(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML))
+        .willReturn(
+            new AbstractMap.SimpleImmutableEntry<>(
+                List.of(
+                    new AbstractMap.SimpleImmutableEntry<>(
+                        "Change Notice - CN000001, CN title name, E0011 LocationId002, A",
+                        new AbstractMap.SimpleImmutableEntry<>("name", ""))),
+                null));
 
     // when
     var actual = underTest.filterDataWithChecks(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
@@ -103,17 +115,24 @@ class ExecutionCheckServiceTest {
     actionType.add(checkTest);
 
     ActionNameString actionTest = new ActionNameString("HumanCheck");
-    DateExecutedChecks expected = new DateExecutedChecks(timeGiven,
-            List.of(new AbstractMap.SimpleEntry<>("output",
-            new ExecutedCheckOutput(Result.humanCheck, "",
-                    new CheckAndActionName(checkTest, actionTest)))));
-
+    DateExecutedChecks expected =
+        new DateExecutedChecks(
+            timeGiven,
+            List.of(
+                new AbstractMap.SimpleEntry<>(
+                    "output",
+                    new ExecutedCheckOutput(
+                        Result.humanCheck, "", new CheckAndActionName(checkTest, actionTest)))));
 
     given(checkRepository.findAll()).willReturn(List.of(checkTest));
-    given(parserService.parseEverything(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML)).willReturn(
-        new AbstractMap.SimpleImmutableEntry<>(List.of(new AbstractMap.SimpleImmutableEntry<>(
-            "Change Notice - CN000001, CN title name, E0011 LocationId002, A",
-            new AbstractMap.SimpleImmutableEntry<>("description", ""))), timeGiven));
+    given(parserService.parseEverything(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML))
+        .willReturn(
+            new AbstractMap.SimpleImmutableEntry<>(
+                List.of(
+                    new AbstractMap.SimpleImmutableEntry<>(
+                        "Change Notice - CN000001, CN title name, E0011 LocationId002, A",
+                        new AbstractMap.SimpleImmutableEntry<>("description", ""))),
+                timeGiven));
 
     // when
     var actual = underTest.filterDataWithChecks(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);

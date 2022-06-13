@@ -1,9 +1,7 @@
 package com.example.demo.modules;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 /** Creates parses that parses CT pages */
 public class ParserCT extends ParserBase {
@@ -32,10 +30,7 @@ public class ParserCT extends ParserBase {
             // followed by 6 numbers.
             .map(element -> element.select("a:matchesOwn(^([M]?[D]?[E]?CT[\\d]{6}))"));
     final var listStrings =
-        stream
-            .parallel()
-            .flatMap(Collection::stream)
-            .map(element -> element.attr("href"));
+        stream.parallel().flatMap(Collection::stream).map(element -> element.attr("href"));
     this.setDocumentByUrl(listStrings);
   }
 }

@@ -3,7 +3,6 @@ package com.example.demo.modules;
 import static com.example.demo.UtilTests.SANDBOX_AND_CHANGE_NOTICE_EXAMPLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.example.demo.UtilTests;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Disabled;
