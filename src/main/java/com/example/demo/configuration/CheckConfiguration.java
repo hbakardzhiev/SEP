@@ -43,7 +43,7 @@ public class CheckConfiguration {
       Action actionType5 = new Action("NotEmpty", "", "pls3");
       actionType5.add(check5);
 
-      Check check7 = new Check("Check6", "Change Request", "customerApprovalRequired", "No", "comment3");
+      Check check7 = new Check("Check7", "Change Request", "customerApprovalRequired", "No", "comment3");
       Action actionType7 = new Action("IsEqual", "String", "pls3");
       actionType7.add(check7);
 
@@ -156,7 +156,9 @@ public class CheckConfiguration {
 
       // Change Tasks checks
 
-      repository.saveAll(List.of(firstCheck, secondCheck, thirdCheck, forthCheck, check5, check6));
+      repository.saveAll(List.of(firstCheck, secondCheck, thirdCheck, forthCheck, check5, check6, check7, check8, check9, check10, check11,
+              check12, check13, check14, check15, check16, check17, check18, check19, check20, check21, check22, check23, check24, check25,
+              check26, check27, check28, check29, check30, check31, check32, check33));
     };
   }
 }
