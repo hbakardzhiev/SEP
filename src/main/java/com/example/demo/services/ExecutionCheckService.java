@@ -74,14 +74,14 @@ public class ExecutionCheckService {
 
     final var indexOfHyphen = element.getKey().indexOf("-");
     final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
-    final var tempKey = element.getValue().getKey();
-    final var attribute =
-        switch (tempKey) {
-            // The cases are not exhaustive yet
-          case "proposedSolution" -> "solution";
-          case "theRequestPriority" -> "requestpriority";
-          default -> tempKey.toLowerCase();
-        };
+    final var attribute = element.getValue().getKey(); //tempKey
+//    final var attribute =
+//        switch (tempKey) {
+//            // The cases are not exhaustive yet
+//          case "proposedSolution" -> "solution";
+//          case "theRequestPriority" -> "requestpriority";
+//          default -> tempKey.toLowerCase();
+//        };
     final var inputValue = element.getValue().getValue();
 
     // list of checks relevant for this docSource and attribute
