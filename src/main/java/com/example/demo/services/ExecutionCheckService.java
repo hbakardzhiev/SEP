@@ -156,22 +156,29 @@ public class ExecutionCheckService {
     String checkAction = check.getActionType().getAction();
     int length = attributeValue.length();
     int checkValue = Integer.parseInt(check.getValue()); // check value
-    int valueInputInt = Integer.parseInt(attributeValue);
-    status =
-        switch (ActionTypes.valueOf(checkAction)) {
-          case StrictlyGreater -> checkValue > valueInputInt;
-          case StrictlySmaller -> checkValue < valueInputInt;
-          case GreaterEqual -> checkValue >= valueInputInt;
-          case SmallerEqual -> checkValue <= valueInputInt;
-          case LengthStrictlyGreater -> length > checkValue;
-          case LengthStrictlySmaller -> length < checkValue;
-          case LengthGreaterEqual -> length >= checkValue;
-          case LengthSmallerEqual -> length <= checkValue;
-          default -> throw new IllegalStateException("Unexpected value: " + checkAction);
-        };
-    ;
-    result = true ? Result.passed : Result.failed;
-    return result;
+    try {
+        int valueInputInt = Integer.parseInt(attributeValue);
+        status =
+          switch (ActionTypes.valueOf(checkAction)) {
+            case StrictlyGreater -> checkValue > valueInputInt;
+            case StrictlySmaller -> checkValue < valueInputInt;
+            case GreaterEqual -> checkValue >= valueInputInt;
+            case SmallerEqual -> checkValue <= valueInputInt;
+            default -> throw new IllegalStateException("Unexpected value: " + checkAction);
+          };
+        result = true ? Result.passed : Result.failed;
+        return result;
+    } catch(NumberFormatException numberFormatException){
+        status = switch (ActionTypes.valueOf(checkAction)) {
+            case LengthStrictlyGreater -> length > checkValue;
+            case LengthStrictlySmaller -> length < checkValue;
+            case LengthGreaterEqual -> length >= checkValue;
+            case LengthSmallerEqual -> length <= checkValue;
+            default -> throw new IllegalStateException("Unexpected value: " + checkAction);
+          };
+        result = true ? Result.passed : Result.failed;
+        return result;
+    }
   }
 
   /**
