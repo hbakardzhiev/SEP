@@ -73,7 +73,9 @@ public class ExecutionCheckService {
       SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>> element) {
 
     final var indexOfHyphen = element.getKey().indexOf("-");
+    final var indexComma = element.getKey().indexOf(",");
     final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
+    final var docSourceUnique = element.getKey().substring(0, indexComma);
     final var attribute = element.getValue().getKey(); //tempKey
 //    final var attribute =
 //        switch (tempKey) {
@@ -96,10 +98,12 @@ public class ExecutionCheckService {
         relCheck.map(
             check -> {
               String action = check.getActionType().getAction();
+              Check tempCheck = check;
+              tempCheck.setDocSource(docSourceUnique);
               ActionNameString actionNameString = new ActionNameString(action);
               CheckAndActionName checkAndActionName =
                   new CheckAndActionName(check, actionNameString);
-              Result status = executeTheCheck(check, inputValue);
+              Result status = executeTheCheck(tempCheck, inputValue);
               ExecutedCheckOutput checkActionInputValue =
                   new ExecutedCheckOutput(status, inputValue, checkAndActionName);
 
