@@ -8,7 +8,7 @@ import com.example.demo.modules.Action;
 import com.example.demo.modules.ActionNameString;
 import com.example.demo.modules.Check;
 import com.example.demo.modules.CheckAndActionName;
-import com.example.demo.repository.AdminRepoistory;
+import com.example.demo.repository.AdminRepository;
 import com.example.demo.services.ActionService;
 import com.example.demo.services.CheckService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,7 +32,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 class CheckControllerTest {
   @MockBean private ActionService actionService;
 
-  @MockBean private AdminRepoistory adminRepoistory;
+  @MockBean private AdminRepository adminRepository;
 
   @Autowired private CheckController checkController;
 
