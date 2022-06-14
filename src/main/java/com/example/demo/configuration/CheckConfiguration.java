@@ -56,27 +56,27 @@ public class CheckConfiguration {
       Action actionType9 = new Action("NotEmpty", "", "pls3");
       actionType9.add(check9);
 
-      Check check10 = new Check("Check10", "Controlled document", "name", "", "comment3");
+      Check check10 = new Check("Check10", "Controlled Document", "name", "", "comment3");
       Action actionType10 = new Action("HumanCheck", "", "pls3");
       actionType10.add(check10);
 
-      Check check11 = new Check("Check11", "Controlled document", "name", "FRU", "comment3");
+      Check check11 = new Check("Check11", "Controlled Document", "name", "FRU", "comment3");
       Action actionType11 = new Action("NotContains", "String", "pls3");
       actionType11.add(check11);
 
-      Check check12 = new Check("Check12", "Controlled document", "name", "40", "comment3");
+      Check check12 = new Check("Check12", "Controlled Document", "name", "40", "comment3");
       Action actionType12 = new Action("LengthSmallerEqual", "Integer", "pls3");
       actionType12.add(check12);
 
-      Check check13 = new Check("Check13", "Controlled document", "phiSendNative", "", "comment3");
+      Check check13 = new Check("Check13", "Controlled Document", "phiSendNative", "", "comment3");
       Action actionType13 = new Action("HumanCheck", "", "pls3");
       actionType13.add(check13);
 
-      Check check14 = new Check("Check14", "Controlled document", "phiDMR", "Yes", "comment3");
+      Check check14 = new Check("Check14", "Controlled Document", "phiDMR", "Yes", "comment3");
       Action actionType14 = new Action("IsEqual", "String", "pls3");
       actionType14.add(check14);
 
-      Check check15 = new Check("Check15", "Controlled document", "designcategory", "3. Design Output", "comment3");
+      Check check15 = new Check("Check15", "Controlled Document", "designcategory", "3. Design Output", "comment3");
       Action actionType15 = new Action("IsEqual", "String", "pls3");
       actionType15.add(check15);
 
