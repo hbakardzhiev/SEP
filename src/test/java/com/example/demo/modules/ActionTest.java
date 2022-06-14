@@ -61,7 +61,7 @@ class ActionTest {
 
   /** Method under test: {@link Action#add(Check)} */
   @Test
-  void testAdd() {
+  void testAdd() throws Exception {
     Action action = new Action();
 
     Action action1 = new Action();

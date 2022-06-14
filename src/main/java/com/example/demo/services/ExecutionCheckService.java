@@ -99,8 +99,12 @@ public class ExecutionCheckService {
             check -> {
               String action = check.getActionType().getAction();
               Check tempCheck = check;
-              tempCheck.setDocSource(docSourceUnique);
-              ActionNameString actionNameString = new ActionNameString(action);
+                try {
+                    tempCheck.setDocSource(docSourceUnique);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                ActionNameString actionNameString = new ActionNameString(action);
               CheckAndActionName checkAndActionName =
                   new CheckAndActionName(check, actionNameString);
               Result status = executeTheCheck(tempCheck, inputValue);
