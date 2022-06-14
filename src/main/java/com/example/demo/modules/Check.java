@@ -93,7 +93,7 @@ public class Check {
   }
 
   public void setDocSource(String docSource) throws Exception {
-    if (name.length() < 1) {
+    if (docSource.length() < 1) {
       throw new IllegalArgumentException("Docsource should not be empty");
     }
     this.docSource = docSource;
@@ -104,7 +104,7 @@ public class Check {
   }
 
   public void setAttribute(String attribute) throws Exception {
-    if (name.length() < 1) {
+    if (attribute.length() < 1) {
       throw new IllegalArgumentException("Attribute should not be empty");
     }
     this.attribute = attribute;
