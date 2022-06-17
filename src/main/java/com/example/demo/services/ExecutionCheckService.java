@@ -76,14 +76,14 @@ public class ExecutionCheckService {
     final var indexComma = element.getKey().indexOf(",");
     final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
     final var docSourceUnique = element.getKey().substring(0, indexComma);
-    final var attribute = element.getValue().getKey(); //tempKey
-//    final var attribute =
-//        switch (tempKey) {
-//            // The cases are not exhaustive yet
-//          case "proposedSolution" -> "solution";
-//          case "theRequestPriority" -> "requestpriority";
-//          default -> tempKey.toLowerCase();
-//        };
+    final var attribute = element.getValue().getKey(); // tempKey
+    //    final var attribute =
+    //        switch (tempKey) {
+    //            // The cases are not exhaustive yet
+    //          case "proposedSolution" -> "solution";
+    //          case "theRequestPriority" -> "requestpriority";
+    //          default -> tempKey.toLowerCase();
+    //        };
     final var inputValue = element.getValue().getValue();
 
     // list of checks relevant for this docSource and attribute
@@ -99,12 +99,12 @@ public class ExecutionCheckService {
             check -> {
               String action = check.getActionType().getAction();
               Check tempCheck = check;
-                try {
-                    tempCheck.setDocSource(docSourceUnique);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                ActionNameString actionNameString = new ActionNameString(action);
+              try {
+                tempCheck.setDocSource(docSourceUnique);
+              } catch (Exception e) {
+                throw new RuntimeException(e);
+              }
+              ActionNameString actionNameString = new ActionNameString(action);
               CheckAndActionName checkAndActionName =
                   new CheckAndActionName(check, actionNameString);
               Result status = executeTheCheck(tempCheck, inputValue);
@@ -161,8 +161,8 @@ public class ExecutionCheckService {
     int length = attributeValue.length();
     int checkValue = Integer.parseInt(check.getValue()); // check value
     try {
-        int valueInputInt = Integer.parseInt(attributeValue);
-        status =
+      int valueInputInt = Integer.parseInt(attributeValue);
+      status =
           switch (ActionTypes.valueOf(checkAction)) {
             case StrictlyGreater -> checkValue > valueInputInt;
             case StrictlySmaller -> checkValue < valueInputInt;
@@ -170,18 +170,19 @@ public class ExecutionCheckService {
             case SmallerEqual -> checkValue <= valueInputInt;
             default -> throw new IllegalStateException("Unexpected value: " + checkAction);
           };
-        result = true ? Result.passed : Result.failed;
-        return result;
-    } catch(NumberFormatException numberFormatException){
-        status = switch (ActionTypes.valueOf(checkAction)) {
+      result = true ? Result.passed : Result.failed;
+      return result;
+    } catch (NumberFormatException numberFormatException) {
+      status =
+          switch (ActionTypes.valueOf(checkAction)) {
             case LengthStrictlyGreater -> length > checkValue;
             case LengthStrictlySmaller -> length < checkValue;
             case LengthGreaterEqual -> length >= checkValue;
             case LengthSmallerEqual -> length <= checkValue;
             default -> throw new IllegalStateException("Unexpected value: " + checkAction);
           };
-        result = true ? Result.passed : Result.failed;
-        return result;
+      result = true ? Result.passed : Result.failed;
+      return result;
     }
   }
 

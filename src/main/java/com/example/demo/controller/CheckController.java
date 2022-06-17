@@ -150,7 +150,7 @@ public class CheckController {
    */
   private Check extractCheck(@RequestBody CheckAndActionName checkAndActionName) {
     Check theCheck = checkAndActionName.theCheck;
-    //theCheck.setAttribute(theCheck.getAttribute().toLowerCase().replaceAll("\\s", ""));
+    // theCheck.setAttribute(theCheck.getAttribute().toLowerCase().replaceAll("\\s", ""));
 
     String actionName = checkAndActionName.actionName.getActionName();
 

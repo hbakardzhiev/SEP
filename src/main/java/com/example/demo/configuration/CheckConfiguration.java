@@ -43,12 +43,13 @@ public class CheckConfiguration {
       Action actionType5 = new Action("NotEmpty", "", "pls3");
       actionType5.add(check5);
 
-      Check check7 = new Check("Check7", "Change Request", "customerApprovalRequired", "No", "comment3");
+      Check check7 =
+          new Check("Check7", "Change Request", "customerApprovalRequired", "No", "comment3");
       Action actionType7 = new Action("IsEqual", "String", "pls3");
       actionType7.add(check7);
 
       Check check8 =
-              new Check("Check8", "Change Request", "supplierApprovalRequired", "No", "comment3");
+          new Check("Check8", "Change Request", "supplierApprovalRequired", "No", "comment3");
       Action actionType8 = new Action("IsEqual", "String", "pls3");
       actionType8.add(check8);
 
@@ -76,7 +77,9 @@ public class CheckConfiguration {
       Action actionType14 = new Action("IsEqual", "String", "pls3");
       actionType14.add(check14);
 
-      Check check15 = new Check("Check15", "Controlled Document", "designcategory", "3. Design Output", "comment3");
+      Check check15 =
+          new Check(
+              "Check15", "Controlled Document", "designcategory", "3. Design Output", "comment3");
       Action actionType15 = new Action("IsEqual", "String", "pls3");
       actionType15.add(check15);
 
@@ -104,7 +107,9 @@ public class CheckConfiguration {
       Action actionType21 = new Action("IsEqual", "String", "pls3");
       actionType21.add(check21);
 
-      Check check22 = new Check("Check22", "GS1 Packaging Sheet", "designcategory", "3. Design Output", "comment3");
+      Check check22 =
+          new Check(
+              "Check22", "GS1 Packaging Sheet", "designcategory", "3. Design Output", "comment3");
       Action actionType22 = new Action("IsEqual", "String", "pls3");
       actionType22.add(check22);
 
@@ -116,11 +121,13 @@ public class CheckConfiguration {
       Action actionType24 = new Action("LengthStrictlySmaller", "Integer", "pls3");
       actionType24.add(check24);
 
-      Check check25 = new Check("Check25", "Engineered Part", "phiPhantomManufacturingPart", "No", "comment3");
+      Check check25 =
+          new Check("Check25", "Engineered Part", "phiPhantomManufacturingPart", "No", "comment3");
       Action actionType25 = new Action("IsEqual", "String", "pls3");
       actionType25.add(check25);
 
-      Check check26 = new Check("Check26", "Engineered Part", "maturity", "Production/Service", "comment3");
+      Check check26 =
+          new Check("Check26", "Engineered Part", "maturity", "Production/Service", "comment3");
       Action actionType26 = new Action("IsEqual", "String", "pls3");
       actionType26.add(check26);
 
@@ -132,15 +139,20 @@ public class CheckConfiguration {
       Action actionType28 = new Action("LengthStrictlySmaller", "Integer", "pls3");
       actionType28.add(check28);
 
-      Check check29 = new Check("Check29", "Configurable Part", "phiPhantomManufacturingPart", "No", "comment3");
+      Check check29 =
+          new Check(
+              "Check29", "Configurable Part", "phiPhantomManufacturingPart", "No", "comment3");
       Action actionType29 = new Action("IsEqual", "String", "pls3");
       actionType29.add(check29);
 
-      Check check30 = new Check("Check30", "Configurable Part", "phiPhantomManufacturingPart", "Yes", "comment3");
+      Check check30 =
+          new Check(
+              "Check30", "Configurable Part", "phiPhantomManufacturingPart", "Yes", "comment3");
       Action actionType30 = new Action("IsEqual", "String", "pls3");
       actionType30.add(check30);
 
-      Check check31 = new Check("Check31", "Configurable Part", "maturity", "Production/Service", "comment3");
+      Check check31 =
+          new Check("Check31", "Configurable Part", "maturity", "Production/Service", "comment3");
       Action actionType31 = new Action("IsEqual", "String", "pls3");
       actionType31.add(check31);
 
@@ -156,9 +168,41 @@ public class CheckConfiguration {
 
       // Change Tasks checks
 
-      repository.saveAll(List.of(firstCheck, secondCheck, thirdCheck, forthCheck, check5, check6, check7, check8, check9, check10, check11,
-              check12, check13, check14, check15, check16, check17, check18, check19, check20, check21, check22, check23, check24, check25,
-              check26, check27, check28, check29, check30, check31, check32, check33));
+      repository.saveAll(
+          List.of(
+              firstCheck,
+              secondCheck,
+              thirdCheck,
+              forthCheck,
+              check5,
+              check6,
+              check7,
+              check8,
+              check9,
+              check10,
+              check11,
+              check12,
+              check13,
+              check14,
+              check15,
+              check16,
+              check17,
+              check18,
+              check19,
+              check20,
+              check21,
+              check22,
+              check23,
+              check24,
+              check25,
+              check26,
+              check27,
+              check28,
+              check29,
+              check30,
+              check31,
+              check32,
+              check33));
     };
   }
 }
