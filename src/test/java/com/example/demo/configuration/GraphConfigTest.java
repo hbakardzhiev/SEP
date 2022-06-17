@@ -9,6 +9,6 @@ class GraphConfigTest {
   /** Method under test: {@link GraphConfig#getEdges()} */
   @Test
   void testGetEdges() {
-    assertEquals(12, (new GraphConfig()).getEdges().size());
+    assertEquals(22, (new GraphConfig()).getEdges().size());
   }
 }

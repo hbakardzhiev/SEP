@@ -14,8 +14,6 @@ public enum ActionTypes {
   LengthStrictlySmaller("LengthStrictlySmaller"),
   LengthGreaterEqual("LengthGreaterEqual"),
   LengthSmallerEqual("LengthSmallerEqual"),
-  DifferentAttrValue("DifferentAttrValue"),
-  SameAttrValue("SameAttrValue"),
   IsEqual("IsEqual"),
   IsNotEqual("IsNotEqual"),
   HumanCheck("HumanCheck");

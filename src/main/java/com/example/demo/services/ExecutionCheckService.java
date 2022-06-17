@@ -73,15 +73,17 @@ public class ExecutionCheckService {
       SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>> element) {
 
     final var indexOfHyphen = element.getKey().indexOf("-");
+    final var indexComma = element.getKey().indexOf(",");
     final var docSource = element.getKey().substring(0, indexOfHyphen - 1);
-    final var tempKey = element.getValue().getKey();
-    final var attribute =
-        switch (tempKey) {
-            // The cases are not exhaustive yet
-          case "proposedSolution" -> "solution";
-          case "theRequestPriority" -> "requestpriority";
-          default -> tempKey.toLowerCase();
-        };
+    final var docSourceUnique = element.getKey().substring(0, indexComma);
+    final var attribute = element.getValue().getKey(); //tempKey
+//    final var attribute =
+//        switch (tempKey) {
+//            // The cases are not exhaustive yet
+//          case "proposedSolution" -> "solution";
+//          case "theRequestPriority" -> "requestpriority";
+//          default -> tempKey.toLowerCase();
+//        };
     final var inputValue = element.getValue().getValue();
 
     // list of checks relevant for this docSource and attribute
@@ -96,10 +98,16 @@ public class ExecutionCheckService {
         relCheck.map(
             check -> {
               String action = check.getActionType().getAction();
-              ActionNameString actionNameString = new ActionNameString(action);
+              Check tempCheck = check;
+                try {
+                    tempCheck.setDocSource(docSourceUnique);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                ActionNameString actionNameString = new ActionNameString(action);
               CheckAndActionName checkAndActionName =
                   new CheckAndActionName(check, actionNameString);
-              Result status = executeTheCheck(check, inputValue);
+              Result status = executeTheCheck(tempCheck, inputValue);
               ExecutedCheckOutput checkActionInputValue =
                   new ExecutedCheckOutput(status, inputValue, checkAndActionName);
 
@@ -152,22 +160,29 @@ public class ExecutionCheckService {
     String checkAction = check.getActionType().getAction();
     int length = attributeValue.length();
     int checkValue = Integer.parseInt(check.getValue()); // check value
-    int valueInputInt = Integer.parseInt(attributeValue);
-    status =
-        switch (ActionTypes.valueOf(checkAction)) {
-          case StrictlyGreater -> checkValue > valueInputInt;
-          case StrictlySmaller -> checkValue < valueInputInt;
-          case GreaterEqual -> checkValue >= valueInputInt;
-          case SmallerEqual -> checkValue <= valueInputInt;
-          case LengthStrictlyGreater -> length > checkValue;
-          case LengthStrictlySmaller -> length < checkValue;
-          case LengthGreaterEqual -> length >= checkValue;
-          case LengthSmallerEqual -> length <= checkValue;
-          default -> throw new IllegalStateException("Unexpected value: " + checkAction);
-        };
-    ;
-    result = true ? Result.passed : Result.failed;
-    return result;
+    try {
+        int valueInputInt = Integer.parseInt(attributeValue);
+        status =
+          switch (ActionTypes.valueOf(checkAction)) {
+            case StrictlyGreater -> checkValue > valueInputInt;
+            case StrictlySmaller -> checkValue < valueInputInt;
+            case GreaterEqual -> checkValue >= valueInputInt;
+            case SmallerEqual -> checkValue <= valueInputInt;
+            default -> throw new IllegalStateException("Unexpected value: " + checkAction);
+          };
+        result = true ? Result.passed : Result.failed;
+        return result;
+    } catch(NumberFormatException numberFormatException){
+        status = switch (ActionTypes.valueOf(checkAction)) {
+            case LengthStrictlyGreater -> length > checkValue;
+            case LengthStrictlySmaller -> length < checkValue;
+            case LengthGreaterEqual -> length >= checkValue;
+            case LengthSmallerEqual -> length <= checkValue;
+            default -> throw new IllegalStateException("Unexpected value: " + checkAction);
+          };
+        result = true ? Result.passed : Result.failed;
+        return result;
+    }
   }
 
   /**
