@@ -73,7 +73,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
   }
 
   /**
-   * Method that overrires the behaviour of its parent and displays the content of the request and
+   * Method that overrides the behaviour of its parent and displays the content of the request and
    * response when the authentication has been
    */
   @Override

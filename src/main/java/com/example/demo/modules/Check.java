@@ -5,6 +5,8 @@ import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 /**
  * Class that defines the rule entity in the database, which contains the name of check (PK), the
  * specific document type, the attribute upon which the check will be made, the inputted value form
@@ -49,6 +51,7 @@ public class Check {
   @ManyToOne(
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "action")
+  @Audited(targetAuditMode = NOT_AUDITED)
   @JsonIgnore
   private Action actionType;
 
