@@ -91,7 +91,7 @@ public class ExecutionCheckService {
         checks.stream()
             .filter(
                 check ->
-                    Objects.equals(check.getDocSource(), docSource)
+                    check.getDocSource().contains(docSource)
                         && Objects.equals(check.getAttribute(), attribute));
 
     var checkedChecks =
