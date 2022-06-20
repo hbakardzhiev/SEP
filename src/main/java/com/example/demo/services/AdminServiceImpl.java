@@ -22,7 +22,7 @@ import java.util.List;
 @Transactional
 public class AdminServiceImpl implements AdminService, UserDetailsService {
 
-  @Autowired AdminRepoistory adminRepoistory;
+  @Autowired AdminRepository adminRepository;
 
   private final PasswordEncoder passwordEncoder;
 
