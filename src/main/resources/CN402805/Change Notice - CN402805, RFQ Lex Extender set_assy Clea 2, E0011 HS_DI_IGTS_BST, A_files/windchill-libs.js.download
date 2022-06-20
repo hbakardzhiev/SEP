@@ -17,8 +17,8 @@ function myUglyButWorkingDisplayFuntion (TabToDisplay,PanelToDisplay) {
 
 
 window.onload = function(){
-  document.getElementById("ext-gen13285").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeNoticeDetailsTab','infoPageinfoPanelID__infoPage_myTab_object_changeNoticeDetailsTab')";
-  document.getElementById("ext-gen13287").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_implementationPlanTab','infoPageinfoPanelID__infoPage_myTab_object_implementationPlanTab')";
-  document.getElementById("ext-gen13289").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeNoticeProcessTab','infoPageinfoPanelID__infoPage_myTab_object_changeNoticeProcessTab')";
-  document.getElementById("ext-gen13291").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeObjectsHistoryTab','infoPageinfoPanelID__infoPage_myTab_object_changeObjectsHistoryTab')";
+  document.getElementById("ext-gen2397").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeNoticeDetailsTab','infoPageinfoPanelID__infoPage_myTab_object_changeNoticeDetailsTab')";
+  document.getElementById("ext-gen2399").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_implementationPlanTab','infoPageinfoPanelID__infoPage_myTab_object_implementationPlanTab')";
+  document.getElementById("ext-gen2401").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeNoticeProcessTab','infoPageinfoPanelID__infoPage_myTab_object_changeNoticeProcessTab')";
+  document.getElementById("ext-gen2403").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeObjectsHistoryTab','infoPageinfoPanelID__infoPage_myTab_object_changeObjectsHistoryTab')";
 }

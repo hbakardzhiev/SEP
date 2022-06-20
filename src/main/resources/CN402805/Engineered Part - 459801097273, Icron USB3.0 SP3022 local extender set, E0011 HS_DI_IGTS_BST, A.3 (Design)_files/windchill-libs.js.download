@@ -30,14 +30,14 @@ function myUglyButWorkingDisplayFuntion (TabToDisplay,PanelToDisplay) {
 
 
 window.onload = function(){
-  document.getElementById("ext-gen20546").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_partInfoDetailsTab','infoPageinfoPanelID__infoPage_myTab_object_partInfoDetailsTab')";
-  document.getElementById("ext-gen20548").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_psb_productStructureGWT','infoPageinfoPanelID__infoPage_myTab_psb_productStructureGWT')";
-  document.getElementById("ext-gen20550").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_partInfoRelatedItemsTab','infoPageinfoPanelID__infoPage_myTab_object_partInfoRelatedItemsTab')";
-  document.getElementById("ext-gen20552").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changesTab','infoPageinfoPanelID__infoPage_myTab_object_changesTab')";
-  document.getElementById("ext-gen20554").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_partInfoHistoryTab','infoPageinfoPanelID__infoPage_myTab_object_partInfoHistoryTab')";
-  document.getElementById("ext-gen20556").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_partInfoWhereUsedTab','infoPageinfoPanelID__infoPage_myTab_object_partInfoWhereUsedTab')";
-  document.getElementById("ext-gen20558").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_requirementTraceabilityTab','infoPageinfoPanelID__infoPage_myTab_object_requirementTraceabilityTab')";
-  document.getElementById("ext-gen20560").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_amlAvlTab','infoPageinfoPanelID__infoPage_myTab_object_amlAvlTab')";
-  document.getElementById("ext-gen20562").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_phiTradeItemsCommercialPartTab','infoPageinfoPanelID__infoPage_myTab_object_phiTradeItemsCommercialPartTab')";
-  document.getElementById("ext-gen20564").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_philipsWhereUsedTab','infoPageinfoPanelID__infoPage_myTab_object_philipsWhereUsedTab')";
+  document.getElementById("ext-gen9660").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_partInfoDetailsTab','infoPageinfoPanelID__infoPage_myTab_object_partInfoDetailsTab')";
+  document.getElementById("ext-gen9662").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_psb_productStructureGWT','infoPageinfoPanelID__infoPage_myTab_psb_productStructureGWT')";
+  document.getElementById("ext-gen9664").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_partInfoRelatedItemsTab','infoPageinfoPanelID__infoPage_myTab_object_partInfoRelatedItemsTab')";
+  document.getElementById("ext-gen9666").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changesTab','infoPageinfoPanelID__infoPage_myTab_object_changesTab')";
+  document.getElementById("ext-gen9668").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_partInfoHistoryTab','infoPageinfoPanelID__infoPage_myTab_object_partInfoHistoryTab')";
+  document.getElementById("ext-gen9670").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_partInfoWhereUsedTab','infoPageinfoPanelID__infoPage_myTab_object_partInfoWhereUsedTab')";
+  document.getElementById("ext-gen9672").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_requirementTraceabilityTab','infoPageinfoPanelID__infoPage_myTab_object_requirementTraceabilityTab')";
+  document.getElementById("ext-gen9674").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_amlAvlTab','infoPageinfoPanelID__infoPage_myTab_object_amlAvlTab')";
+  document.getElementById("ext-gen9676").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_phiTradeItemsCommercialPartTab','infoPageinfoPanelID__infoPage_myTab_object_phiTradeItemsCommercialPartTab')";
+  document.getElementById("ext-gen9678").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_philipsWhereUsedTab','infoPageinfoPanelID__infoPage_myTab_object_philipsWhereUsedTab')";
 }

@@ -1,0 +1,21 @@
+function myUglyButWorkingDisplayFuntion (TabToDisplay,PanelToDisplay) {
+  document.getElementById("infoPage_myTab_object_changeTaskDetailsTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_changeTaskProcessTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_changeObjectsHistoryTab").classList.add("x-hide-display");
+
+  document.getElementById(TabToDisplay).classList.remove("x-hide-display");
+
+
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_changeTaskDetailsTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_changeTaskProcessTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_changeObjectsHistoryTab").classList.remove("x-tab-strip-active");
+
+  document.getElementById(PanelToDisplay).classList.add("x-tab-strip-active");
+}
+
+
+window.onload = function(){
+  document.getElementById("ext-gen21556").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeTaskDetailsTab','infoPageinfoPanelID__infoPage_myTab_object_changeTaskDetailsTab')";
+  document.getElementById("ext-gen21558").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeTaskProcessTab','infoPageinfoPanelID__infoPage_myTab_object_changeTaskProcessTab')";
+  document.getElementById("ext-gen21560").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeObjectsHistoryTab','infoPageinfoPanelID__infoPage_myTab_object_changeObjectsHistoryTab')";
+}

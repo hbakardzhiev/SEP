@@ -15,7 +15,7 @@ function myUglyButWorkingDisplayFuntion (TabToDisplay,PanelToDisplay) {
 
 
 window.onload = function(){
-  document.getElementById("ext-gen616").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeRequestDetailsTab','infoPageinfoPanelID__infoPage_myTab_object_changeRequestDetailsTab')";
-  document.getElementById("ext-gen618").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeRequestProcessTab','infoPageinfoPanelID__infoPage_myTab_object_changeRequestProcessTab')";
-  document.getElementById("ext-gen620").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeObjectsHistoryTab','infoPageinfoPanelID__infoPage_myTab_object_changeObjectsHistoryTab')";
+  document.getElementById("ext-gen615").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeRequestDetailsTab','infoPageinfoPanelID__infoPage_myTab_object_changeRequestDetailsTab')";
+  document.getElementById("ext-gen617").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeRequestProcessTab','infoPageinfoPanelID__infoPage_myTab_object_changeRequestProcessTab')";
+  document.getElementById("ext-gen619").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changeObjectsHistoryTab','infoPageinfoPanelID__infoPage_myTab_object_changeObjectsHistoryTab')";
 }

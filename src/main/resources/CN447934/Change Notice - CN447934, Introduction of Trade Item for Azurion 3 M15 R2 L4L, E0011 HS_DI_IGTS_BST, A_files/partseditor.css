@@ -1,0 +1,36 @@
+.supplementary-replacement {
+    background: url(../../images/part_supplementary_replacement9x.png) no-repeat;background-position:center;
+}
+input.x-form-text::-ms-clear {
+	width : 0;
+	height : 0;
+}
+
+.filterProperties-link {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+    padding: 3px 3 px 3px 5px;
+    white-space: nowrap;
+}
+
+.x-grid3-row-checker-disabled {
+    background-image:url(../../themes/windchill/grid/row-check-sprite.gif);
+    background-position: 2px 2px;
+    padding: 2px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    height: 18px;
+    width: 100%;
+    opacity:.4;
+    -moz-opacity:.4;
+    filter:alpha(opacity=40);
+}
+
+.consumed-part-bom-header {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-top: -1px;
+    background: url(../../images/parts_list.png) no-repeat;background-position:center;
+}
