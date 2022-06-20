@@ -21,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class AdminServiceImpl implements AdminService, UserDetailsService {
+
   @Autowired AdminRepoistory adminRepoistory;
 
   private final PasswordEncoder passwordEncoder;
