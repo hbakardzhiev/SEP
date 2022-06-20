@@ -32,8 +32,6 @@ public class ActionConfig {
               new Action("LengthStrictlySmaller", "Integer", "sth"),
               new Action("LengthGreaterEqual", "Integer", "sth"),
               new Action("LengthSmallerEqual", "Integer", "sth"),
-              new Action("DifferentAttrValue", "String", "sth"),
-              new Action("SameAttrValue", "String", "sth"),
               new Action("HumanCheck", "", "sth"),
               new Action("IsEqual", "String", "sth"),
               new Action("IsNotEqual", "String", "sth"));

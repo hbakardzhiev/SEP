@@ -8,5 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * create implementation for CRUD features regarding Admin class.
  */
 public interface AdminRepoistory extends JpaRepository<Admin, Long> {
+
   Admin findAdminByUsername(String username);
 }

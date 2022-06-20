@@ -1,0 +1,311 @@
+.pfb-layered_splitter {
+    background-image: url(/Windchill/netmarkets/images/layered_over_splitter.png);
+    background-position: right;
+    background-repeat: repeat-y;
+    border-left: 1px solid #7d96a1;
+}
+
+.pfb_west_hide {
+    display: none;
+}
+.x-edit-dialog{
+    position: absolute;
+    top: 0;
+    left:0;
+    visibility: hidden;
+    z-index: 0;
+    border:0 none;
+}
+.x-edit-dialog .x-fieldset {
+    border-width: 1px 0px 0px 0px;
+}
+.x-edit-dialog .x-edit-dialog-attributes{
+    background-color: rgb(223,232,246);
+    border: 1px solid #bebebe;
+}
+.pfb-centered_splitter {
+    width: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    height:100%;
+    display:flex;
+    flex-direction: column;
+}
+
+.pfb-offset_splitter {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 16px;
+}
+
+.pfb-navbar {
+    background-color: #587D6C;
+    width:32px;
+    left: -33px;
+    position: absolute;
+    height: 100%;
+    cursor: pointer;
+}
+.pfb-navtext {
+    color: white;
+    position: absolute;
+    font-size: 14px;
+    font-weight: bold;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    margin-top: auto;
+}
+.pfb-navtext_title {
+    float: left;
+    margin: auto 16px;
+}
+
+.pfb-tree_border{
+    border-color: #3D4647;
+    border-top-width: 10px;
+    border-bottom-width: 13px;
+    border-left-width: 8px;
+    border-right-width: 8px;
+    border-style: solid;
+}
+.pfb-navbar:hover {
+    background-color: #465153;
+}
+.pfb-clear{
+    clear:both;
+}
+.pfb-infobar {
+    background-color: #587D6C;
+    width:32px;
+    right:-33px;
+    position: absolute;
+    height: 100%;
+    cursor: pointer;
+}
+.pfb-infotext {
+    color: white;
+    position: absolute;
+    font-size: 14px;
+    font-weight: bold;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    margin-top: auto;
+}
+
+.pfb-matrix-cell-vertical table {
+    width: 100%;
+}
+
+.pfb-matrix-cell-vertical table tr {
+    height: 16px;
+}
+
+.pfb-matrix-cell-vertical td {
+    text-align: left;
+}
+
+.pfb-matrix-cell-vertical td span,
+.pfb-matrix-cell-vertical td div,
+.pfb-matrix-cell-vertical td a {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    font-size: 11px;
+    line-height: 14px;
+}
+.pfb-matrix-cell-vertical td span.cat-fit-match {
+    display:inline;
+}
+
+.pfb-matrix-cell-vertical-centered {
+    text-align: center;
+    width: 100%;
+}
+.pfb-matrix-cell-horizontal {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+.pfb-matrix-cell-img-horizontal {
+    position: relative;
+    top: -4px;
+}
+
+.pfb-matrix-cell-vertical span > img {
+        position: relative;
+            top: -2px;
+}
+
+.pfb-matrix-cell-vertical > img,
+.pfb-matrix-cell-vertical > div {
+    position: relative;
+    top: +4px;
+    display: inline;
+}
+
+#PFBBOMTree .x-grid3-scroller {
+    overflow-x:scroll;
+}
+
+
+#PFBBOMTreebuddy_ .x-grid3-scroller {
+    overflow-x:scroll;
+}
+#PFBTree .x-grid3-scroller {
+    background-color:#F5F7F4;
+}
+.apply-button{
+   background:#A2A2A2;
+}
+
+.apply-button-edit{
+   background:#236192;
+}
+
+#apply_button_id .x-btn-text {
+    background:none;
+    color: #ffffff;
+    border:0;
+    font-size:11px;
+}
+.cancel-button{
+    background:#A2A2A2;
+}
+
+#cancel_button_id .x-btn-text {
+    background:#A2A2A2;
+    color: #ffffff;
+    border:0;
+    font-size:11px;
+}
+/* This causes performance problems for non-Chrome browsers
+#PFBBOMTree div.x-grid3-row:nth-child(odd),
+#PFBBOMTreebuddy_ div.x-grid3-row:nth-child(odd) {
+    background: #f7f7f7;
+}
+*/
+
+#PFBBOMTreebuddy_ td.x-grid3-col:not(:last-child) {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-right: 1px solid #D1D3D4 ;
+}
+
+#PFBBOMTreebuddy_ div.x-grid3-row table {
+    height: 100%;
+}
+
+
+#PFBBOMTreebuddy_ {
+    border: 1px solid #D1D3D4;
+}
+
+#PFBBOMTreebuddy_ .x-grid3-header .x-grid3-hd-btn {
+    visibility:hidden;
+}
+
+
+#PFBBOMTree .x-grid3-header.x-grid3-header-rowspan-2 {
+    background-image: url("/Windchill/netmarkets/images/grid/grid3-hrow-rowspan2.gif");
+}
+
+#PFBBOMTree td.x-grid3-hd-over.x-grid3-header-rowspan-2 .x-grid3-hd-inner,td.sort-desc .x-grid3-hd-inner,td.sort-asc .x-grid3-hd-inner,td.x-grid3-hd-menu-open .x-grid3-hd-inner {
+    background-color: #ebf3fd;
+    background-image: url("/Windchill/netmarkets/images/grid/grid3-hrow-over-rowspan2.png");
+}
+
+#PFBBOMTree .x-grid3-header.x-grid3-header-rowspan-3 {
+    background-image: url("/Windchill/netmarkets/images/grid/grid3-hrow-rowspan3.gif");
+}
+
+#PFBBOMTree td.x-grid3-hd-over.x-grid3-header-rowspan-3 .x-grid3-hd-inner,td.sort-desc .x-grid3-hd-inner,td.sort-asc .x-grid3-hd-inner,td.x-grid3-hd-menu-open .x-grid3-hd-inner {
+    background-color: #ebf3fd;
+    background-image: url("/Windchill/netmarkets/images/grid/grid3-hrow-over-rowspan3.png");
+}
+
+.x-grid3-cell-selected {
+    background-color: #dff3d8 !important;
+}
+
+.x-grid3-header-img-span {
+    position: relative;
+    width: 11px;
+    margin-right: 3px;
+}
+
+.x-grid3-header-img {
+    vertical-align: top;
+    width: 11px;
+}
+
+.x-grid3-header-glyph {
+    position: absolute;
+    left: 5px;
+    top: 4px;
+    width: 8px;
+}
+
+.view-attributes-panel {
+    margin: 5px;
+    margin-right: 20px;
+}
+
+.view-attributes-panel div.x-component {
+    margin: 2px;
+}
+
+.x-grid3-row-alt {
+    background-color:#dedede;
+}
+
+.row-alt-configurable-module {
+    background-color:#dedede;
+}
+
+.row-alt-module-variant{
+    background-color:#FFF;
+}
+
+.row-alt-replacement {
+    background-color:#FFF;
+}
+
+.row-alt-revision {
+    background-color:#FFF;
+}
+
+.row-standard {
+    background-color:#FFF;
+}
+
+.sticky-first .x-grid3-row > table {
+	background-color: inherit;
+}
+
+.sticky-first .x-grid3-row  > table > tbody {
+	background-color: inherit;
+}
+
+.sticky-first .x-grid3-row  > table > tbody > tr{
+	background-color: inherit;
+}
+
+.sticky-first .x-grid3-row  > table > tbody > tr > .x-grid-cell-first{
+	background-color: inherit;
+}
+
+.sticky-first > div > div > div > div > div> div> table > tbody >tr > td:first-of-type {
+	position: sticky;
+	left: 1px;
+	z-index: 2;
+}
+
+.sticky-first .x-grid3-row .x-grid-cell-first {
+	position: sticky;
+	left: 1px;
+}

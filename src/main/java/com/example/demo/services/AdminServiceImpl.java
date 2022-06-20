@@ -2,7 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.Util;
 import com.example.demo.modules.Admin;
-import com.example.demo.repository.AdminRepoistory;
+import com.example.demo.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,12 +36,12 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
   public Admin addAdmin(Admin admin) {
     admin.setPassword(passwordEncoder.encode(admin.getPassword()));
     admin.setAdminRole("ADMIN");
-    return adminRepoistory.save(admin);
+    return adminRepository.save(admin);
   }
 
   @Override
   public Admin getAdminById(Long id) {
-    return adminRepoistory.getById(id);
+    return adminRepository.getById(id);
   }
 
   /**
@@ -58,7 +58,7 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
       throw new IllegalAccessException("User cannot delete themself");
     }
 
-    adminRepoistory.deleteById(id);
+    adminRepository.deleteById(id);
   }
 
   /**
@@ -68,7 +68,7 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
    */
   @Override
   public List<Admin> getAdmins() {
-    return adminRepoistory.findAll();
+    return adminRepository.findAll();
   }
 
   /**
@@ -80,7 +80,7 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
    */
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Admin admin = adminRepoistory.findAdminByUsername(username);
+    Admin admin = adminRepository.findAdminByUsername(username);
 
     if (admin == null) {
       throw new UsernameNotFoundException("Admin not found in database");

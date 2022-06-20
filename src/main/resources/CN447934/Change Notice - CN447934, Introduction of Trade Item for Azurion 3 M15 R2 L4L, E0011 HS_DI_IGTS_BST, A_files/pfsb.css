@@ -1,0 +1,10 @@
+/**
+ * Despite the fact that using "important" is a horrible idea, this really just overrides
+ * other CSS "important" flags that are nested and buried in generic Windchill css files. 
+ * This will enforce that the specific div with the class convertToManagedConfirmation will
+ * be forced to use the auto style.  The .x-window-mc is also necessary to increase the 
+ * specificity to this particular component. See SPR 6947768 (Integrity).
+ */
+div .x-window-mc .convertToManagedConfirmation {
+	overflow: auto !important;
+}

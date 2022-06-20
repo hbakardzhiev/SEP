@@ -84,7 +84,10 @@ public class Check {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(String name) throws Exception {
+    if (name.length() < 1) {
+      throw new IllegalArgumentException("Name should not be empty");
+    }
     this.name = name;
   }
 
@@ -92,7 +95,10 @@ public class Check {
     return docSource;
   }
 
-  public void setDocSource(String docSource) {
+  public void setDocSource(String docSource) throws Exception {
+    if (docSource.length() < 1) {
+      throw new IllegalArgumentException("Docsource should not be empty");
+    }
     this.docSource = docSource;
   }
 
@@ -100,7 +106,10 @@ public class Check {
     return attribute;
   }
 
-  public void setAttribute(String attribute) {
+  public void setAttribute(String attribute) throws Exception {
+    if (attribute.length() < 1) {
+      throw new IllegalArgumentException("Attribute should not be empty");
+    }
     this.attribute = attribute;
   }
 

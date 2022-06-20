@@ -1,0 +1,54 @@
+function myUglyButWorkingDisplayFuntion (TabToDisplay,PanelToDisplay) {
+
+  document.getElementById("infoPage_myTab_object_partInfoDetailsTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_psb_productStructureGWT").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_partInfoRelatedItemsTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_changesTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_regulatoryTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_partInfoHistoryTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_partInfoWhereUsedTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_requirementTraceabilityTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_amlAvlTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_phiEngineeredConfigurablePartsTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_phiRegulatoryPartTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_philipsWhereUsedTab").classList.add("x-hide-display");
+  document.getElementById("infoPage_myTab_object_phiProductMasterDataTab").classList.add("x-hide-display");
+
+  document.getElementById(TabToDisplay).classList.remove("x-hide-display");
+
+
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_partInfoDetailsTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_psb_productStructureGWT").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_partInfoRelatedItemsTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_changesTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_regulatoryTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_partInfoHistoryTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_partInfoWhereUsedTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_requirementTraceabilityTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_amlAvlTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_phiEngineeredConfigurablePartsTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_phiRegulatoryPartTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_philipsWhereUsedTab").classList.remove("x-tab-strip-active");
+  document.getElementById("infoPageinfoPanelID__infoPage_myTab_object_phiProductMasterDataTab").classList.remove("x-tab-strip-active");
+
+
+  document.getElementById(PanelToDisplay).classList.add("x-tab-strip-active");
+}
+
+
+window.onload = function(){
+  document.getElementById("ext-gen24909").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_partInfoDetailsTab','infoPageinfoPanelID__infoPage_myTab_object_partInfoDetailsTab')";
+  document.getElementById("ext-gen24911").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_psb_productStructureGWT','infoPageinfoPanelID__infoPage_myTab_psb_productStructureGWT')";
+  document.getElementById("ext-gen24913").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_partInfoRelatedItemsTab','infoPageinfoPanelID__infoPage_myTab_object_partInfoRelatedItemsTab')";
+  document.getElementById("ext-gen24915").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_changesTab','infoPageinfoPanelID__infoPage_myTab_object_changesTab')";
+  document.getElementById("ext-gen24917").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_regulatoryTab','infoPageinfoPanelID__infoPage_myTab_object_regulatoryTab')";
+  document.getElementById("ext-gen24919").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_partInfoHistoryTab','infoPageinfoPanelID__infoPage_myTab_object_partInfoHistoryTab')";
+  document.getElementById("ext-gen24921").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_partInfoWhereUsedTab','infoPageinfoPanelID__infoPage_myTab_object_partInfoWhereUsedTab')";
+  document.getElementById("ext-gen24923").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_requirementTraceabilityTab','infoPageinfoPanelID__infoPage_myTab_object_requirementTraceabilityTab')";
+  document.getElementById("ext-gen24925").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_amlAvlTab','infoPageinfoPanelID__infoPage_myTab_object_amlAvlTab')";
+  document.getElementById("ext-gen24927").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_phiEngineeredConfigurablePartsTab','infoPageinfoPanelID__infoPage_myTab_object_phiEngineeredConfigurablePartsTab')";
+  document.getElementById("ext-gen24929").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_phiRegulatoryPartTab','infoPageinfoPanelID__infoPage_myTab_object_phiRegulatoryPartTab')";
+  document.getElementById("ext-gen24931").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_philipsWhereUsedTab','infoPageinfoPanelID__infoPage_myTab_object_philipsWhereUsedTab')";
+  document.getElementById("ext-gen24933").href = "javascript:myUglyButWorkingDisplayFuntion('infoPage_myTab_object_phiProductMasterDataTab','infoPageinfoPanelID__infoPage_myTab_object_phiProductMasterDataTab')";
+
+}

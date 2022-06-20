@@ -8,7 +8,6 @@ import com.example.demo.modules.DateExecutedChecks;
 import com.example.demo.services.ExecutionCheckService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
