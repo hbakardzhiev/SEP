@@ -163,8 +163,7 @@ public class CheckController {
 
     theAction.add(theCheck);
 
-//    add a new attribute type in the sheet_source table
-
+//   add a new attribute type in the sheet_source table if it does not exist already
     String typeOfAttribute = theCheck.getAttribute();
     SheetType sheetType = getSheetType(theCheck.getDocSource());
     SheetSource sheetSource = new SheetSource(typeOfAttribute, String.class.getTypeName(), sheetType);
