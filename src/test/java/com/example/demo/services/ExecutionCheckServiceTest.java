@@ -37,9 +37,13 @@ class ExecutionCheckServiceTest {
   void filterDataWithChecksPassed() throws IOException {
     // given
 
-    Check checkTest = new Check("Check 1", "Change Notice", "name", "null", "comment");
+    Check checkTest = new Check("Check 1", "Change Notice - CN000001", "name", "null", "comment");
     Action actionType = new Action("NotEmpty", "", "pls1");
     actionType.add(checkTest);
+
+    Check checkDB = new Check("Check 1", "Change Notice", "name", "null", "comment");
+    Action actionDB = new Action("NotEmpty", "", "pls1");
+    actionDB.add(checkDB);
 
     ActionNameString actionTest = new ActionNameString("NotEmpty");
     DateExecutedChecks expected =
@@ -53,7 +57,7 @@ class ExecutionCheckServiceTest {
                         "CN title name",
                         new CheckAndActionName(checkTest, actionTest)))));
 
-    given(checkRepository.findAll()).willReturn(List.of(checkTest));
+    given(checkRepository.findAll()).willReturn(List.of(checkDB));
     given(parserService.parseEverything(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML))
         .willReturn(
             new SimpleImmutableEntry<>(
@@ -69,15 +73,20 @@ class ExecutionCheckServiceTest {
     // then: verifies that the findAll, parsedEverything were invoked and check the result
     verify(checkRepository).findAll();
     verify(parserService).parseEverything(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
-    assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    assertThat(actual.toString())//.usingRecursiveComparison()
+     .isEqualTo(expected.toString());
   }
 
   @Test
   void filterDataWithChecksFailed() throws IOException {
     // given: name is put to empty to check whether the check will fail
-    Check checkTest = new Check("Check 1", "Change Notice", "name", "null", "comment");
+    Check checkTest = new Check("Check 1", "Change Notice - CN000001", "name", "null", "comment");
     Action actionType = new Action("NotEmpty", "", "pls1");
     actionType.add(checkTest);
+
+    Check checkDB = new Check("Check 1", "Change Notice", "name", "null", "comment");
+    Action actionDB = new Action("NotEmpty", "", "pls1");
+    actionDB.add(checkDB);
 
     ActionNameString actionTest = new ActionNameString("NotEmpty");
     DateExecutedChecks expected =
@@ -89,7 +98,7 @@ class ExecutionCheckServiceTest {
                     new ExecutedCheckOutput(
                         Result.failed, "", new CheckAndActionName(checkTest, actionTest)))));
 
-    given(checkRepository.findAll()).willReturn(List.of(checkTest));
+    given(checkRepository.findAll()).willReturn(List.of(checkDB));
     given(parserService.parseEverything(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML))
         .willReturn(
             new AbstractMap.SimpleImmutableEntry<>(
@@ -103,16 +112,21 @@ class ExecutionCheckServiceTest {
     var actual = underTest.filterDataWithChecks(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
 
     // then: verifies that the findAll, parsedEverything were invoked and check the result
-    assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    assertThat(actual.toString())//.usingRecursiveComparison()
+            .isEqualTo(expected.toString());
   }
 
   @Test
-  void filterDataWithChecksHuman() throws IOException {
+  void filterDataWithChecksHuman() throws Exception {
     // given: name is put to empty to check whether the check will fail
     OffsetDateTime timeGiven = OffsetDateTime.now();
-    Check checkTest = new Check("Check 1", "Change Notice", "description", "null", "comment");
+    Check checkTest = new Check("Check 1", "Change Notice - CN000001", "description", "null", "comment");
     Action actionType = new Action("HumanCheck", "", "pls1");
     actionType.add(checkTest);
+
+    Check checkGiven = new Check("Check 1", "Change Notice", "description", "null", "comment");
+    Action actionGiven = new Action("HumanCheck", "", "pls1");
+    actionGiven.add(checkGiven);
 
     ActionNameString actionTest = new ActionNameString("HumanCheck");
     DateExecutedChecks expected =
@@ -124,7 +138,7 @@ class ExecutionCheckServiceTest {
                     new ExecutedCheckOutput(
                         Result.humanCheck, "", new CheckAndActionName(checkTest, actionTest)))));
 
-    given(checkRepository.findAll()).willReturn(List.of(checkTest));
+    given(checkRepository.findAll()).willReturn(List.of(checkGiven));
     given(parserService.parseEverything(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML))
         .willReturn(
             new AbstractMap.SimpleImmutableEntry<>(
@@ -138,6 +152,7 @@ class ExecutionCheckServiceTest {
     var actual = underTest.filterDataWithChecks(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
 
     // then: verifies that the findAll, parsedEverything were invoked and check the result
-    assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    assertThat(actual.toString()).//usingRecursiveComparison().
+            isEqualTo(expected.toString());
   }
 }
