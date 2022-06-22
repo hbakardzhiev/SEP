@@ -73,8 +73,8 @@ class ExecutionCheckServiceTest {
     // then: verifies that the findAll, parsedEverything were invoked and check the result
     verify(checkRepository).findAll();
     verify(parserService).parseEverything(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
-    assertThat(actual.toString())//.usingRecursiveComparison()
-     .isEqualTo(expected.toString());
+    assertThat(actual.toString()) // .usingRecursiveComparison()
+        .isEqualTo(expected.toString());
   }
 
   @Test
@@ -112,15 +112,16 @@ class ExecutionCheckServiceTest {
     var actual = underTest.filterDataWithChecks(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
 
     // then: verifies that the findAll, parsedEverything were invoked and check the result
-    assertThat(actual.toString())//.usingRecursiveComparison()
-            .isEqualTo(expected.toString());
+    assertThat(actual.toString()) // .usingRecursiveComparison()
+        .isEqualTo(expected.toString());
   }
 
   @Test
   void filterDataWithChecksHuman() throws Exception {
     // given: name is put to empty to check whether the check will fail
     OffsetDateTime timeGiven = OffsetDateTime.now();
-    Check checkTest = new Check("Check 1", "Change Notice - CN000001", "description", "null", "comment");
+    Check checkTest =
+        new Check("Check 1", "Change Notice - CN000001", "description", "null", "comment");
     Action actionType = new Action("HumanCheck", "", "pls1");
     actionType.add(checkTest);
 
@@ -152,7 +153,8 @@ class ExecutionCheckServiceTest {
     var actual = underTest.filterDataWithChecks(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
 
     // then: verifies that the findAll, parsedEverything were invoked and check the result
-    assertThat(actual.toString()).//usingRecursiveComparison().
-            isEqualTo(expected.toString());
+    assertThat(actual.toString())
+        . // usingRecursiveComparison().
+        isEqualTo(expected.toString());
   }
 }

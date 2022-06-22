@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /** JPA repository that does CRUD operations on the SheetSource class in the DB */
 public interface SheetSourceRepository extends JpaRepository<SheetSource, Long> {
 
-    boolean existsByHtmlIDAndSheetSourceType(String htmlID, SheetType sheetSourceType);
+  boolean existsByHtmlIDAndSheetSourceType(String htmlID, SheetType sheetSourceType);
 }

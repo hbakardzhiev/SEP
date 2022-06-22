@@ -163,10 +163,11 @@ public class CheckController {
 
     theAction.add(theCheck);
 
-//  add a new attribute type in the sheet_source table if it does not exist already
+    //  add a new attribute type in the sheet_source table if it does not exist already
     String typeOfAttribute = theCheck.getAttribute();
     SheetType sheetType = getSheetType(theCheck.getDocSource());
-    SheetSource sheetSource = new SheetSource(typeOfAttribute, String.class.getTypeName(), sheetType);
+    SheetSource sheetSource =
+        new SheetSource(typeOfAttribute, String.class.getTypeName(), sheetType);
     if (!sheetSourceRepository.existsByHtmlIDAndSheetSourceType(typeOfAttribute, sheetType)) {
       sheetSourceRepository.save(sheetSource);
     }
@@ -183,16 +184,16 @@ public class CheckController {
   private SheetType getSheetType(String docSource) {
     SheetType sheetType;
     sheetType =
-            switch (docSource) {
-              case "Change Notice" -> SheetType.CN;
-              case "Change Request" -> SheetType.CR;
-              case "Engineering Change Task" -> SheetType.CT;
-              case "Manufacturing Change Task" -> SheetType.CT;
-              case "Master Data Change Task" -> SheetType.CT;
-              case "Commercial Change Task" -> SheetType.CT;
-              default -> SheetType.DMR;
-            };
-    return sheetType; //prone to mistakes everything which is not correct will be DMR
+        switch (docSource) {
+          case "Change Notice" -> SheetType.CN;
+          case "Change Request" -> SheetType.CR;
+          case "Engineering Change Task" -> SheetType.CT;
+          case "Manufacturing Change Task" -> SheetType.CT;
+          case "Master Data Change Task" -> SheetType.CT;
+          case "Commercial Change Task" -> SheetType.CT;
+          default -> SheetType.DMR;
+        };
+    return sheetType; // prone to mistakes everything which is not correct will be DMR
   }
 
   /**

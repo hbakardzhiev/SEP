@@ -98,7 +98,13 @@ public class ExecutionCheckService {
         relCheck.map(
             check -> {
               String action = check.getActionType().getAction();
-              Check tempCheck = new Check(check.getName(), docSourceUnique, attribute, check.getValue(), check.getComments());
+              Check tempCheck =
+                  new Check(
+                      check.getName(),
+                      docSourceUnique,
+                      attribute,
+                      check.getValue(),
+                      check.getComments());
               tempCheck.setActionType(check.getActionType());
               try {
                 tempCheck.setDocSource(docSourceUnique);
