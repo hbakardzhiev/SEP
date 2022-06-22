@@ -163,7 +163,7 @@ public class CheckController {
 
     theAction.add(theCheck);
 
-//   add a new attribute type in the sheet_source table if it does not exist already
+//  add a new attribute type in the sheet_source table if it does not exist already
     String typeOfAttribute = theCheck.getAttribute();
     SheetType sheetType = getSheetType(theCheck.getDocSource());
     SheetSource sheetSource = new SheetSource(typeOfAttribute, String.class.getTypeName(), sheetType);
@@ -174,6 +174,12 @@ public class CheckController {
     return theCheck;
   }
 
+  /**
+   * Associates the docSource with the general sheetType that it has.
+   *
+   * @param docSource the document source whose sheetType needs to be found
+   * @return the sheetType that corresponds to the provided document source
+   */
   private SheetType getSheetType(String docSource) {
     SheetType sheetType;
     sheetType =
