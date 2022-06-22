@@ -98,7 +98,8 @@ public class ExecutionCheckService {
         relCheck.map(
             check -> {
               String action = check.getActionType().getAction();
-              Check tempCheck = check;
+              Check tempCheck = new Check(check.getName(), docSourceUnique, attribute, check.getValue(), check.getComments());
+              tempCheck.setActionType(check.getActionType());
               try {
                 tempCheck.setDocSource(docSourceUnique);
               } catch (Exception e) {
@@ -106,8 +107,8 @@ public class ExecutionCheckService {
               }
               ActionNameString actionNameString = new ActionNameString(action);
               CheckAndActionName checkAndActionName =
-                  new CheckAndActionName(check, actionNameString);
-              Result status = executeTheCheck(tempCheck, inputValue);
+                  new CheckAndActionName(tempCheck, actionNameString);
+              Result status = executeTheCheck(check, inputValue);
               ExecutedCheckOutput checkActionInputValue =
                   new ExecutedCheckOutput(status, inputValue, checkAndActionName);
 
