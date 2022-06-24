@@ -143,7 +143,8 @@ public class CheckController {
 
   /**
    * Extracts the check and the action and saves/updates the check in the db. Associates the check
-   * with the corresponding action name from the action table.
+   * with the corresponding action name from the action table. If a new type of attribute is used
+   * which is not in the sheet_source table then the attribute as htmlId is added there as well.
    *
    * @param checkAndActionName a check and its action name
    * @return TODO: make it later void when tested with front end
