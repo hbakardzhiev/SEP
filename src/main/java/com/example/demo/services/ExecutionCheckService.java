@@ -134,21 +134,12 @@ public class ExecutionCheckService {
    */
   private Result executeTheCheck(Check check, String attributeValue) {
     String actionValue = check.getActionType().getValueType();
-    Result result;
-    switch (actionValue) {
-      case "":
-        result = checksNull(attributeValue, check);
-        break;
-      case "String":
-        result = checksString(attributeValue, check);
-        break;
-      case "Integer":
-        result = checksInteger(attributeValue, check);
-        break;
-      default:
-        throw new IllegalStateException("Unexpected value type: " + actionValue);
-    }
-    ;
+    Result result = switch (actionValue) {
+        case "" -> checksNull(attributeValue, check);
+        case "String" -> checksString(attributeValue, check);
+        case "Integer" -> checksInteger(attributeValue, check);
+        default -> throw new IllegalStateException("Unexpected value type: " + actionValue);
+    };
     return result;
   }
 
@@ -171,13 +162,14 @@ public class ExecutionCheckService {
       int valueInputInt = Integer.parseInt(attributeValue);
       status =
           switch (ActionTypes.valueOf(checkAction)) {
-            case StrictlyGreater -> checkValue > valueInputInt;
-            case StrictlySmaller -> checkValue < valueInputInt;
-            case GreaterEqual -> checkValue >= valueInputInt;
-            case SmallerEqual -> checkValue <= valueInputInt;
-            default -> throw new IllegalStateException("Unexpected value: " + checkAction);
+            case StrictlyGreater -> checkValue < valueInputInt;
+            case StrictlySmaller -> checkValue > valueInputInt;
+            case GreaterEqual -> checkValue <= valueInputInt;
+            case SmallerEqual -> checkValue >= valueInputInt;
+            default -> false;
+//                    throw new IllegalStateException("Unexpected value: " + checkAction);
           };
-      result = true ? Result.passed : Result.failed;
+      result = status ? Result.passed : Result.failed;
       return result;
     } catch (NumberFormatException numberFormatException) {
       status =
@@ -186,9 +178,10 @@ public class ExecutionCheckService {
             case LengthStrictlySmaller -> length < checkValue;
             case LengthGreaterEqual -> length >= checkValue;
             case LengthSmallerEqual -> length <= checkValue;
-            default -> throw new IllegalStateException("Unexpected value: " + checkAction);
+            default -> false;
+//                    throw new IllegalStateException("Unexpected value: " + checkAction);
           };
-      result = true ? Result.passed : Result.failed;
+      result = status ? Result.passed : Result.failed;
       return result;
     }
   }
