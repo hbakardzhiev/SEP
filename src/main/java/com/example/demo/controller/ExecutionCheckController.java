@@ -17,7 +17,7 @@ import java.io.IOException;
  * their status and the values related to each check.
  */
 @RestController
-@RequestMapping("/executedChecks") // change later
+@RequestMapping("/executedChecks")
 @CrossOrigin(CorsConfiguration.ALL)
 public class ExecutionCheckController {
 

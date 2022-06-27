@@ -30,8 +30,4 @@ public class ActionController {
     return actionService.findAll();
   }
 
-  /*@GetMapping
-  public Action getByAction(String action){
-      return actionService.findByName(action);
-  }*/
 }

@@ -47,7 +47,6 @@ public abstract class ParserBase {
                 element -> element != null && !element.equals("") && !element.equals(EXTERNAL_PAGE))
             .map(
                 element -> {
-                  final var split = element.split("/");
                   String tempName;
                   if (sheetType.equals(SheetType.CN)) {
                     tempName = Util.CHANGE_NOTICE_EXAMPLE_HTML;
@@ -57,11 +56,11 @@ public abstract class ParserBase {
                   if (element.matches("^CN[\\d]{6}$")) {
                     sandboxFolder = element;
                   }
-                  final Path path = Paths.get(Util.RESOURCE_LOCATION, sandboxFolder, tempName);
-                  try {
-                    final var currentDocument = Jsoup.parse(Files.readString(path));
+                    try {
+                        final Path path = Paths.get(Util.RESOURCE_LOCATION, sandboxFolder, tempName);
+                        final var currentDocument = Jsoup.parse(Files.readString(path));
                     return new SimpleEntry<>(readDocumentName(currentDocument), currentDocument);
-                  } catch (IOException e) {
+                  } catch (Exception e) {
                     throw new RuntimeException(e);
                   }
                 })
