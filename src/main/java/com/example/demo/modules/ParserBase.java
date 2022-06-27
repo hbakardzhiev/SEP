@@ -56,9 +56,9 @@ public abstract class ParserBase {
                   if (element.matches("^CN[\\d]{6}$")) {
                     sandboxFolder = element;
                   }
-                    try {
-                        final Path path = Paths.get(Util.RESOURCE_LOCATION, sandboxFolder, tempName);
-                        final var currentDocument = Jsoup.parse(Files.readString(path));
+                  try {
+                    final Path path = Paths.get(Util.RESOURCE_LOCATION, sandboxFolder, tempName);
+                    final var currentDocument = Jsoup.parse(Files.readString(path));
                     return new SimpleEntry<>(readDocumentName(currentDocument), currentDocument);
                   } catch (Exception e) {
                     throw new RuntimeException(e);

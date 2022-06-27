@@ -169,7 +169,7 @@ public class CheckController {
     SheetType sheetType = getSheetType(theCheck.getDocSource());
     if (!sheetSourceRepository.existsByHtmlIDAndSheetSourceType(typeOfAttribute, sheetType)) {
       SheetSource sheetSource =
-              new SheetSource(typeOfAttribute, String.class.getTypeName(), sheetType);
+          new SheetSource(typeOfAttribute, String.class.getTypeName(), sheetType);
       sheetSourceRepository.save(sheetSource);
     }
     checkService.save(theCheck);

@@ -36,7 +36,7 @@ public class ExecutionCheckService {
    * with the list of all checks where the correct checks need to be found.
    *
    * @return a dataExecutedChecks object, that has the date when the parsing is done and a list of
-   * executed checks
+   *     executed checks
    * @throws IOException if the parsing of the data fails
    */
   public DateExecutedChecks filterDataWithChecks(String input) throws IOException {
@@ -134,12 +134,13 @@ public class ExecutionCheckService {
    */
   private Result executeTheCheck(Check check, String attributeValue) {
     String actionValue = check.getActionType().getValueType();
-    Result result = switch (actionValue) {
-        case "" -> checksNull(attributeValue, check);
-        case "String" -> checksString(attributeValue, check);
-        case "Integer" -> checksInteger(attributeValue, check);
-        default -> throw new IllegalStateException("Unexpected value type: " + actionValue);
-    };
+    Result result =
+        switch (actionValue) {
+          case "" -> checksNull(attributeValue, check);
+          case "String" -> checksString(attributeValue, check);
+          case "Integer" -> checksInteger(attributeValue, check);
+          default -> throw new IllegalStateException("Unexpected value type: " + actionValue);
+        };
     return result;
   }
 
@@ -150,7 +151,7 @@ public class ExecutionCheckService {
    * @param attributeValue the value that needs to be checked
    * @param check the check that needs to be performed
    * @return the result status when the check is performed
-       * @throws IllegalStateException if the check action is none of the specified
+   * @throws IllegalStateException if the check action is none of the specified
    */
   private Result checksInteger(String attributeValue, Check check) { // InputValue and a check
     Result result = null;
@@ -167,7 +168,8 @@ public class ExecutionCheckService {
             case GreaterEqual -> checkValue <= valueInputInt;
             case SmallerEqual -> checkValue >= valueInputInt;
             default -> false;
-//                    throw new IllegalStateException("Unexpected value: " + checkAction);
+              //                    throw new IllegalStateException("Unexpected value: " +
+              // checkAction);
           };
       result = status ? Result.passed : Result.failed;
       return result;
@@ -179,7 +181,8 @@ public class ExecutionCheckService {
             case LengthGreaterEqual -> length >= checkValue;
             case LengthSmallerEqual -> length <= checkValue;
             default -> false;
-//                    throw new IllegalStateException("Unexpected value: " + checkAction);
+              //                    throw new IllegalStateException("Unexpected value: " +
+              // checkAction);
           };
       result = status ? Result.passed : Result.failed;
       return result;

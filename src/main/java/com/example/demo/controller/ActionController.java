@@ -29,5 +29,4 @@ public class ActionController {
   public List<Action> getAllAction() {
     return actionService.findAll();
   }
-
 }
