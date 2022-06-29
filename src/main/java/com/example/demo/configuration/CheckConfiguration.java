@@ -20,14 +20,16 @@ public class CheckConfiguration {
       Check firstCheck =
           new Check(
               "CN_name", "Change Notice", "name", "", "comment to show when the check fails ");
-      Action actionType =
-          actionRepository.getById("NotEmpty"); // new Action("NotEmpty", "", "pls1");
+      Action actionType = new Action(
+              "NotEmpty", "", "The check passes if the attribute value is " + "not be empty.");
+          //actionRepository.getById("NotEmpty");
       actionType.add(firstCheck);
 
       Check secondCheck = new Check("CN_solution", "Change Notice", "solution", "", "comment2");
-      Action actionType2 = actionRepository.getById("NotEmpty");
+      Action actionType2 = new Action(
+              "NotEmpty", "", "The check passes if the attribute value is " + "not be empty.");
       actionType2.add(secondCheck);
-      //
+
       Check check6 =
           new Check(
               "CN_customerApprovalRequired",
@@ -35,9 +37,13 @@ public class CheckConfiguration {
               "customerApprovalRequired",
               "No",
               "comment3");
-      Action actionType6 = actionRepository.getById("IsEqual");
+      Action actionType6 = new Action(
+              "IsEqual",
+              "String",
+              "The check passes if the "
+                      + "the attribute value is exactly as the specified check value. ");
       actionType6.add(check6);
-      //
+
       Check thirdCheck =
           new Check(
               "CN_supplierApprovalRequired",
@@ -45,17 +51,23 @@ public class CheckConfiguration {
               "supplierApprovalRequired",
               "No",
               "comment3");
-      Action actionType3 = actionRepository.getById("IsEqual");
+      Action actionType3 = new Action(
+              "IsEqual",
+              "String",
+              "The check passes if the "
+                      + "the attribute value is exactly as the specified check value. ");
       actionType3.add(thirdCheck);
 
       // Change Requests checks
       Check forthCheck = new Check("CR_name", "Change Request", "name", "", "comment3");
-      Action actionType4 = actionRepository.getById("NotEmpty");
+      Action actionType4 = new Action(
+              "NotEmpty", "", "The check passes if the attribute value is " + "not be empty.");
       actionType4.add(forthCheck);
 
       Check check5 =
           new Check("CR_RequestPriority", "Change Request", "theRequestPriority", "", "comment3");
-      Action actionType5 = actionRepository.getById("NotEmpty");
+      Action actionType5 = new Action(
+              "NotEmpty", "", "The check passes if the attribute value is " + "not be empty.");
       actionType5.add(check5);
 
       Check check7 =
@@ -65,7 +77,11 @@ public class CheckConfiguration {
               "customerApprovalRequired",
               "No",
               "comment3");
-      Action actionType7 = actionRepository.getById("IsEqual");
+      Action actionType7 = new Action(
+              "IsEqual",
+              "String",
+              "The check passes if the "
+                      + "the attribute value is exactly as the specified check value. ");
       actionType7.add(check7);
 
       Check check8 =
@@ -75,8 +91,11 @@ public class CheckConfiguration {
               "supplierApprovalRequired",
               "No",
               "comment3");
-      Action actionType8 = actionRepository.getById("IsEqual");
-      ;
+      Action actionType8 = new Action(
+              "IsEqual",
+              "String",
+              "The check passes if the "
+                      + "the attribute value is exactly as the specified check value. ");
       actionType8.add(check8);
 
       //      Check check9 = new Check("Check9", "Change Task", "name", "", "comment3");
