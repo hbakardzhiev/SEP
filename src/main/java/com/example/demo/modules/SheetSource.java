@@ -8,17 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.Hibernate;
 
 /** SheetSource class is specifying which html tag should be scraped from which page. */
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
 @Table
+@Data
 public class SheetSource {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -58,11 +54,6 @@ public class SheetSource {
     this(htmlID, dataType, sheetSourceType);
     this.htmlTag = htmlTag;
   }
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 
     @Override
   public boolean equals(Object o) {
