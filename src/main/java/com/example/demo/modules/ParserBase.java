@@ -69,7 +69,7 @@ public abstract class ParserBase {
      * @return Stream of Key Value pairs which hold Key Value pairs
      */
     private Stream<AbstractMap.SimpleImmutableEntry<String, AbstractMap.SimpleImmutableEntry<String, String>>> parseElementByTag(String tag, String id) {
-        final var content = document.entrySet().parallelStream().map(element -> new AbstractMap.SimpleImmutableEntry<>(element.getKey(), new SimpleImmutableEntry<String, String>(id, element.getValue().select((String.format("[%s=%s]", tag, id))).text())));
+        final var content = document.entrySet().parallelStream().map(element -> new AbstractMap.SimpleImmutableEntry<>(element.getKey(), new AbstractMap.SimpleImmutableEntry<String, String>(id, element.getValue().select((String.format("[%s=%s]", tag, id))).text())));
         return content;
     }
 
