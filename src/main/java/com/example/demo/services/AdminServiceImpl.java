@@ -7,24 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class AdminServiceImpl implements AdminService, UserDetailsService {
 
-  private AdminRepository adminRepository;
-  private final PasswordEncoder passwordEncoder;
   @Autowired
-  public AdminServiceImpl(AdminRepository adminRepository, PasswordEncoder passwordEncoder) {
-    this.passwordEncoder = passwordEncoder;
-    this.adminRepository = adminRepository;
-  }
+  private AdminRepository adminRepository;
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   /**
    * Method that adds na Admin object to the database.
@@ -50,12 +44,12 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
    * @param id the id of the admin object
    */
   @Override
-  public void deleteAdmin(Long id) throws IllegalAccessException {
+  public void deleteAdmin(Long id) throws RuntimeException {
 
     final var username = Util.getUsernameFromPrincipal();
 
     if (getAdminById(id).getUsername().equals(username)) {
-      throw new IllegalAccessException("User cannot delete themself");
+      throw new RuntimeException("User cannot delete themself");
     }
 
     adminRepository.deleteById(id);
@@ -76,14 +70,14 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
    *
    * @param username the username to be searched
    * @return returns the details of the user
-   * @throws UsernameNotFoundException
+   * @throws RuntimeException
    */
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+  public UserDetails loadUserByUsername(String username) throws RuntimeException {
     final var admin = adminRepository.findAdminByUsername(username);
 
     if (admin == null) {
-      throw new UsernameNotFoundException("Admin not found in database");
+      throw new RuntimeException("Admin not found in database");
     }
 
     final var authorities = List.of(new SimpleGrantedAuthority("ADMIN"));
