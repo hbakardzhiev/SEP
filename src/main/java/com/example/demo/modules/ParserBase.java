@@ -1,12 +1,10 @@
 package com.example.demo.modules;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,7 +39,7 @@ public abstract class ParserBase {
      * them in the document hashmap.
      *
      * @param url Streams of urls on which the page is saved on
-     * @throws IOException
+     * @throws RuntimeException
      */
     public void setDocumentByUrl(Stream<String> url) {
         document = url.filter(element -> element != null && !element.equals("") && !element.equals(EXTERNAL_PAGE)).map(element -> {
@@ -59,7 +57,7 @@ public abstract class ParserBase {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (prev, next) -> next, HashMap::new));
+        }).collect(Collectors.toMap(HashMap.Entry::getKey, HashMap.Entry::getValue, (prev, next) -> next, HashMap::new));
     }
 
     /**
@@ -83,7 +81,6 @@ public abstract class ParserBase {
      * @param sheetSourceStream Stream of SheetSources tells it which page to gather
      * @return key - unique name of the document, value - key, value pair that holds the id and text
      * value
-     * @throws IOException
      */
     public Stream<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>> parsePage(Stream<SheetSource> sheetSourceStream) {
         final var stream = sheetSourceStream.parallel()
