@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -21,8 +19,6 @@ import com.example.demo.Util;
  */
 public abstract class ParserBase {
 
-    @Getter
-    @Setter
     private SheetType sheetType = SheetType.CN;
 
     public static String sandboxFolder;
@@ -30,9 +26,24 @@ public abstract class ParserBase {
      * Dictionary which holds the unique name of the page eg. CR000001, ProjectName01 - SW Tooling,
      * E0011 LocationId002 as key and the parsed HTML content as key
      */
-    @Getter
-    @Setter
     private HashMap<String, Document> document = new HashMap<>();
+
+    public HashMap<String, Document> getDocument() {
+        return document;
+    }
+
+    public void setDocument(HashMap<String, Document> document) {
+        this.document = document;
+    }
+
+    public void setSheetType(SheetType sheetType) {
+        this.sheetType = sheetType;
+    }
+
+    public SheetType getSheetType() {
+        return sheetType;
+    }
+
 
     /**
      * Takes the stream of urls eg. locations of the webpages, goes through each of them and saves
@@ -84,7 +95,7 @@ public abstract class ParserBase {
     public Stream<AbstractMap.SimpleImmutableEntry<String, AbstractMap.SimpleImmutableEntry<String, String>>> parsePage(Stream<SheetSource> sheetSourceStream) {
         final var stream = sheetSourceStream.parallel()
                 // element is a row in table sheet_source
-                .filter(element -> element.getSheetSourceType().equals(this.getSheetType())).flatMap((elementToBeParsed) -> parseElementByTag(elementToBeParsed.getHtmlTag(), elementToBeParsed.getHtmlID()));
+                .filter(element -> element.getSheetSourceType().equals(this.sheetType)).flatMap((elementToBeParsed) -> parseElementByTag(elementToBeParsed.getHtmlTag(), elementToBeParsed.getHtmlID()));
         return stream;
     }
 
