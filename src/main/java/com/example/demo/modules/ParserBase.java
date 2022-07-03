@@ -45,7 +45,7 @@ public abstract class ParserBase {
      */
     public void setDocumentByUrl(Stream<String> url) {
         document = url.filter(element -> element != null && !element.equals("") && !element.equals(EXTERNAL_PAGE)).map(element -> {
-            String tempName = switch (sheetType) {
+            final var tempName = switch (sheetType) {
                 case CN -> CHANGE_NOTICE_EXAMPLE_HTML;
                 case CR, CT, DMR -> element;
             };
@@ -93,12 +93,8 @@ public abstract class ParserBase {
     }
 
     private String readDocumentName(Document document) {
-        final var stringBuilder = new StringBuilder();
         final var firstPart = document.select("[id=infoPageIdentityDisplayType]").text();
         final var secondPart = document.select("[id=infoPageIdentityObjectIdentifier]").text();
-        stringBuilder.append(firstPart);
-        stringBuilder.append(" - ");
-        stringBuilder.append(secondPart);
-        return stringBuilder.toString();
+        return firstPart + " - " + secondPart;
     }
 }
