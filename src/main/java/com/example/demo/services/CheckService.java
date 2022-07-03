@@ -1,7 +1,10 @@
 package com.example.demo.services;
 
 import com.example.demo.modules.Check;
+import com.example.demo.modules.SheetSource;
+import com.example.demo.modules.SheetType;
 import com.example.demo.repository.CheckRepository;
+import com.example.demo.repository.SheetSourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +16,12 @@ public class CheckService {
 
   private CheckRepository checkRepository;
 
+  private SheetSourceRepository sheetSourceRepository;
+
   /** Constructor to use the correct repository */
   @Autowired
-  public CheckService(CheckRepository repository) {
+  public CheckService(CheckRepository repository, SheetSourceRepository sheetSourceRepository) {
+    this.sheetSourceRepository = sheetSourceRepository;
     this.checkRepository = repository;
   }
 
@@ -54,7 +60,34 @@ public class CheckService {
    * @param theCheck the check to be saved in the database
    */
   public void save(Check theCheck) {
+    createSheetSource(theCheck);
     checkRepository.save(theCheck);
+  }
+
+  private void createSheetSource(Check theCheck) {
+    //  add a new attribute type in the sheet_source table if it does not exist already
+    String typeOfAttribute = theCheck.getAttribute();
+    SheetType sheetType = getSheetType(theCheck.getDocSource());
+    if (!sheetSourceRepository.existsByHtmlIDAndSheetSourceType(typeOfAttribute, sheetType)) {
+      SheetSource sheetSource =
+              new SheetSource(typeOfAttribute, String.class.getTypeName(), sheetType);
+      sheetSourceRepository.save(sheetSource);
+    }
+  }
+
+  private SheetType getSheetType(String docSource) {
+    SheetType sheetType;
+    sheetType =
+            switch (docSource) {
+              case "Change Notice" -> SheetType.CN;
+              case "Change Request" -> SheetType.CR;
+              case "Engineering Change Task",
+                      "Manufacturing Change Task",
+                      "Master Data Change Task",
+                      "Commercial Change Task" -> SheetType.CT;
+              default -> SheetType.DMR;
+            };
+    return sheetType; // prone to mistakes everything which is not correct will be DMR
   }
 
   /**

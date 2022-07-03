@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.modules.Check;
 import com.example.demo.repository.CheckRepository;
+import com.example.demo.repository.SheetSourceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,11 +21,12 @@ import static org.mockito.Mockito.verify;
 class CheckServiceTest {
 
   @Mock private CheckRepository checkRepository;
+  @Mock private SheetSourceRepository sheetSourceRepository;
   private CheckService underTest;
 
   @BeforeEach
   void setUp() {
-    underTest = new CheckService(checkRepository);
+    underTest = new CheckService(checkRepository, sheetSourceRepository);
   }
 
   @Test

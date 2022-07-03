@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.modules.*;
 import com.example.demo.Util;
 import com.example.demo.repository.AdminRepository;
-import com.example.demo.repository.SheetSourceRepository;
 import com.example.demo.services.ActionService;
 import com.example.demo.services.CheckService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,6 @@ public class CheckController {
   @Autowired private ActionService actionService;
 
   @Autowired private AdminRepository adminRepository;
-
-  @Autowired private SheetSourceRepository sheetSourceRepository;
 
   public CheckController(CheckService checkService) {
     this.checkService = checkService;
@@ -150,31 +147,38 @@ public class CheckController {
    * @return TODO: make it later void when tested with front end
    */
   private Check extractCheck(@RequestBody CheckAndActionName checkAndActionName) {
-    Check theCheck = checkAndActionName.theCheck;
+    Check theCheck = checkAndActionName.getTheCheck();
     // theCheck.setAttribute(theCheck.getAttribute().toLowerCase().replaceAll("\\s", ""));
+    String actionName = checkAndActionName.getActionName().getActionName();
 
-    String actionName = checkAndActionName.actionName.getActionName();
-
-    String username = Util.getUsernameFromPrincipal();
-    Long adminId = adminRepository.findAdminByUsername(username).getId();
-
-    theCheck.setAuthor(adminId);
+    addAuthor(theCheck);
 
     Action theAction = actionService.findByName(actionName);
 
     theAction.add(theCheck);
 
-    //  add a new attribute type in the sheet_source table if it does not exist already
-    String typeOfAttribute = theCheck.getAttribute();
-    SheetType sheetType = getSheetType(theCheck.getDocSource());
-    if (!sheetSourceRepository.existsByHtmlIDAndSheetSourceType(typeOfAttribute, sheetType)) {
-      SheetSource sheetSource =
-          new SheetSource(typeOfAttribute, String.class.getTypeName(), sheetType);
-      sheetSourceRepository.save(sheetSource);
-    }
+//    createSheetSource(theCheck);
     checkService.save(theCheck);
     return theCheck;
   }
+
+  private void addAuthor(Check theCheck) {
+    String username = Util.getUsernameFromPrincipal();
+    Long adminId = adminRepository.findAdminByUsername(username).getId();
+
+    theCheck.setAuthor(adminId);
+  }
+
+//  private void createSheetSource(Check theCheck) {
+//    //  add a new attribute type in the sheet_source table if it does not exist already
+//    String typeOfAttribute = theCheck.getAttribute();
+//    SheetType sheetType = getSheetType(theCheck.getDocSource());
+//    if (!sheetSourceRepository.existsByHtmlIDAndSheetSourceType(typeOfAttribute, sheetType)) {
+//      SheetSource sheetSource =
+//          new SheetSource(typeOfAttribute, String.class.getTypeName(), sheetType);
+//      sheetSourceRepository.save(sheetSource);
+//    }
+//  }
 
   /**
    * Associates the docSource with the general sheetType that it has.
@@ -182,20 +186,20 @@ public class CheckController {
    * @param docSource the document source whose sheetType needs to be found
    * @return the sheetType that corresponds to the provided document source
    */
-  private SheetType getSheetType(String docSource) {
-    SheetType sheetType;
-    sheetType =
-        switch (docSource) {
-          case "Change Notice" -> SheetType.CN;
-          case "Change Request" -> SheetType.CR;
-          case "Engineering Change Task" -> SheetType.CT;
-          case "Manufacturing Change Task" -> SheetType.CT;
-          case "Master Data Change Task" -> SheetType.CT;
-          case "Commercial Change Task" -> SheetType.CT;
-          default -> SheetType.DMR;
-        };
-    return sheetType; // prone to mistakes everything which is not correct will be DMR
-  }
+//  private SheetType getSheetType(String docSource) {
+//    SheetType sheetType;
+//    sheetType =
+//        switch (docSource) {
+//          case "Change Notice" -> SheetType.CN;
+//          case "Change Request" -> SheetType.CR;
+//          case "Engineering Change Task",
+//                  "Manufacturing Change Task",
+//                  "Master Data Change Task",
+//                  "Commercial Change Task" -> SheetType.CT;
+//          default -> SheetType.DMR;
+//        };
+//    return sheetType; // prone to mistakes everything which is not correct will be DMR
+//  }
 
   /**
    * Deletes the check from the database with the provided name.
