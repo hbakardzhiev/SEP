@@ -13,7 +13,8 @@ import lombok.Setter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import static com.example.demo.Util.*;
+import com.example.demo.Util;
+
 
 /**
  * We follow somewhat the State design pattern by creating a base abstract parser from which we
@@ -39,19 +40,18 @@ public abstract class ParserBase {
      * them in the document hashmap.
      *
      * @param url Streams of urls on which the page is saved on
-     * @throws RuntimeException
      */
     public void setDocumentByUrl(Stream<String> url) {
-        document = url.filter(element -> element != null && !element.equals("") && !element.equals(EXTERNAL_PAGE)).map(element -> {
+        document = url.filter(element -> element != null && !element.equals("") && !element.equals(Util.EXTERNAL_PAGE)).map(element -> {
             final var tempName = switch (sheetType) {
-                case CN -> CHANGE_NOTICE_EXAMPLE_HTML;
+                case CN -> Util.CHANGE_NOTICE_EXAMPLE_HTML;
                 case CR, CT, DMR -> element;
             };
             if (element.matches("^CN[\\d]{6}$")) {
                 sandboxFolder = element;
             }
             try {
-                final var path = Paths.get(RESOURCE_LOCATION, sandboxFolder, tempName);
+                final var path = Paths.get(Util.RESOURCE_LOCATION, sandboxFolder, tempName);
                 final var currentDocument = Jsoup.parse(Files.readString(path));
                 return new SimpleEntry<>(readDocumentName(currentDocument), currentDocument);
             } catch (Exception e) {
