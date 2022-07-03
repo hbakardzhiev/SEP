@@ -39,7 +39,7 @@ public class ExecutionCheckService {
    *     executed checks
    * @throws IOException if the parsing of the data fails
    */
-  public DateExecutedChecks filterDataWithChecks(String input) throws IOException {
+  public DateExecutedChecks filterDataWithChecks(String input) throws Exception {
     List<Check> checks = checkRepository.findAll();
     var data = parserService.parseEverything(input);
     final var relevantChecksVal =

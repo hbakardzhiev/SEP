@@ -32,7 +32,7 @@ public class ExecutionCheckController {
    * @throws IOException if the parsing of the data fails in the Service class
    */
   @PostMapping("/all")
-  public DateExecutedChecks executeChecksAll(@RequestBody String input) throws IOException {
+  public DateExecutedChecks executeChecksAll(@RequestBody String input) throws Exception {
     return executionCheckService.filterDataWithChecks(input);
   }
 }

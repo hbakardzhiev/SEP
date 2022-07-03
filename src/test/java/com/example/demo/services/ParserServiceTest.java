@@ -25,14 +25,14 @@ class ParserServiceTest {
   @MockBean private SheetSourceRepository sheetSourceRepository;
 
   @Test
-  void testParseEverything() throws IOException {
+  void testParseEverything() throws Exception {
     when(this.sheetSourceRepository.findAll()).thenReturn(new ArrayList<>());
-    this.parserService.parseEverything("ExternalPage.html");
+    this.parserService.parseEverything("CN000001");
     verify(this.sheetSourceRepository).findAll();
   }
 
   @Test
-  void testParseEverything1() throws IOException {
+  void testParseEverything1() throws Exception {
     SheetSource sheetSource = new SheetSource();
     sheetSource.setDataType("ExternalPage.html");
     sheetSource.setHtmlID("ExternalPage.html");
@@ -44,27 +44,27 @@ class ParserServiceTest {
     ArrayList<SheetSource> sheetSourceList = new ArrayList<>();
     sheetSourceList.add(sheetSource);
     when(this.sheetSourceRepository.findAll()).thenReturn(sheetSourceList);
-    this.parserService.parseEverything("ExternalPage.html");
+    this.parserService.parseEverything("CN000001");
     verify(this.sheetSourceRepository).findAll();
   }
 
   @Test
-  void testParseEverything2() throws IOException {
+  void testParseEverything2() throws Exception {
     when(this.sheetSourceRepository.findAll()).thenReturn(new ArrayList<>());
-    this.parserService.parseEverything("");
+    this.parserService.parseEverything("CN000001");
     verify(this.sheetSourceRepository).findAll();
   }
 
   @Test
-  void testParseEverything5() throws IOException {
+  void testParseEverything5() throws Exception {
     when(this.sheetSourceRepository.findAll()).thenReturn(new ArrayList<>());
-    this.parserService.parseEverything("ExternalPage.html");
+    this.parserService.parseEverything("CN000001");
     verify(this.sheetSourceRepository).findAll();
   }
 
   /** Method under test: {@link ParserService#parseEverything(String)} */
   @Test
-  void testParseEverything6() throws IOException {
+  void testParseEverything6() throws Exception {
     SheetSource sheetSource = new SheetSource();
     sheetSource.setDataType("ExternalPage.html");
     sheetSource.setHtmlID("ExternalPage.html");
@@ -76,14 +76,14 @@ class ParserServiceTest {
     ArrayList<SheetSource> sheetSourceList = new ArrayList<>();
     sheetSourceList.add(sheetSource);
     when(this.sheetSourceRepository.findAll()).thenReturn(sheetSourceList);
-    this.parserService.parseEverything("ExternalPage.html");
+    this.parserService.parseEverything("CN000001");
     verify(this.sheetSourceRepository).findAll();
   }
 
   @Test
-  void testParseEverything7() throws IOException {
+  void testParseEverything7() throws Exception {
     when(this.sheetSourceRepository.findAll()).thenReturn(new ArrayList<>());
-    this.parserService.parseEverything("");
+    this.parserService.parseEverything("CN000001");
     verify(this.sheetSourceRepository).findAll();
   }
 }

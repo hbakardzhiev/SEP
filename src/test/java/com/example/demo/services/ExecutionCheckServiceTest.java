@@ -34,7 +34,7 @@ class ExecutionCheckServiceTest {
   }
 
   @Test
-  void filterDataWithChecksPassed() throws IOException {
+  void filterDataWithChecksPassed() throws Exception {
     // given
 
     Check checkTest = new Check("Check 1", "Change Notice - CN000001", "name", "null", "comment");
@@ -78,7 +78,7 @@ class ExecutionCheckServiceTest {
   }
 
   @Test
-  void filterDataWithChecksFailed() throws IOException {
+  void filterDataWithChecksFailed() throws Exception {
     // given: name is put to empty to check whether the check will fail
     Check checkTest = new Check("Check 1", "Change Notice - CN000001", "name", "null", "comment");
     Action actionType = new Action("NotEmpty", "", "pls1");

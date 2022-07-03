@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.Util;
 import com.example.demo.modules.ParserCN;
 import com.example.demo.modules.ParserCR;
 import com.example.demo.modules.ParserCT;
@@ -13,6 +14,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /** The Service which calls the repository and parses the correct page. */
 @Service
@@ -29,7 +33,8 @@ public class ParserService {
    */
   public SimpleImmutableEntry<
           List<SimpleImmutableEntry<String, SimpleImmutableEntry<String, String>>>, OffsetDateTime>
-      parseEverything(String input) throws IOException {
+      parseEverything(String input) throws Exception {
+    checkCNExists(input);
     final var sheetSourceStream = sheetSourceRepository.findAll();
     final var parserCN = new ParserCN(input);
     final var parserCT = new ParserCT(parserCN);
@@ -47,5 +52,18 @@ public class ParserService {
             .flatMap(x -> x)
             .collect(Collectors.toList()),
         offsetTime);
+  }
+
+  private void checkCNExists(String input) throws Exception {
+
+    String dirPath = Util.RESOURCE_LOCATION + input;
+    Path path = Paths.get(dirPath);
+    boolean isDir = Files.isDirectory(path);
+
+    System.out.println("input exists: ");
+    System.out.println(isDir);
+    if(!isDir) {
+      throw new Exception("CN not found");
+    }
   }
 }
