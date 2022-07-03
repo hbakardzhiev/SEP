@@ -1,11 +1,16 @@
 package com.example.demo;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 
 /** Helper class where constants and helper functions are defined. */
 public class Util {
@@ -40,5 +45,19 @@ public class Util {
     final var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     final var username = principal.toString();
     return username;
+  }
+
+  public static String getToken(HttpServletRequest request, User admin) {
+    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+
+    // retrieving the token
+    String access_token =
+            JWT.create()
+                    .withSubject(admin.getUsername())
+                    .withExpiresAt(new Date(System.currentTimeMillis() + 3 * 60 * 60 * 1000))
+                    .withIssuer(request.getRequestURL().toString())
+                    .withClaim("roles", "ADMIN")
+                    .sign(algorithm);
+    return access_token;
   }
 }
