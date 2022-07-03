@@ -1,7 +1,9 @@
 package com.example.demo;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
@@ -59,5 +61,12 @@ public class Util {
                     .withClaim("roles", "ADMIN")
                     .sign(algorithm);
     return access_token;
+  }
+
+  public static DecodedJWT getDecodedJWT(String token) {
+    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+    JWTVerifier verifier = JWT.require(algorithm).build();
+    DecodedJWT decodedJWT = verifier.verify(token);
+    return decodedJWT;
   }
 }
