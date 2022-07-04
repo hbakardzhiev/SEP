@@ -1,32 +1,49 @@
 package com.example.demo.services;
 
+import com.example.demo.Util;
+import com.example.demo.modules.Admin;
 import com.example.demo.modules.Check;
+import com.example.demo.repository.AdminRepository;
 import com.example.demo.repository.CheckRepository;
 import com.example.demo.repository.SheetSourceRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CheckServiceTest {
 
   @Mock private CheckRepository checkRepository;
   @Mock private SheetSourceRepository sheetSourceRepository;
+  @Mock private AdminRepository adminRepository;
+  @Mock private ActionService actionService;
+  @Autowired
   private CheckService underTest;
+  @Autowired
+  private CheckWrapperService checkWrapperServiceunderTest;
 
   @BeforeEach
   void setUp() {
-    underTest = new CheckService(checkRepository, sheetSourceRepository);
+    underTest = new CheckService(checkRepository);
+    checkWrapperServiceunderTest = new CheckWrapperService(actionService, checkRepository,
+            adminRepository, sheetSourceRepository);
   }
 
   @Test
@@ -57,12 +74,22 @@ class CheckServiceTest {
   }
 
   @Test
+  @Disabled
   void save() {
     // given
     Check checkToBeSaved = new Check("Check 1", "CN", "description", "Philips", "comment", 2L);
+    final var securityContext = mock(SecurityContext.class);
+    final var applicationUser = mock(UserDetails.class);
+    final var authentication = mock(Authentication.class);
+    when(securityContext.getAuthentication()).thenReturn(authentication);
+    SecurityContextHolder.setContext(securityContext);
+    when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(applicationUser);
+    final var admin = new Admin();
+    when(adminRepository.findAdminByUsername(applicationUser.toString())).thenReturn(admin);
+//    when(admin.getId()).thenReturn(123L);
 
     // when
-    underTest.save(checkToBeSaved);
+    checkWrapperServiceunderTest.save(checkToBeSaved);
 
     // then: verifies that the save method was invoked with the checkToBeSaved
     ArgumentCaptor<Check> checkArgumentCaptor = ArgumentCaptor.forClass(Check.class);
@@ -82,6 +109,8 @@ class CheckServiceTest {
   void deleteByName() {
     // given
     String name = "CN_description";
+    Check checkProba = new Check("CN_description","Change notice", "name", "null", "blaaa");
+    given(checkRepository.findById(name)).willReturn(Optional.of(checkProba));
 
     // when
     underTest.deleteByName(name);

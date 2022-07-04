@@ -1,32 +1,27 @@
 package com.example.demo.controller;
 
-import com.example.demo.modules.*;
-import com.example.demo.Util;
-import com.example.demo.repository.AdminRepository;
-import com.example.demo.services.ActionService;
+import com.example.demo.modules.Check;
+import com.example.demo.modules.CheckAndActionName;
 import com.example.demo.services.CheckService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.services.CheckWrapperService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.web.cors.CorsConfiguration;
-
 /** Class that defines the API - the GET, POST, DELETE and PUT requests. */
 @RestController
 @RequestMapping("/check")
-@CrossOrigin(CorsConfiguration.ALL)
 public class CheckController {
 
   private CheckService checkService;
 
-  @Autowired private ActionService actionService;
+  private CheckWrapperService checkWrapperService;
 
-  @Autowired private AdminRepository adminRepository;
-
-  public CheckController(CheckService checkService) {
+  public CheckController(CheckService checkService,
+                         CheckWrapperService checkWrapperService) {
     this.checkService = checkService;
+    this.checkWrapperService = checkWrapperService;
   }
 
   /**
@@ -37,23 +32,17 @@ public class CheckController {
   @GetMapping
   public List<CheckAndActionName> printAllCheck() {
 
-    List<Check> allChecks = checkService.findAll();
+    final var allChecks = checkService.findAll();
 
-    var checksAndActions =
+    final var checksAndActions =
         allChecks.stream()
             .map(
                 e -> {
-                  CheckAndActionName checkAndAction = toCheckAndActionName(e);
+                  final var checkAndAction = checkService.toCheckAndActionName(e);
                   return checkAndAction;
                 });
 
     return checksAndActions.collect(Collectors.toList());
-  }
-
-  private CheckAndActionName toCheckAndActionName(Check check) {
-    ActionNameString actionNameString = new ActionNameString(check.getActionType().getAction());
-    CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
-    return checkAndActionName;
   }
 
   /**
@@ -68,12 +57,11 @@ public class CheckController {
 
     Check theCheck = checkService.findByName(name);
 
-    if (theCheck == null) {
-      throw new RuntimeException("Check not found " + name);
-    }
+//    if (theCheck == null) {
+//      throw new RuntimeException("Check not found " + name);
+//    }
 
-    ActionNameString action = new ActionNameString(theCheck.getActionType().getAction());
-    CheckAndActionName checkAndActionName = new CheckAndActionName(theCheck, action);
+    CheckAndActionName checkAndActionName = checkService.toCheckAndActionName(theCheck);
 
     return checkAndActionName;
   }
@@ -103,10 +91,7 @@ public class CheckController {
      */
   @PostMapping
   public Check addCheck(@RequestBody CheckAndActionName checkAndActionName) {
-
-    Check theCheck = extractCheck(checkAndActionName);
-
-    return theCheck;
+    return checkWrapperService.extractCheck(checkAndActionName);
   }
 
   /**
@@ -133,41 +118,30 @@ public class CheckController {
   @PutMapping
   public Check updateCheck(@RequestBody CheckAndActionName checkAndActionName) {
 
-    Check theCheck = extractCheck(checkAndActionName);
+    Check theCheck = checkWrapperService.extractCheck(checkAndActionName);
 
     return theCheck;
   }
 
-  /**
-   * Extracts the check and the action and saves/updates the check in the db. Associates the check
-   * with the corresponding action name from the action table. If a new type of attribute is used
-   * which is not in the sheet_source table then the attribute as htmlId is added there as well.
-   *
-   * @param checkAndActionName a check and its action name
-   * @return TODO: make it later void when tested with front end
-   */
-  private Check extractCheck(@RequestBody CheckAndActionName checkAndActionName) {
-    Check theCheck = checkAndActionName.getTheCheck();
-    // theCheck.setAttribute(theCheck.getAttribute().toLowerCase().replaceAll("\\s", ""));
-    String actionName = checkAndActionName.getActionName().getActionName();
+//  /**
+//   * Extracts the check and the action and saves/updates the check in the db. Associates the check
+//   * with the corresponding action name from the action table. If a new type of attribute is used
+//   * which is not in the sheet_source table then the attribute as htmlId is added there as well.
+//   *
+//   * @param checkAndActionName a check and its action name
+//   * @return TODO: make it later void when tested with front end
+//   */
+//  private Check extractCheck(@RequestBody CheckAndActionName checkAndActionName) {
+//    Check theCheck = checkAndActionName.getTheCheck();
+//    String actionName = checkAndActionName.getActionName().getActionName();
+//
+//    actionService.findByName(actionName).add(theCheck);
+//
+//    checkService.save(theCheck);
+//    return theCheck;
+//  }
 
-    addAuthor(theCheck);
 
-    Action theAction = actionService.findByName(actionName);
-
-    theAction.add(theCheck);
-
-//    createSheetSource(theCheck);
-    checkService.save(theCheck);
-    return theCheck;
-  }
-
-  private void addAuthor(Check theCheck) {
-    String username = Util.getUsernameFromPrincipal();
-    Long adminId = adminRepository.findAdminByUsername(username).getId();
-
-    theCheck.setAuthor(adminId);
-  }
 
 //  private void createSheetSource(Check theCheck) {
 //    //  add a new attribute type in the sheet_source table if it does not exist already
@@ -210,11 +184,6 @@ public class CheckController {
    */
   @DeleteMapping("/{name}")
   public String deleteCheck(@PathVariable String name) {
-    Check theCheck = checkService.findByName(name);
-
-    if (theCheck == null) {
-      throw new RuntimeException("Check not found " + name);
-    }
     checkService.deleteByName(name);
     return "Deleted " + name;
   }

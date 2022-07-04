@@ -1,8 +1,8 @@
 package com.example.demo.services;
 
-import com.example.demo.modules.Check;
-import com.example.demo.modules.SheetSource;
-import com.example.demo.modules.SheetType;
+import com.example.demo.Util;
+import com.example.demo.modules.*;
+import com.example.demo.repository.AdminRepository;
 import com.example.demo.repository.CheckRepository;
 import com.example.demo.repository.SheetSourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +16,9 @@ public class CheckService {
 
   private CheckRepository checkRepository;
 
-  private SheetSourceRepository sheetSourceRepository;
-
   /** Constructor to use the correct repository */
   @Autowired
-  public CheckService(CheckRepository repository, SheetSourceRepository sheetSourceRepository) {
-    this.sheetSourceRepository = sheetSourceRepository;
+  public CheckService(CheckRepository repository) {
     this.checkRepository = repository;
   }
 
@@ -47,47 +44,16 @@ public class CheckService {
 
     if (result.isPresent()) {
       theCheck = result.get();
-    }
-    /*else {
+    } else {
         throw new RuntimeException("Check not found " + name);
-    }*/
+    }
     return theCheck;
   }
 
-  /**
-   * Saves the check
-   *
-   * @param theCheck the check to be saved in the database
-   */
-  public void save(Check theCheck) {
-    createSheetSource(theCheck);
-    checkRepository.save(theCheck);
-  }
-
-  private void createSheetSource(Check theCheck) {
-    //  add a new attribute type in the sheet_source table if it does not exist already
-    String typeOfAttribute = theCheck.getAttribute();
-    SheetType sheetType = getSheetType(theCheck.getDocSource());
-    if (!sheetSourceRepository.existsByHtmlIDAndSheetSourceType(typeOfAttribute, sheetType)) {
-      SheetSource sheetSource =
-              new SheetSource(typeOfAttribute, String.class.getTypeName(), sheetType);
-      sheetSourceRepository.save(sheetSource);
-    }
-  }
-
-  private SheetType getSheetType(String docSource) {
-    SheetType sheetType;
-    sheetType =
-            switch (docSource) {
-              case "Change Notice" -> SheetType.CN;
-              case "Change Request" -> SheetType.CR;
-              case "Engineering Change Task",
-                      "Manufacturing Change Task",
-                      "Master Data Change Task",
-                      "Commercial Change Task" -> SheetType.CT;
-              default -> SheetType.DMR;
-            };
-    return sheetType; // prone to mistakes everything which is not correct will be DMR
+  public CheckAndActionName toCheckAndActionName(Check check) {
+    ActionNameString actionNameString = new ActionNameString(check.getActionType().getAction());
+    CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
+    return checkAndActionName;
   }
 
   /**
@@ -96,6 +62,11 @@ public class CheckService {
    * @param name the name of the check to be deleted
    */
   public void deleteByName(String name) {
+    Check theCheck = this.findByName(name);
+
+    if (theCheck == null) {
+      throw new RuntimeException("Check not found " + name);
+    }
     checkRepository.deleteById(name);
   }
 }
