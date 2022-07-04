@@ -43,12 +43,22 @@ public class Util {
     return resultStringBuilder.toString();
   }
 
+  /**
+   * Retrieves the username of the admin who is logged in
+   * @return the username of the admin
+   */
   public static String getUsernameFromPrincipal() {
     final var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     final var username = principal.toString();
     return username;
   }
 
+  /**
+   * Creates access_token for the admin that has sent the request and encodes it
+   * @param request the http request that was made (the url)
+   * @param admin the admin who made the request
+   * @return the encoded access_token
+   */
   public static String getToken(HttpServletRequest request, User admin) {
     Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
 
@@ -63,6 +73,11 @@ public class Util {
     return access_token;
   }
 
+  /**
+   * Verifies the token and decodes it.
+   * @param token the token to be verified
+   * @return decoded json web token
+   */
   public static DecodedJWT getDecodedJWT(String token) {
     Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
     JWTVerifier verifier = JWT.require(algorithm).build();

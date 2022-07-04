@@ -60,7 +60,6 @@ class CheckWrapperServiceTest {
         when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(applicationUser);
         final var admin = new Admin();
         when(adminRepository.findAdminByUsername(applicationUser.toString())).thenReturn(admin);
-//        given(admin.getId()).willReturn(123L);// when does not work
     }
 
 
