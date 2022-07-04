@@ -18,6 +18,7 @@ public class GraphConfig {
 
   /**
    * Get all edges of the graph
+   *
    * @return list of edges
    */
   public List<CustomEdge> getEdges() {
@@ -26,6 +27,7 @@ public class GraphConfig {
 
   /**
    * add all edges in the graph
+   *
    * @param attribute string attributes needed
    */
   private void addMultipleEdges(String attribute) {
@@ -34,10 +36,7 @@ public class GraphConfig {
     }
   }
 
-  /**
-   * fill in graph with all sheetTypes embedded in
-   * the system
-   */
+  /** fill in graph with all sheetTypes embedded in the system */
   private void populateGraph() {
     edges = new ArrayList<>();
 

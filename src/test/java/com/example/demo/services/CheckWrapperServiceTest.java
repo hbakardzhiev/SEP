@@ -26,132 +26,115 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(classes = {CheckWrapperService.class})
 @ExtendWith(SpringExtension.class)
 class CheckWrapperServiceTest {
-    @MockBean
-    private ActionService actionService;
+  @MockBean private ActionService actionService;
 
-    @MockBean
-    private AdminRepository adminRepository;
+  @MockBean private AdminRepository adminRepository;
 
-    @MockBean
-    private CheckRepository checkRepository;
+  @MockBean private CheckRepository checkRepository;
 
-    @Autowired
-    private CheckWrapperService checkWrapperService;
+  @Autowired private CheckWrapperService checkWrapperService;
 
-    @MockBean
-    private SheetSourceRepository sheetSourceRepository;
+  @MockBean private SheetSourceRepository sheetSourceRepository;
 
-    @Autowired
-    private CheckWrapperService checkWrapperServiceunderTest;
+  @Autowired private CheckWrapperService checkWrapperServiceunderTest;
 
-    @MockBean
-    private CheckService checkService;
+  @MockBean private CheckService checkService;
 
+  @BeforeEach
+  void setUp() {
+    checkWrapperServiceunderTest =
+        new CheckWrapperService(
+            actionService, checkRepository, adminRepository, sheetSourceRepository);
+    final var securityContext = mock(SecurityContext.class);
+    final var applicationUser = mock(UserDetails.class);
+    final var authentication = mock(Authentication.class);
+    when(securityContext.getAuthentication()).thenReturn(authentication);
+    SecurityContextHolder.setContext(securityContext);
+    when(SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+        .thenReturn(applicationUser);
+    final var admin = new Admin();
+    when(adminRepository.findAdminByUsername(applicationUser.toString())).thenReturn(admin);
+  }
 
-    @BeforeEach
-    void setUp() {
-        checkWrapperServiceunderTest = new CheckWrapperService(actionService, checkRepository,
-                adminRepository, sheetSourceRepository);
-        final var securityContext = mock(SecurityContext.class);
-        final var applicationUser = mock(UserDetails.class);
-        final var authentication = mock(Authentication.class);
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        SecurityContextHolder.setContext(securityContext);
-        when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(applicationUser);
-        final var admin = new Admin();
-        when(adminRepository.findAdminByUsername(applicationUser.toString())).thenReturn(admin);
-    }
+  @Test
+  void save() {
+    // given
+    Check checkToBeSaved = new Check("Check 1", "CN", "description", "Philips", "comment", 2L);
 
+    // when
+    checkWrapperServiceunderTest.save(checkToBeSaved);
 
-    @Test
-    void save() {
-        // given
-        Check checkToBeSaved = new Check("Check 1", "CN", "description", "Philips", "comment", 2L);
+    // then: verifies that the save method was invoked with the checkToBeSaved
+    ArgumentCaptor<Check> checkArgumentCaptor = ArgumentCaptor.forClass(Check.class);
 
-        // when
-        checkWrapperServiceunderTest.save(checkToBeSaved);
+    // captures the check instance that was used upon saving
+    // and verifies that the save method was invoked
+    verify(checkRepository).save(checkArgumentCaptor.capture());
 
-        // then: verifies that the save method was invoked with the checkToBeSaved
-        ArgumentCaptor<Check> checkArgumentCaptor = ArgumentCaptor.forClass(Check.class);
+    // retrieved the captured check
+    Check capturedCheck = checkArgumentCaptor.getValue();
 
-        // captures the check instance that was used upon saving
-        // and verifies that the save method was invoked
-        verify(checkRepository).save(checkArgumentCaptor.capture());
+    // check that the captured check is the one that supposed to be saved
+    assertThat(capturedCheck).isEqualTo(checkToBeSaved);
+  }
 
-        // retrieved the captured check
-        Check capturedCheck = checkArgumentCaptor.getValue();
+  /** Method under test: {@link CheckWrapperService#extractCheck(CheckAndActionName)} */
+  @Test
+  void testExtractCheck() {
+    final var check = new Check("CN_description", "CN", "description", "Philips", "comment");
+    final var checkAndActionName = mock(CheckAndActionName.class);
+    ActionNameString actionName = new ActionNameString("blaa");
+    checkAndActionName.setActionName(actionName);
+    when(checkAndActionName.getTheCheck()).thenReturn(check);
+    when(checkAndActionName.getActionName()).thenReturn(actionName);
+    Action action = mock(Action.class);
+    when(actionService.findByName(actionName.getActionName())).thenReturn(action);
 
-        // check that the captured check is the one that supposed to be saved
-        assertThat(capturedCheck).isEqualTo(checkToBeSaved);
-    }
+    this.checkWrapperService.extractCheck(checkAndActionName);
+  }
 
-    /**
-     * Method under test: {@link CheckWrapperService#extractCheck(CheckAndActionName)}
-     */
-    @Test
-    void testExtractCheck() {
-        final var check =
-                new Check("CN_description", "CN", "description", "Philips", "comment");
-        final var checkAndActionName = mock(CheckAndActionName.class);
-        ActionNameString actionName = new ActionNameString("blaa");
-        checkAndActionName.setActionName(actionName);
-        when(checkAndActionName.getTheCheck()).thenReturn(check);
-        when(checkAndActionName.getActionName()).thenReturn(actionName);
-        Action action = mock(Action.class);
-        when(actionService.findByName(actionName.getActionName())).thenReturn(action);
+  /** Method under test: {@link CheckWrapperService#extractCheck(CheckAndActionName)} */
+  @Test
+  void testExtractCheck2() {
+    final var check = new Check("CN_description", "CN", "description", "Philips", "comment");
+    final var checkAndActionName = mock(CheckAndActionName.class);
+    ActionNameString actionName = new ActionNameString("blaa");
+    checkAndActionName.setActionName(actionName);
+    when(checkAndActionName.getTheCheck()).thenReturn(check);
+    when(checkAndActionName.getActionName()).thenReturn(actionName);
 
-        this.checkWrapperService.extractCheck(checkAndActionName);
-    }
+    Action action = new Action();
+    action.setAction("Action");
+    action.setChecks(new ArrayList<>());
+    action.setDescription("The characteristics of someone or something");
+    action.setValueType("42");
+    when(this.actionService.findByName((String) any())).thenReturn(action);
 
-    /**
-     * Method under test: {@link CheckWrapperService#extractCheck(CheckAndActionName)}
-     */
-    @Test
-    void testExtractCheck2() {
-        final var check =
-                new Check("CN_description", "CN", "description", "Philips", "comment");
-        final var checkAndActionName = mock(CheckAndActionName.class);
-        ActionNameString actionName = new ActionNameString("blaa");
-        checkAndActionName.setActionName(actionName);
-        when(checkAndActionName.getTheCheck()).thenReturn(check);
-        when(checkAndActionName.getActionName()).thenReturn(actionName);
+    this.checkWrapperService.extractCheck(checkAndActionName);
+  }
 
-        Action action = new Action();
-        action.setAction("Action");
-        action.setChecks(new ArrayList<>());
-        action.setDescription("The characteristics of someone or something");
-        action.setValueType("42");
-        when(this.actionService.findByName((String) any())).thenReturn(action);
+  /** Method under test: {@link CheckWrapperService#extractCheck(CheckAndActionName)} */
+  @Test
+  void testExtractCheck3() {
+    final var check = new Check("CN_description", "CN", "description", "Philips", "comment");
+    final var checkAndActionName = mock(CheckAndActionName.class);
+    ActionNameString actionName = new ActionNameString("blaa");
+    checkAndActionName.setActionName(actionName);
+    when(checkAndActionName.getTheCheck()).thenReturn(check);
+    when(checkAndActionName.getActionName()).thenReturn(actionName);
 
-        this.checkWrapperService.extractCheck(checkAndActionName);
-    }
+    Action action = mock(Action.class);
+    doNothing().when(action).add((Check) any());
+    doNothing().when(action).setAction((String) any());
+    doNothing().when(action).setChecks((java.util.List<Check>) any());
+    doNothing().when(action).setDescription((String) any());
+    doNothing().when(action).setValueType((String) any());
+    action.setAction("Action");
+    action.setChecks(new ArrayList<>());
+    action.setDescription("The characteristics of someone or something");
+    action.setValueType("42");
+    when(this.actionService.findByName((String) any())).thenReturn(action);
 
-    /**
-     * Method under test: {@link CheckWrapperService#extractCheck(CheckAndActionName)}
-     */
-    @Test
-    void testExtractCheck3() {
-        final var check =
-                new Check("CN_description", "CN", "description", "Philips", "comment");
-        final var checkAndActionName = mock(CheckAndActionName.class);
-        ActionNameString actionName = new ActionNameString("blaa");
-        checkAndActionName.setActionName(actionName);
-        when(checkAndActionName.getTheCheck()).thenReturn(check);
-        when(checkAndActionName.getActionName()).thenReturn(actionName);
-
-        Action action = mock(Action.class);
-        doNothing().when(action).add((Check) any());
-        doNothing().when(action).setAction((String) any());
-        doNothing().when(action).setChecks((java.util.List<Check>) any());
-        doNothing().when(action).setDescription((String) any());
-        doNothing().when(action).setValueType((String) any());
-        action.setAction("Action");
-        action.setChecks(new ArrayList<>());
-        action.setDescription("The characteristics of someone or something");
-        action.setValueType("42");
-        when(this.actionService.findByName((String) any())).thenReturn(action);
-
-        this.checkWrapperService.extractCheck(checkAndActionName);
-    }
+    this.checkWrapperService.extractCheck(checkAndActionName);
+  }
 }
-

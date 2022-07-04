@@ -11,6 +11,7 @@ public class AdminConfiguration {
 
   /**
    * create default admin
+   *
    * @param service adminService
    * @return void
    */

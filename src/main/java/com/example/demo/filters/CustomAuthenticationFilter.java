@@ -59,5 +59,4 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     // return the token in a JSON format
     new ObjectMapper().writeValue(response.getOutputStream(), tokens);
   }
-
 }

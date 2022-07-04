@@ -55,7 +55,7 @@ public class SheetSource {
     this.htmlTag = htmlTag;
   }
 
-    @Override
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;

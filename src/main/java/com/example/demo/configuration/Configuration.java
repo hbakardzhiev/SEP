@@ -19,6 +19,7 @@ public class Configuration {
 
   /**
    * create password encoder
+   *
    * @return
    */
   @Bean
@@ -28,6 +29,7 @@ public class Configuration {
 
   /**
    * persist all entities
+   *
    * @param sheetSourceRepository repository used to save entities
    * @return
    */
@@ -57,6 +59,7 @@ public class Configuration {
 
   /**
    * sets CORS on all links
+   *
    * @return
    */
   @Bean

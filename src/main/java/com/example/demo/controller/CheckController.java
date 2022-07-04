@@ -18,8 +18,7 @@ public class CheckController {
 
   private CheckWrapperService checkWrapperService;
 
-  public CheckController(CheckService checkService,
-                         CheckWrapperService checkWrapperService) {
+  public CheckController(CheckService checkService, CheckWrapperService checkWrapperService) {
     this.checkService = checkService;
     this.checkWrapperService = checkWrapperService;
   }
@@ -118,7 +117,6 @@ public class CheckController {
 
     return theCheck;
   }
-
 
   /**
    * Deletes the check from the database with the provided name.

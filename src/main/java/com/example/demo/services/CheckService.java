@@ -1,10 +1,7 @@
 package com.example.demo.services;
 
-import com.example.demo.Util;
 import com.example.demo.modules.*;
-import com.example.demo.repository.AdminRepository;
 import com.example.demo.repository.CheckRepository;
-import com.example.demo.repository.SheetSourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +42,7 @@ public class CheckService {
     if (result.isPresent()) {
       theCheck = result.get();
     } else {
-        throw new RuntimeException("Check not found " + name);
+      throw new RuntimeException("Check not found " + name);
     }
     return theCheck;
   }

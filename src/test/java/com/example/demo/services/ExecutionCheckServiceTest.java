@@ -131,30 +131,30 @@ class ExecutionCheckServiceTest {
 
     ActionNameString actionTest = new ActionNameString("Empty");
     DateExecutedChecks expected =
-            new DateExecutedChecks(
-                    null,
-                    List.of(
-                            new AbstractMap.SimpleEntry<>(
-                                    "output",
-                                    new ExecutedCheckOutput(
-                                            Result.failed, "", new CheckAndActionName(checkTest, actionTest)))));
+        new DateExecutedChecks(
+            null,
+            List.of(
+                new AbstractMap.SimpleEntry<>(
+                    "output",
+                    new ExecutedCheckOutput(
+                        Result.failed, "", new CheckAndActionName(checkTest, actionTest)))));
 
     given(checkRepository.findAll()).willReturn(List.of(checkDB));
     given(parserService.parseEverything(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML))
-            .willReturn(
+        .willReturn(
+            new AbstractMap.SimpleImmutableEntry<>(
+                List.of(
                     new AbstractMap.SimpleImmutableEntry<>(
-                            List.of(
-                                    new AbstractMap.SimpleImmutableEntry<>(
-                                            "Change Notice - CN000001, CN title name, E0011 LocationId002, A",
-                                            new AbstractMap.SimpleImmutableEntry<>("name", ""))),
-                            null));
+                        "Change Notice - CN000001, CN title name, E0011 LocationId002, A",
+                        new AbstractMap.SimpleImmutableEntry<>("name", ""))),
+                null));
 
     // when
     var actual = underTest.filterDataWithChecks(UtilTests.CHANGE_NOTICE_EXAMPLE_HTML);
 
     // then: verifies that the findAll, parsedEverything were invoked and check the result
     assertThat(actual.toString()) // .usingRecursiveComparison()
-            .isEqualTo(expected.toString());
+        .isEqualTo(expected.toString());
   }
 
   @Test

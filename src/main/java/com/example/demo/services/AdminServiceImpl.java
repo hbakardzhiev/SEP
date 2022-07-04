@@ -15,10 +15,8 @@ import java.util.List;
 @Service
 public class AdminServiceImpl implements AdminService, UserDetailsService {
 
-  @Autowired
-  private AdminRepository adminRepository;
-  @Autowired
-  private PasswordEncoder passwordEncoder;
+  @Autowired private AdminRepository adminRepository;
+  @Autowired private PasswordEncoder passwordEncoder;
 
   /**
    * Method that adds na Admin object to the database.

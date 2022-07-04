@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import com.example.demo.Util;
 import com.example.demo.modules.Admin;
 import com.example.demo.modules.Check;
 import com.example.demo.repository.AdminRepository;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -34,16 +32,15 @@ class CheckServiceTest {
   @Mock private SheetSourceRepository sheetSourceRepository;
   @Mock private AdminRepository adminRepository;
   @Mock private ActionService actionService;
-  @Autowired
-  private CheckService underTest;
-  @Autowired
-  private CheckWrapperService checkWrapperServiceunderTest;
+  @Autowired private CheckService underTest;
+  @Autowired private CheckWrapperService checkWrapperServiceunderTest;
 
   @BeforeEach
   void setUp() {
     underTest = new CheckService(checkRepository);
-    checkWrapperServiceunderTest = new CheckWrapperService(actionService, checkRepository,
-            adminRepository, sheetSourceRepository);
+    checkWrapperServiceunderTest =
+        new CheckWrapperService(
+            actionService, checkRepository, adminRepository, sheetSourceRepository);
   }
 
   @Test
@@ -83,10 +80,11 @@ class CheckServiceTest {
     final var authentication = mock(Authentication.class);
     when(securityContext.getAuthentication()).thenReturn(authentication);
     SecurityContextHolder.setContext(securityContext);
-    when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(applicationUser);
+    when(SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+        .thenReturn(applicationUser);
     final var admin = new Admin();
     when(adminRepository.findAdminByUsername(applicationUser.toString())).thenReturn(admin);
-//    when(admin.getId()).thenReturn(123L);
+    //    when(admin.getId()).thenReturn(123L);
 
     // when
     checkWrapperServiceunderTest.save(checkToBeSaved);
@@ -109,7 +107,7 @@ class CheckServiceTest {
   void deleteByName() {
     // given
     String name = "CN_description";
-    Check checkProba = new Check("CN_description","Change notice", "name", "null", "blaaa");
+    Check checkProba = new Check("CN_description", "Change notice", "name", "null", "blaaa");
     given(checkRepository.findById(name)).willReturn(Optional.of(checkProba));
 
     // when

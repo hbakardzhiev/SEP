@@ -14,6 +14,7 @@ public class ActionConfig {
 
   /**
    * Save actions
+   *
    * @param repository actionRepository to save actions
    * @return void
    */

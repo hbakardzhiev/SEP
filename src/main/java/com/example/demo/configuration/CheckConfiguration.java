@@ -14,6 +14,7 @@ import java.util.List;
 public class CheckConfiguration {
   /**
    * Save checks in the DB
+   *
    * @param repository checkRepository to save checks
    * @param actionRepository actionRepository to save actions
    * @return void
