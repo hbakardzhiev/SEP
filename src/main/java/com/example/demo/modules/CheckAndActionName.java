@@ -8,8 +8,8 @@ import java.util.Objects;
  */
 public class CheckAndActionName {
 
-  public Check theCheck;
-  public ActionNameString actionName;
+  private Check theCheck;
+  private ActionNameString actionName;
 
   public CheckAndActionName() {}
 

@@ -12,6 +12,11 @@ import java.util.List;
 @Configuration
 public class ActionConfig {
 
+  /**
+   * Save actions
+   * @param repository actionRepository to save actions
+   * @return void
+   */
   @Bean
   CommandLineRunner commandLineRunnerActionTypes(ActionRepository repository) {
     return args -> {

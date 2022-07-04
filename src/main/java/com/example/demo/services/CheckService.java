@@ -1,7 +1,10 @@
 package com.example.demo.services;
 
-import com.example.demo.modules.Check;
+import com.example.demo.Util;
+import com.example.demo.modules.*;
+import com.example.demo.repository.AdminRepository;
 import com.example.demo.repository.CheckRepository;
+import com.example.demo.repository.SheetSourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,20 +44,16 @@ public class CheckService {
 
     if (result.isPresent()) {
       theCheck = result.get();
-    }
-    /*else {
+    } else {
         throw new RuntimeException("Check not found " + name);
-    }*/
+    }
     return theCheck;
   }
 
-  /**
-   * Saves the check
-   *
-   * @param theCheck the check to be saved in the database
-   */
-  public void save(Check theCheck) {
-    checkRepository.save(theCheck);
+  public CheckAndActionName toCheckAndActionName(Check check) {
+    ActionNameString actionNameString = new ActionNameString(check.getActionType().getAction());
+    CheckAndActionName checkAndActionName = new CheckAndActionName(check, actionNameString);
+    return checkAndActionName;
   }
 
   /**
@@ -63,6 +62,11 @@ public class CheckService {
    * @param name the name of the check to be deleted
    */
   public void deleteByName(String name) {
+    Check theCheck = this.findByName(name);
+
+    if (theCheck == null) {
+      throw new RuntimeException("Check not found " + name);
+    }
     checkRepository.deleteById(name);
   }
 }
