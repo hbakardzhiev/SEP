@@ -1,27 +1,30 @@
 package com.example.demo.services;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import com.example.demo.modules.Action;
-import com.example.demo.modules.ActionNameString;
-import com.example.demo.modules.Check;
-import com.example.demo.modules.CheckAndActionName;
+import com.example.demo.modules.*;
 import com.example.demo.repository.AdminRepository;
 import com.example.demo.repository.CheckRepository;
 import com.example.demo.repository.SheetSourceRepository;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {CheckWrapperService.class})
 @ExtendWith(SpringExtension.class)
@@ -41,45 +44,104 @@ class CheckWrapperServiceTest {
     @MockBean
     private SheetSourceRepository sheetSourceRepository;
 
-    /**
-     * Method under test: {@link CheckWrapperService#extractCheck(CheckAndActionName)}
-     */
-    @Test
-//    @Disabled("TODO: Complete this test")
-    void testExtractCheck() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "com.example.demo.modules.ActionNameString.getActionName()" because the return value of "com.example.demo.modules.CheckAndActionName.getActionName()" is null
-        //       at com.example.demo.services.CheckWrapperService.extractCheck(CheckWrapperService.java:45)
-        //   In order to prevent extractCheck(CheckAndActionName)
-        //   from throwing NullPointerException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   extractCheck(CheckAndActionName).
-        //   See https://diff.blue/R013 to resolve this issue.
+    @Autowired
+    private CheckWrapperService checkWrapperServiceunderTest;
 
-        this.checkWrapperService.extractCheck(new CheckAndActionName());
+    @MockBean
+    private CheckService checkService;
+
+
+    @BeforeEach
+    void setUp() {
+        checkWrapperServiceunderTest = new CheckWrapperService(actionService, checkRepository,
+                adminRepository, sheetSourceRepository);
+        final var securityContext = mock(SecurityContext.class);
+        final var applicationUser = mock(UserDetails.class);
+        final var authentication = mock(Authentication.class);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(applicationUser);
+        final var admin = new Admin();
+        when(adminRepository.findAdminByUsername(applicationUser.toString())).thenReturn(admin);
+//        given(admin.getId()).willReturn(123L);// when does not work
+    }
+
+    @BeforeAll
+    static void beforeAll(){
+//        final var adminRepository = mock(AdminRepository.class);
+//        final var securityContext = mock(SecurityContext.class);
+//        final var applicationUser = mock(UserDetails.class);
+//        final var authentication = mock(Authentication.class);
+//        when(securityContext.getAuthentication()).thenReturn(authentication);
+//        SecurityContextHolder.setContext(securityContext);
+//        when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(applicationUser);
+//        final var admin = new Admin();
+//        when(adminRepository.findAdminByUsername(applicationUser.toString())).thenReturn(admin);
+//        given(admin.getId()).willReturn(123L);// when does not work
+    }
+
+    @Test
+    void save() {
+        // given
+        Check checkToBeSaved = new Check("Check 1", "CN", "description", "Philips", "comment", 2L);
+//        final var securityContext = mock(SecurityContext.class);
+//        final var applicationUser = mock(UserDetails.class);
+//        final var authentication = mock(Authentication.class);
+//        when(securityContext.getAuthentication()).thenReturn(authentication);
+//        SecurityContextHolder.setContext(securityContext);
+//        when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(applicationUser);
+//        final var admin = new Admin();
+//        when(adminRepository.findAdminByUsername(applicationUser.toString())).thenReturn(admin);
+//    when(admin.getId()).thenReturn(123L);
+
+        // when
+        checkWrapperServiceunderTest.save(checkToBeSaved);
+
+        // then: verifies that the save method was invoked with the checkToBeSaved
+        ArgumentCaptor<Check> checkArgumentCaptor = ArgumentCaptor.forClass(Check.class);
+
+        // captures the check instance that was used upon saving
+        // and verifies that the save method was invoked
+        verify(checkRepository).save(checkArgumentCaptor.capture());
+
+        // retrieved the captured check
+        Check capturedCheck = checkArgumentCaptor.getValue();
+
+        // check that the captured check is the one that supposed to be saved
+        assertThat(capturedCheck).isEqualTo(checkToBeSaved);
     }
 
     /**
      * Method under test: {@link CheckWrapperService#extractCheck(CheckAndActionName)}
      */
     @Test
-    @Disabled("TODO: Complete this test")
+    void testExtractCheck() {
+        final var check =
+                new Check("CN_description", "CN", "description", "Philips", "comment");
+        final var checkAndActionName = mock(CheckAndActionName.class);
+        ActionNameString actionName = new ActionNameString("blaa");
+        checkAndActionName.setActionName(actionName);
+        when(checkAndActionName.getTheCheck()).thenReturn(check);
+        when(checkAndActionName.getActionName()).thenReturn(actionName);
+        Action action = mock(Action.class);
+        when(actionService.findByName(actionName.getActionName())).thenReturn(action);
+
+        this.checkWrapperService.extractCheck(checkAndActionName);
+    }
+
+    /**
+     * Method under test: {@link CheckWrapperService#extractCheck(CheckAndActionName)}
+     */
+    @Test
+//    @Disabled("TODO: Complete this test")
     void testExtractCheck2() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "com.example.demo.modules.Check.setActionType(com.example.demo.modules.Action)" because "tempCheck" is null
-        //       at com.example.demo.modules.Action.add(Action.java:54)
-        //       at com.example.demo.services.CheckWrapperService.extractCheck(CheckWrapperService.java:47)
-        //   In order to prevent extractCheck(CheckAndActionName)
-        //   from throwing NullPointerException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   extractCheck(CheckAndActionName).
-        //   See https://diff.blue/R013 to resolve this issue.
+        final var check =
+                new Check("CN_description", "CN", "description", "Philips", "comment");
+        final var checkAndActionName = mock(CheckAndActionName.class);
+        ActionNameString actionName = new ActionNameString("blaa");
+        checkAndActionName.setActionName(actionName);
+        when(checkAndActionName.getTheCheck()).thenReturn(check);
+        when(checkAndActionName.getActionName()).thenReturn(actionName);
 
         Action action = new Action();
         action.setAction("Action");
@@ -88,8 +150,6 @@ class CheckWrapperServiceTest {
         action.setValueType("42");
         when(this.actionService.findByName((String) any())).thenReturn(action);
 
-        CheckAndActionName checkAndActionName = new CheckAndActionName();
-        checkAndActionName.setActionName(new ActionNameString());
         this.checkWrapperService.extractCheck(checkAndActionName);
     }
 
@@ -97,22 +157,14 @@ class CheckWrapperServiceTest {
      * Method under test: {@link CheckWrapperService#extractCheck(CheckAndActionName)}
      */
     @Test
-    @Disabled("TODO: Complete this test")
     void testExtractCheck3() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "org.springframework.security.core.Authentication.getPrincipal()" because the return value of "org.springframework.security.core.context.SecurityContext.getAuthentication()" is null
-        //       at com.example.demo.Util.getUsernameFromPrincipal(Util.java:47)
-        //       at com.example.demo.services.CheckWrapperService.addAuthor(CheckWrapperService.java:64)
-        //       at com.example.demo.services.CheckWrapperService.save(CheckWrapperService.java:58)
-        //       at com.example.demo.services.CheckWrapperService.extractCheck(CheckWrapperService.java:49)
-        //   In order to prevent extractCheck(CheckAndActionName)
-        //   from throwing NullPointerException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   extractCheck(CheckAndActionName).
-        //   See https://diff.blue/R013 to resolve this issue.
+        final var check =
+                new Check("CN_description", "CN", "description", "Philips", "comment");
+        final var checkAndActionName = mock(CheckAndActionName.class);
+        ActionNameString actionName = new ActionNameString("blaa");
+        checkAndActionName.setActionName(actionName);
+        when(checkAndActionName.getTheCheck()).thenReturn(check);
+        when(checkAndActionName.getActionName()).thenReturn(actionName);
 
         Action action = mock(Action.class);
         doNothing().when(action).add((Check) any());
@@ -126,8 +178,6 @@ class CheckWrapperServiceTest {
         action.setValueType("42");
         when(this.actionService.findByName((String) any())).thenReturn(action);
 
-        CheckAndActionName checkAndActionName = new CheckAndActionName();
-        checkAndActionName.setActionName(new ActionNameString());
         this.checkWrapperService.extractCheck(checkAndActionName);
     }
 
