@@ -16,16 +16,28 @@ public class GraphConfig {
     this.populateGraph();
   }
 
+  /**
+   * Get all edges of the graph
+   * @return list of edges
+   */
   public List<CustomEdge> getEdges() {
     return new ArrayList(g.edgeSet());
   }
 
+  /**
+   * add all edges in the graph
+   * @param attribute string attributes needed
+   */
   private void addMultipleEdges(String attribute) {
     for (SheetType s : SheetType.values()) {
       g.addEdge(s.toString(), attribute);
     }
   }
 
+  /**
+   * fill in graph with all sheetTypes embedded in
+   * the system
+   */
   private void populateGraph() {
     edges = new ArrayList<>();
 

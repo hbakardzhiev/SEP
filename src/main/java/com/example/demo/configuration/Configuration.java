@@ -17,11 +17,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @org.springframework.context.annotation.Configuration
 public class Configuration {
 
+  /**
+   * create password encoder
+   * @return
+   */
   @Bean
   PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
+  /**
+   * persist all entities
+   * @param sheetSourceRepository repository used to save entities
+   * @return
+   */
   @Bean
   CommandLineRunner persist(SheetSourceRepository sheetSourceRepository) {
     var graph = new GraphConfig();
@@ -29,7 +38,6 @@ public class Configuration {
     return args -> {
       final var list = new ArrayList<SheetSource>();
 
-      // TODO: add the sheetTypeCT to the graphConfig
       for (var sheetType : List.of(SheetType.CT, SheetType.CN, SheetType.CR, SheetType.DMR)) {
         list.add(
             new SheetSource(
@@ -47,6 +55,10 @@ public class Configuration {
     };
   }
 
+  /**
+   * sets CORS on all links
+   * @return
+   */
   @Bean
   public WebMvcConfigurer corsConfigurer() {
     return new WebMvcConfigurer() {

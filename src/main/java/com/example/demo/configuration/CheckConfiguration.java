@@ -12,6 +12,12 @@ import java.util.List;
 /** Configuration file for adding checks to the database. */
 @Configuration
 public class CheckConfiguration {
+  /**
+   * Save checks in the DB
+   * @param repository checkRepository to save checks
+   * @param actionRepository actionRepository to save actions
+   * @return void
+   */
   @Bean
   CommandLineRunner commandLineCheck(
       CheckRepository repository, ActionRepository actionRepository) {

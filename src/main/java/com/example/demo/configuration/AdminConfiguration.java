@@ -9,6 +9,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AdminConfiguration {
 
+  /**
+   * create default admin
+   * @param service adminService
+   * @return void
+   */
   @Bean
   CommandLineRunner commandLineRunnerAdmin(AdminService service) {
     return args -> {
