@@ -1,4 +1,5 @@
 # SEP
 
-Exclude folders for code quality analysis:
+Folders to exclude for code quality analysis:
 - SEP/src/main/resources/
+- SEP/src/test/java/com/example/demo/
